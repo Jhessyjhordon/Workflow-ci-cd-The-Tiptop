@@ -1,0 +1,49 @@
+// .main-container {
+//     nav {
+//         background-color: darkcyan;
+//         ul {
+//             display: flex;
+//             li {
+//                 list-style: none;
+//                 padding: 20px 40px;
+//                 cursor: pointer;
+//                 color: white;
+
+//                 &:hover {
+//                     background-color: #007070;
+//                     transition: all 1s;
+//                 }
+//                 &:last-child {
+//                     margin-left: auto;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+.custom-active {
+    background-color: #ff0000;
+    /* Changer la couleur de fond */
+    color: #ffffff;
+    /* Changer la couleur du texte */
+    font-weight: bold;
+    /* Changer le style de police */
+    /* Ajoutez d'autres styles personnalisés si nécessaire */
+    transition: all 1s;
+}
+
+.logout {
+    cursor: pointer;
+}
+
+// .dropdown-menu-end {
+//     //    margin: 0 auto;
+//     left: -125%;
+// }
+
+// @media (max-width: 767px) {
+//     .dropdown-menu-end {
+//         left: auto;
+//     }
+// }
