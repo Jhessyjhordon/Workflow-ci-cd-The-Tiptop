@@ -1,4 +1,31 @@
+@import "./src/assets/custom-bootstrap/custom-bootstrap";
 * {
     margin: 0;
     padding: 0;
+    font-family: Inter;
+}
+
+h1 {
+    color: #000;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    letter-spacing: 10.272px;
+    text-transform: uppercase;
+
+    @media (max-width: 767px) {
+        & {
+            font-size: 30px;
+        }                    
+    }
+}
+
+.btn-green {
+    background-color: $bg-green !important;
+    color: $white !important;
+}
+
+.be-color-button {
+
 }

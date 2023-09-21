@@ -16,7 +16,7 @@ export default [
         import('./contact/contact.component').then((c) => c.ContactComponent)
     },
     { 
-        path: 'recompences', canActivate: [authGuard], loadComponent: () =>
+        path: 'recompences', loadComponent: () =>
         import('./recompences/recompences.component').then((c) => c.RecompencesComponent)
     },
 ] as Routes;
