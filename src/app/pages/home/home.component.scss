@@ -1,5 +1,25 @@
-.main-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+section{
+    min-height:100vh;
+    background-image:url('/assets/images/home/home_thetiptop.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    .container{
+        text-align: center;
+        margin-top: 20rem;
+        margin-bottom: 30rem;
+    }
+
+    .container-home-2{
+        color:#fff;
+        text-align: center;
+        margin-top:-10rem;
+    }
+
+    .container-home-p{
+        max-width: 330px; 
+        margin: 0 auto; 
+        text-align: center;
+    }
 }
