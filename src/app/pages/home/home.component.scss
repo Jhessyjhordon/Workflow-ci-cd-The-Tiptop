@@ -1,3 +1,7 @@
+img{
+    width: 100%;
+}
+
 section.banniere {
     background-image: url('/assets/images/home/home_thetiptop.png');
     background-repeat: no-repeat;
@@ -12,3 +16,35 @@ section.banniere {
         flex: 1;
     }
 }
+
+section.background{
+    background-image: url('/assets/images/home/home-background-thetiptop.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    .centered-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+    .rectangle {
+        margin-left: -5rem;
+    }
+    
+    .rectangle-2 {
+        margin-left: -8.8rem;
+    }
+
+    // Media queries
+    @media (max-width: 767px) {  // For screens smaller than 768px
+        .rectangle {
+            margin-left: 0; 
+        }
+
+        .rectangle-2 {
+            margin-left: 0; 
+        }
+    }
+}
+
