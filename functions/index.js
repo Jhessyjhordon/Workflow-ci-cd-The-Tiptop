@@ -48,11 +48,6 @@ const transporter = nodemailer.createTransport({
 app.post('/submit-contact-form', async (req, res) => {
 	try {
 
-		// Vérifier si la requête contient les données du formulaire
-		if (req.method !== 'POST') {
-			return res.status(400).json({ message: 'Méthode invalide. Seules les requêtes POST sont autorisées.' });
-		}
-
 		const formData = req.body;
 		const userEmail = formData.email; // Utilisez l'adresse e-mail comme clé
 
@@ -91,8 +86,6 @@ app.post('/submit-contact-form', async (req, res) => {
 			}
 		});
 
-		// Répondre avec succès
-		return res.status(200).json({ message: 'E-mail envoyé avec succès.' });
 	} catch (error) {
 		console.error('Erreur lors du traitement de la demande :', error);
 		return res.status(500).json({ message: 'Une erreur s\'est produite lors du traitement de la demande.' });
