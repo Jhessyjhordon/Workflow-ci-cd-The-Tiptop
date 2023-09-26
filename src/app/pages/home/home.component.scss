@@ -29,20 +29,32 @@ section.background{
         height: 100%;
     }
     .rectangle {
+        background-image: url('/assets/images/home/rectangle-thetiptop.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin-right: 10rem;
         margin-left: -5rem;
+        padding: 10px;
     }
     
     .rectangle-2 {
+        background-image: url('/assets/images/home/rectangle-thetiptop.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin-right: 10rem;
         margin-left: -8.8rem;
+        padding: 10px;
     }
 
     // Media queries
     @media (max-width: 767px) {  // For screens smaller than 768px
         .rectangle {
+            margin-right: 0;
             margin-left: 0; 
         }
 
         .rectangle-2 {
+            margin-right: 0;
             margin-left: 0; 
         }
     }
