@@ -9,5 +9,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
+  images: string[] = [
+    '/assets/images/home/qualite-superieure-thetiptop.png',
+    '/assets/images/home/qualite-superieure-thetiptop.png',
+    '/assets/images/home/qualite-superieure-thetiptop.png',
+    '/assets/images/home/qualite-superieure-thetiptop.png',
+    '/assets/images/home/qualite-superieure-thetiptop.png'
+  ];
 }
