@@ -61,25 +61,26 @@ export class ContactComponent implements OnInit {
     const control = form.get(field);
     return control!.invalid && (control!.touched || control!.dirty) && control!.value === false;
   }
-  
-  
+
+
 
   markFieldsAsTouched(formGroup: FormGroup) {
-		Object.keys(formGroup.controls).forEach(field => {
-			const control = formGroup.get(field);
-			control?.markAsTouched();
-		});
-	}
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      control?.markAsTouched();
+    });
+  }
 
-  submitForm() {    
+  submitForm() {
     this.formSubmitted = true;
     this.markFieldsAsTouched(this.contactForm);
-    
-    
+
+
     if (this.contactForm.valid) {
       this.formSubmitted = false;
       const formData = this.contactForm.value;
 
+      // Envoyer les données au service pour les enregistrer dans la base de données
       this.contactService.submitContactForm(formData).subscribe(
         (response) => {
           this.submissionResult = {
@@ -97,6 +98,17 @@ export class ContactComponent implements OnInit {
           };
         }
       );
+
+      // Envoyer les données au service pour l'envoi de l'e-mail
+      this.contactService.sendContactEmail(formData).subscribe(
+        (response) => {
+          console.log('E-mail envoyé avec succès:', response);
+        },
+        (error) => {
+          console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
+        }
+      );
+
     }
   }
 }

@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:4200',
 })); // Pour autoriser les requêtes cross-origin (CORS)
 
 app.use(express.json());
@@ -44,8 +44,6 @@ app.post('/submit-contact-form', async (req, res) => {
         if (!formData) {
             return res.status(400).json({ message: 'Les données du formulaire sont manquantes.' });
         }
-
-        const userEmail = formData.email;
 
         // Ajouter la date d'envoi au formulaire
         formData.dateSent = new Date().toISOString();
