@@ -17,6 +17,27 @@ section.banniere {
     }
 }
 
+section.qualite{
+    .img-fluid.img-20{
+        width: 20%;
+        margin: auto;
+        display: block;
+    }
+
+    // Media queries
+    @media (max-width: 767px) {  // For screens smaller than 768px
+        div.flex-container{
+            display: block;
+            width: 100%;
+        }
+        .img-fluid.img-20{
+            width: 100%;
+            margin: auto;
+            display: block;
+        }
+    }
+}
+
 section.background{
     background-image: url('/assets/images/home/home-background-thetiptop.png');
     background-repeat: no-repeat;
@@ -27,6 +48,9 @@ section.background{
         flex-direction: column;
         justify-content: center;
         height: 100%;
+    }
+    .text-uppercase.text-white{
+        font-size: 55px;
     }
     .rectangle {
         background-image: url('/assets/images/home/rectangle-thetiptop.png');
@@ -61,3 +85,23 @@ section.background{
     }
 }
 
+div.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    .img-fluid.img-60{
+        width: 50%;
+        margin: auto;
+        display: block;
+    }
+
+    // Media queries
+    @media (max-width: 767px) {  // For screens smaller than 768px
+        .img-fluid.img-60{
+            width: 100%;
+            margin: auto;
+            display: block;
+        }
+    }
+}

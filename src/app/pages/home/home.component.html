@@ -7,12 +7,12 @@
     </div>
     <div class="flex-grow-1"></div>
 </section>
-<section class="d-flex flex-column align-items-center">
+<section class="qualite d-flex flex-column align-items-center">
     <h2 class="text-uppercase">3 meilleurs qualité de nos thé</h2>
-    <div class="row">
-        <div class="col-12 col-md-4"><img src="/assets/images/home/qualite-superieure-thetiptop.png"/></div>
-        <div class="col-12 col-md-4"><img src="/assets/images/home/biologique-thetiptop.png"/></div>
-        <div class="col-12 col-md-4"><img src="/assets/images/home/producteurs-locaux-thetiptop.png"/></div>
+    <div class="flex-container">
+        <img class="img-fluid img-20" src="/assets/images/home/qualite-superieure-thetiptop.png"/>
+        <img class="img-fluid img-20" src="/assets/images/home/biologique-thetiptop.png"/>
+        <img class="img-fluid img-20" src="/assets/images/home/producteurs-locaux-thetiptop.png"/>
     </div>
 </section>
 <section class="background d-flex flex-column align-items-center vh-100">
@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-12 col-md-8"><img src="/assets/images/home/the-thetiptop.png"/></div>
         <div class="col-12 col-md-4 centered-content">
-            <h2 class="text-uppercase">thé de terroir</h2>
+            <h2 class="text-uppercase text-white">thé de terroir</h2>
             <p class="rectangle mb-0">Lorem ipsum dolor sit amet consectetur. Volutpat risus rhoncus feugiat massa dolor nisl faucibus a. Erat metus venenatis facilisi vel in in tortor. Aliquam nibh adipiscing auctor arcu urna sit vel et. A pharetra leo ornare duis tortor diam at at commodo. Natoque mauris rhoncus amet vestibulum lacus augue libero accumsan. Non in phasellus enim quis nibh sollicitudin amet ac. Vitae eget diam sem eu lacus imperdiet. Vivamus nisl in orci habitasse odio eu pellentesque. Iaculis elementum et nam eu. Pretium posuere sociis senectus pulvinar ultrices gravida amet risus. Imperdiet lorem aliquam enim risus. Sit ullamcorper integer et vel sit donec.</p>
             <p class="rectangle-2">Lorem ipsum dolor sit amet consectetur. Mattis sit cursus quam sed non vestibulum dui ante. Enim semper quam id lectus velit dictumst risus aliquam congue. Non nullam sed ultrices purus metus vulputate. In in sit nec tempor leo lectus ut. Nulla nibh nulla urna tortor velit lacus interdum gravida tellus.</p>
         </div>
@@ -28,10 +28,10 @@
     <div class="flex-grow-1"></div>
 </section>
 <section class="d-flex flex-column align-items-center">
-    <h2 class="text-uppercase">Ils nous font confiance</h2>
-    <div class="row">
+    <h2 class="text-uppercase text-center">Ils nous font confiance</h2>
+    <div class="flex-container">
         <div class="col" *ngFor="let image of images">
-            <img [src]="image" class="img-fluid" [alt]="'Image ' + (images.indexOf(image) + 1)">
+            <img [src]="image" class="img-fluid img-60" [alt]="'Image ' + (images.indexOf(image) + 1)">
         </div>
     </div>
 </section>
