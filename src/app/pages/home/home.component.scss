@@ -25,6 +25,14 @@ section.banniere {
     .custom-shadow{
         box-shadow: 12px 10px 15px #000;
     }
+
+    // Media queries
+    @media (max-width: 767px) {  // For screens smaller than 768px
+        h1{
+            font-size: 2.5rem;
+        }
+        
+    }
 }
 
 section.qualite{
@@ -82,6 +90,10 @@ section.background{
 
     // Media queries
     @media (max-width: 767px) {  // For screens smaller than 768px
+        .text-uppercase.text-white.d-md-none{
+            padding:30px;
+        }
+
         .rectangle {
             margin-right: 0;
             margin-left: 0; 
@@ -91,6 +103,9 @@ section.background{
             margin-right: 0;
             margin-left: 0; 
             margin-bottom: 10rem;
+        }
+        .text-uppercase.text-white{
+            font-size: 35px;
         }
     }
 }
