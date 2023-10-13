@@ -33,10 +33,18 @@ export class AuthService {
   }
 
   login({ email, password }: any): Observable<any> {
+    console.log("user try to log with user name : ", email, " and password : ", password);
+    
     if (email === 'toto@gmail.com' && password === 'toto123') {
       this.setToken('sdr-è_ujhbtyhubjgd"eYT_"ehbbcfjx');
       return of({ name: 'Toto Dupond', email: 'toto@gmail.com' });
     }
     return throwError(new Error('Failed to login'));
+  }
+
+  signup({ firstname, lastname, phone, email, password }: any): Observable<any> {
+    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " and password : ", password);
+    
+    return throwError(new Error('Failed to signup'));
   }
 }

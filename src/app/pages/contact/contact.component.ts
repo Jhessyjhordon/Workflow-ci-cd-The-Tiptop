@@ -25,18 +25,7 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Définir les regex pour la validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/u;
-    const subjectRegex = /^[^<>{}[\]\/\\|#`]{1,50}$/;
-    const messageUserRegex = /^[^<>{}[\]\/\\|#`]{1,1000}$/;
 
-
-    this.contactForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(emailRegex)]],
-      subject: ['', [Validators.required, Validators.pattern(subjectRegex)]],
-      messageUser: ['', [Validators.required, Validators.pattern(messageUserRegex)]],
-      consent: [false, Validators.requiredTrue],
-    });
   }
 
   buildCommonForm(): FormGroup {

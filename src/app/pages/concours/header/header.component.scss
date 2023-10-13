@@ -1,0 +1,218 @@
+// .carousl,
+// .carousel-innr,
+// .carousel-inner > .carousel-item {
+//     overflow: hidden;
+// }
+// .carousel-inner > .carousel-item.active,
+// .carousel-inner > .carousel-item-next {
+//     display: flex;
+//     flex-wrap: nowrap;
+// }
+// .carousel-inner:before {
+//     position:absolute;
+//     top:0;
+//     bottom: 0;
+//     right: 100%;
+//     // right: 72%;
+//     left: 0;
+//     content:"";
+//     display:block;
+//     background-color: #fff;
+//     z-index: 2;
+// }
+// .carousel-inner:after {
+//     position:absolute;
+//     top:0;
+//     bottom:0;
+//     right: 0;
+//     left: 100%;
+//     // left: 72%;
+//     content:"";
+//     display:block;
+//     background-color:#fff;
+//     z-index: 2;
+// }
+
+// .carousel-control-prev {
+//     z-index: 2000;
+//     left: 22%;
+// }
+
+// .carousel-control-next {
+//     z-index: 2000;
+//     right: 22%;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+.carousel-inner {
+    height: 80vh !important;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-right: 20px;
+    // margin-left: 5px;
+    
+    @media (max-width: 767px) {
+        & {
+            margin-right: 14px;
+        }
+    }
+}
+.carousel-indicators {
+    margin-bottom: 0 !important;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 5rem;
+    height: 5rem;
+}
+
+.carousel-control-prev-icon {
+    background-position: -6% 13%;
+    background-size: 133% 130%;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    // background-color: red;
+}
+
+.carousel-overlay {
+    position: relative;
+}
+
+.carousel-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0) 16%, rgba(0, 0, 0, 0) 84%, black 100%);
+    opacity: 0.7;
+    /* Ajustez l'opacité selon vos préférences */
+    z-index: 1;
+    /* Assurez-vous que l'overlay soit au-dessus de l'image */
+}
+
+.carousel-caption-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 0px 100px 15px rgba(0, 0, 0, 1);
+    /* Fond semi-transparent */
+    color: #000000;
+    /* Couleur du texte */
+    padding: 20px;
+    /* Espacement interne */
+    border-radius: 5px;
+    /* Coins arrondis */
+    width: 50%;
+    height: 50%;
+    /* Largeur du carré au milieu */
+    z-index: 2;
+
+    @media (max-width: 767px) {
+        & {
+            transform: translate(-50%, -55%);
+            width: 86%;
+            height: 80%;
+        }
+    }
+
+    @media (max-width: 991px) and (min-width: 768px ) {
+        & {
+            transform: translate(-50%, -65%);
+            width: 70%;
+            height: 60%;
+        }
+    }
+
+    h5 {
+        font-size: 48px;
+        font-weight: 700;
+    }
+
+    input {
+        width: 272px;
+        height: 76px;
+        border-radius: 5.5rem 0 0 5.5rem;
+        background-color: rgba(62, 81, 64, 1);
+        color: white;
+        padding: 10px 10px 10px 20px;
+        margin-bottom: 10px;
+
+        &::placeholder {
+            color: rgb(153, 153, 153);
+        }
+
+        @media (max-width: 767px) {
+            & {
+                width: 70%;
+                height: 66px;
+            }
+        }
+    }
+
+    button {
+        width: 144px;
+        height: 76px;
+        border-radius: 0 5.5rem 5.5rem 0;
+        background-color: rgba(213, 186, 134, 1);
+        color: black;
+        padding: 10px 20px;
+        cursor: pointer;
+
+        @media (max-width: 767px) {
+            & {
+                width: 30%;
+                height: 66px;
+            }
+        }
+    }
+}
+
+.centered-square {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    p.truncate-text {
+        // for truncated text
+        // -webkit-line-clamp: 10;
+        // display: -webkit-box;
+        // text-overflow: ellipsis;
+        // -webkit-box-orient: vertical;
+        text-align: justify;
+        overflow: auto;
+
+        @media (min-width: 1200px) {
+            & {
+                overflow: initial;
+            }
+        }
+
+    }
+}
+
+
+

@@ -1,0 +1,53 @@
+h5 {
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 500;
+    color: rgba(40, 51, 39, 1);
+    letter-spacing: 10.272px;
+    text-transform: uppercase;
+
+    // color: #000;
+    // font-size: 48px;
+    // font-style: normal;
+    // font-weight: 700;
+    // line-height: 40px;
+    // letter-spacing: 10.272px;
+
+}
+
+.scrolling-container {
+    display: flex;
+    flex-direction: row; // Disposition horizontale
+    overflow-x: auto; // Activation du défilement horizontal 
+    width: 100%; // Largeur du conteneur
+    scrollbar-width: none; // Masquer la barre de défilement (si nécessaire) 
+    -ms-overflow-style: none; // Masquer la barre de défilement pour Internet Explorer 
+
+    &::-webkit-scrollbar {
+        display: none;
+        // Masquer la barre de défilement pour les navigateurs WebKit
+    }
+
+    .card {
+        flex: 0 0 auto; // Désactiver la flexibilité pour garder chaque carte à une largeur fixe
+        width: 360px;
+        // width: 260px;
+        height: 440px; // Largeur de chaque carte 
+        margin-right: 15px; // Marge entre les cartes (ajustez selon vos besoins) 
+
+        @media (max-width: 767px) {
+            & {
+                width: 260px;
+            }
+        }
+
+        .card-text {
+            text-align: justify;
+        }
+    }
+}
+
+.scrolling-content {
+    display: flex;
+    flex-direction: row;
+}
