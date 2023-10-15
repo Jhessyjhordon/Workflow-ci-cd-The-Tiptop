@@ -1,0 +1,111 @@
+.header-caption-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 0px 100px 15px rgba(0, 0, 0, 1);
+    /* Fond semi-transparent */
+    color: #000000;
+    /* Couleur du texte */
+    padding: 20px;
+    /* Espacement interne */
+    border-radius: 5px;
+    /* Coins arrondis */
+    width: 75%;
+    height: 65%;
+    /* Largeur du carré au milieu */
+    z-index: 2;
+
+    @media (max-width: 767px) {
+        & {
+            transform: translate(-48%, -45%);
+            width: 86%;
+            height: 100%;
+        }
+    }
+
+    @media (max-width: 991px) and (min-width: 768px ) {
+        & {
+            transform: translate(-48%, -50%);
+            width: 70%;
+            height: 60%;
+        }
+    }
+
+    h5 {
+        font-size: 48px;
+        font-weight: 700;
+    }
+
+    input {
+        width: 70%;
+                height: 66px;
+        border-radius: 5.5rem 0 0 5.5rem;
+        background-color: rgba(62, 81, 64, 1);
+        color: white;
+        padding: 10px 10px 10px 20px;
+        margin-bottom: 10px;
+
+        &::placeholder {
+            color: rgb(153, 153, 153);
+        }
+
+        // @media (max-width: 1200px) {
+        //     & {
+        //         width: 70%;
+        //         height: 66px;
+        //     }
+        // }
+    }
+
+    button {
+        width: 30%;
+                height: 66px;
+        border-radius: 0 5.5rem 5.5rem 0;
+        background-color: rgba(213, 186, 134, 1);
+        color: black;
+        padding: 10px 20px;
+        cursor: pointer;
+
+        // @media (max-width: 1200px) {
+        //     & {
+        //         width: 30%;
+        //         height: 66px;
+        //     }
+        // }
+    }
+}
+
+.centered-square {
+    // width: 100%;
+    // height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    p.truncate-text {
+        // for truncated text
+        -webkit-line-clamp: 5;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        text-align: justify;
+        overflow: auto;
+
+        @media (min-width: 1200px) {
+            & {
+                overflow: initial;
+            }
+        }
+
+    }
+}
+
+.header-img {
+    background-image: url('/assets/images/concours/header/cafe0.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
