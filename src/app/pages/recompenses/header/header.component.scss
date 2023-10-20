@@ -22,14 +22,14 @@
         & {
             transform: translate(-48%, -45%);
             width: 86%;
-            height: 100%;
+            height: auto;
         }
     }
 
-    @media (max-width: 991px) and (min-width: 768px ) {
+    @media (max-width: 991px) and (min-width: 768px) {
         & {
             transform: translate(-48%, -50%);
-            width: 70%;
+            width: 90%;
             height: 60%;
         }
     }
@@ -41,7 +41,7 @@
 
     input {
         width: 70%;
-                height: 66px;
+        height: 66px;
         border-radius: 5.5rem 0 0 5.5rem;
         background-color: rgba(62, 81, 64, 1);
         color: white;
@@ -62,7 +62,7 @@
 
     button {
         width: 30%;
-                height: 66px;
+        height: 66px;
         border-radius: 0 5.5rem 5.5rem 0;
         background-color: rgba(213, 186, 134, 1);
         color: black;
@@ -84,7 +84,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    
+
     p.truncate-text {
         // for truncated text
         -webkit-line-clamp: 5;
@@ -104,8 +104,40 @@
 }
 
 .header-img {
+    height: -webkit-fill-available;
+}
+
+.header-bg-img {
     background-image: url('/assets/images/concours/header/cafe0.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+// .header-sm-img {
+//     height: 50%;
+// }
+
+.header-background-2 {
+    // height: 60%;
+
+    img {
+
+        height: 400px;
+    }
+
+}
+
+// .header-para {
+//     width: 40%;
+
+//     img {
+//         width: 100%;
+//         height: 400px;
+//     }
+// }
+
+h5 {
+    font-size: 48px;
+    font-weight: 700;
 }
