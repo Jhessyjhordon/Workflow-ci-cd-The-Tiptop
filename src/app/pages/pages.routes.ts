@@ -17,6 +17,6 @@ export default [
     },
     { 
         path: 'recompences', loadComponent: () =>
-        import('./recompences/recompences.component').then((c) => c.RecompencesComponent)
+        import('./recompenses/recompenses.component').then((c) => c.RecompensesComponent)
     },
 ] as Routes;
