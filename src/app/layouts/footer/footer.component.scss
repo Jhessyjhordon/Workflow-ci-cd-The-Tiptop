@@ -5,7 +5,7 @@ p{
 section.footer {
     footer {
         background: #283327;
-        height: 300px;
+        // height: 300px;
 
         div.flex-container {
             display: flex;
@@ -48,23 +48,23 @@ section.footer {
 
 section.post-footer{
     background: #283327;
-    div.mentions{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;  // Espacer les éléments également
-        align-items: center;      
-        flex-wrap: nowrap;
-        width: 100%;
-        padding: 10px 35%; // Ajuster l'espacement vertical et horizontal 
-        p{
-            padding: 5px;
-        }
-    }
+    // div.mentions{
+    //     display: flex;
+    //     flex-direction: row;
+    //     justify-content: space-between;  // Espacer les éléments également
+    //     align-items: center;      
+    //     flex-wrap: nowrap;
+    //     width: 100%;
+    //     padding: 10px 35%; // Ajuster l'espacement vertical et horizontal 
+    //     p{
+    //         padding: 5px;
+    //     }
+    // }
 
-    @media (max-width: 767px) {
-        div.mentions {
-            padding: 10px 5%!important; // Réduire le pourcentage pour mobile
-        }
-    }
+    // @media (max-width: 767px) {
+    //     div.mentions {
+    //         padding: 10px 5%!important; // Réduire le pourcentage pour mobile
+    //     }
+    // }
     
 }
