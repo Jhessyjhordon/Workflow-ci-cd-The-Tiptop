@@ -6,92 +6,122 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-interface Country {
+// Structure de l'objet User qui va contenir un tableau
+interface User {
 	id?: number;
 	name: string;
-	flag: string;
-	area: number;
-	population: number;
+  firstname: string;
+  birth: string;
+  address: string;
+	email: string;
+	prize: string;
 }
 
-const COUNTRIES: Country[] = [
+// Données brutes pour test le filtre
+const USERS: User[] = [
 	{
 		name: 'Russia',
-		flag: 'f/f3/Flag_of_Russia.svg',
-		area: 17075200,
-		population: 146989754,
+    firstname: 'Today',
+    birth: '11/12/2023',
+    address: '1 All Lorentz',
+		email: 'toto@gmail.com',
+		prize: 'Thé Noir',
 	},
 	{
 		name: 'France',
-		flag: 'c/c3/Flag_of_France.svg',
-		area: 640679,
-		population: 64979548,
+    firstname: 'Le Parisien',
+    birth: '11/12/2023',
+    address: '1 All Lorentz',
+		email: 'toto@gmail.com',
+		prize: 'Aucun',
 	},
 	{
 		name: 'Germany',
-		flag: 'b/ba/Flag_of_Germany.svg',
-		area: 357114,
-		population: 82114224,
+    firstname: 'Le Bosch',
+    birth: '12/12/2023',
+    address: '1 All Lorentz',
+		email: 'toto@gmail.com',
+		prize: 'Thé Noir',
 	},
 	{
 		name: 'Portugal',
-		flag: '5/5c/Flag_of_Portugal.svg',
-		area: 92090,
-		population: 10329506,
+    firstname: 'Le BTP',
+    birth: '12/12/2023',
+    address: '1 All Lorentz',
+		email: 'toto@gmail.com',
+		prize: 'Thé Gris',
 	},
 	{
 		name: 'Canada',
-		flag: 'c/cf/Flag_of_Canada.svg',
-		area: 9976140,
-		population: 36624199,
+    firstname: 'Tabernacle',
+    birth: '12/12/2023',
+    address: '2 All Lorentz',
+		email: 'toto2@gmail.com',
+		prize: 'Thé Jaune',
 	},
 	{
 		name: 'Vietnam',
-		flag: '2/21/Flag_of_Vietnam.svg',
-		area: 331212,
-		population: 95540800,
+    firstname: 'Ho Chinh Minh',
+    birth: '15/12/2023',
+    address: '3 All Lorentz',
+		email: 'toto2@gmail.com',
+		prize: 'Thé Noir',
 	},
 	{
 		name: 'Brazil',
-		flag: '0/05/Flag_of_Brazil.svg',
-		area: 8515767,
-		population: 209288278,
+    firstname: 'Brasilia',
+    birth: '16/12/2023',
+    address: '3 All Lorentz',
+		email: 'toto2@gmail.com',
+		prize: 'Thé rouge',
 	},
 	{
 		name: 'Mexico',
-		flag: 'f/fc/Flag_of_Mexico.svg',
-		area: 1964375,
-		population: 129163276,
+    firstname: 'Guadeleja',
+    birth: '18/12/2023',
+    address: '3 All Lorentz',
+		email: 'toto3@gmail.com',
+		prize: 'Thé rouge',
 	},
 	{
 		name: 'United States',
-		flag: 'a/a4/Flag_of_the_United_States.svg',
-		area: 9629091,
-		population: 324459463,
+    firstname: 'New York',
+    birth: '18/12/2023',
+    address: '3 All Lorentz',
+		email: 'toto3@gmail.com',
+		prize: 'Thé',
 	},
 	{
 		name: 'India',
-		flag: '4/41/Flag_of_India.svg',
-		area: 3287263,
-		population: 1324171354,
+    firstname: 'Bombai',
+    birth: '18/12/2023',
+    address: '3 All Lorentz',
+		email: 'toto3@gmail.com',
+		prize: 'Thé',
 	},
 	{
 		name: 'Indonesia',
-		flag: '9/9f/Flag_of_Indonesia.svg',
-		area: 1910931,
-		population: 263991379,
+    firstname: 'Indonesie',
+    birth: '19/12/2023',
+    address: '4 All Lorentz',
+		email: 'toto3@gmail.com',
+		prize: 'Infusion de thé',
 	},
 	{
 		name: 'Tuvalu',
-		flag: '3/38/Flag_of_Tuvalu.svg',
-		area: 26,
-		population: 11097,
+    firstname: 'Indonesie',
+    birth: '19/12/2023',
+    address: '3 All Lorentz',
+		email: 'toto3@gmail.com',
+		prize: 'Jackpot',
 	},
 	{
 		name: 'China',
-		flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-		area: 9596960,
-		population: 1409517397,
+    firstname: 'Indonesie',
+    birth: '19/12/2023',
+    address: '3 All Lorentz',
+		email: 'toto4@gmail.com',
+		prize: 'Aucun',
 	},
 ];
 
@@ -103,26 +133,41 @@ const COUNTRIES: Country[] = [
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent {
-  totalItems: number = COUNTRIES.length;
+  totalItems: number = USERS.length;
   page = 1;
 	pageSize = 4;
-	collectionSize = COUNTRIES.length;
-	countries!: Country[];
+	collectionSize = USERS.length;
+	users!: User[];
+  filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
+
+  // Fonction pour gérer le filtre dynamique sur le tableau
+  onFilterChange() { // On appelle cette fonction quand la valeur de filterText change
+    const filteredUser = this.filterText
+        ? USERS.filter(user=>
+              user.name.toLowerCase().includes(this.filterText.toLowerCase()) || // Conditions de filtrage sur name
+              user.firstname.toLowerCase().includes(this.filterText.toLowerCase()) || // Conditions de filtrage sur firstname
+              user.prize.toLowerCase().includes(this.filterText.toLowerCase()) // Conditions de filtrage sur prize
+          )
+        : USERS;
+    this.totalItems = filteredUser.length;
+    this.refreshUsersFilters(filteredUser);
+  }
+
+  // Fonction permettant de paginer un sous-ensemble d'users tout en conservant le comportement par défaut de la pagination entière des USERS.
+  refreshUsersFilters(filteredUser: User[] = USERS) {
+      const startIndex = (this.page - 1) * this.pageSize;
+      this.users = filteredUser.slice(startIndex, startIndex + this.pageSize);
+  }
+  //
 
   constructor() {
-		this.refreshCountries();
+		this.refreshUsersFilters();
 	}
 
-  refreshCountries() {
-		this.countries = COUNTRIES.map((country, i) => ({ id: i + 1, ...country })).slice(
-			(this.page - 1) * this.pageSize,
-			(this.page - 1) * this.pageSize + this.pageSize,
-		);
-	}
-
+  // Liée à la pagination, permet de remettre à jour celle-ci en fonction d'un événement qui se déclenche sur la page
   pageChanged(event: any): void {
     this.page = event.page;
-    this.refreshCountries();
+    this.refreshUsersFilters();
   }
 
   //Chart exemple
