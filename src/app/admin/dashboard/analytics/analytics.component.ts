@@ -5,6 +5,7 @@ import { Chart } from 'chart.js/auto';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Structure de l'objet User qui va contenir un tableau
 interface User {
@@ -128,7 +129,7 @@ const USERS: User[] = [
 @Component({
   selector: 'app-analytics',
   standalone: true,
-  imports: [CommonModule, RouterModule, PaginationModule, NgFor, DecimalPipe, FormsModule],
+  imports: [CommonModule, RouterModule, PaginationModule, NgFor, DecimalPipe, FormsModule, HttpClientModule],
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.scss']
 })
@@ -139,6 +140,10 @@ export class AnalyticsComponent {
 	collectionSize = USERS.length;
 	users!: User[];
   filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
+
+  // Affichage pour le nombre total de tickets
+  ticketUsed: number = 243;
+  ticketTotal: number = 1200;
 
   // Fonction pour gérer le filtre dynamique sur le tableau
   onFilterChange() { // On appelle cette fonction quand la valeur de filterText change
@@ -173,6 +178,7 @@ export class AnalyticsComponent {
   //Chart exemple
   title = 'ng-chart';
   chart : any = []; //Type la variable chart en any pour qu'elle accepte n'importe quelles données
+  chartPie: any = [];
 
   ngOnInit() { // Initialise au chargement du component
     this.chart = new Chart('canvas', {
@@ -195,6 +201,31 @@ export class AnalyticsComponent {
         },
       },
     });
-  }
 
+    this.chartPie = new Chart('canvasPie', {
+      type: 'pie', // Type de graphique en camembert
+      data: {
+        labels: ['Tickets Used', 'Tickets Remaining'], // Labels pour le camembert
+        datasets: [{
+          label: 'Ticket Distribution', // Étiquette pour le jeu de données
+          data: [this.ticketUsed, this.ticketTotal - this.ticketUsed], // Données pour le camembert
+          backgroundColor: [ // Couleurs de fond pour chaque segment
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)'
+          ],
+          borderColor: [ // Couleurs de bordure pour chaque segment
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)'
+          ],
+          borderWidth: 1 // Largeur de la bordure des segments
+        }]
+      },
+      options: {
+        responsive: true, // Le graphique s'adapte à la taille du conteneur
+        maintainAspectRatio: false, // Empêche le graphique de respecter le rapport d'aspect de canvas
+        // D'autres options peuvent être ajoutées ici si nécessaire
+      }
+    });
+
+  }
 }
