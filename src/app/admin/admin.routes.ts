@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './dashboard/user/user.component';
 import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
+import { authGuard } from '../guards/auth.guard';
 
 export default [
     { 
@@ -13,5 +14,4 @@ export default [
             // autres routes enfants
         ]
     },
-    { path: '**', redirectTo: '/auth/login', pathMatch: 'full' }
 ] as Routes;
