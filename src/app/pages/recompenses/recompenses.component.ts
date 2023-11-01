@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { HeaderComponent } from './header/header.component';
 import { MesGainsComponent } from './mes-gains/mes-gains.component';
 import { GainsPotentielsComponent } from './gains-potentiels/gains-potentiels.component';

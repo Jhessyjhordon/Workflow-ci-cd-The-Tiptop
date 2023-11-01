@@ -1,5 +1,4 @@
-
-    <button *ngIf="isLoggedIn" class="btn btn-primary">Réclamer une récompense</button>
-    <app-header></app-header>
-    <app-mes-gains></app-mes-gains>
-    <app-gains-potentiels></app-gains-potentiels>
+<app-header></app-header>
+<!-- Affiche la section "MES GAINS" si l'utilisateur est connecté -->
+<app-mes-gains *ngIf="isLoggedIn"></app-mes-gains>
+<app-gains-potentiels></app-gains-potentiels>
