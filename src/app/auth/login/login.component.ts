@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
     });
     // si l'utilisateur est déjà connecté il a pas acces à la route "auth/login" et on le renvoie sur la "home" 
     // si non il a l'accès
-    if (this.isLoggedIn) {
+    /*if (this.isLoggedIn) {
       this.router.navigate(['home'])
-    }
+    }*/
   }
 
   buildCommonForm(): FormGroup {
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
             message: result.message,
           };
           this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-          this.router.navigate(['home'])
+          /*this.router.navigate(['home'])*/
         },
         (err: Error) => {
           console.error("==============>>>>>>>>", err);

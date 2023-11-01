@@ -6,125 +6,19 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+// Appel du service admin
+import { AdminService } from 'src/app/services/admin/admin.service';
 
 // Structure de l'objet User qui va contenir un tableau
 interface User {
 	id?: number;
-	name: string;
+	lastname: string;
   firstname: string;
-  birth: string;
+  birth_date: string;
   address: string;
 	email: string;
 	prize: string;
 }
-
-// Données brutes pour test le filtre
-const USERS: User[] = [
-	{
-		name: 'Russia',
-    firstname: 'Today',
-    birth: '11/12/2023',
-    address: '1 All Lorentz',
-		email: 'toto@gmail.com',
-		prize: 'Thé Noir',
-	},
-	{
-		name: 'France',
-    firstname: 'Le Parisien',
-    birth: '11/12/2023',
-    address: '1 All Lorentz',
-		email: 'toto@gmail.com',
-		prize: 'Aucun',
-	},
-	{
-		name: 'Germany',
-    firstname: 'Le Bosch',
-    birth: '12/12/2023',
-    address: '1 All Lorentz',
-		email: 'toto@gmail.com',
-		prize: 'Thé Noir',
-	},
-	{
-		name: 'Portugal',
-    firstname: 'Le BTP',
-    birth: '12/12/2023',
-    address: '1 All Lorentz',
-		email: 'toto@gmail.com',
-		prize: 'Thé Gris',
-	},
-	{
-		name: 'Canada',
-    firstname: 'Tabernacle',
-    birth: '12/12/2023',
-    address: '2 All Lorentz',
-		email: 'toto2@gmail.com',
-		prize: 'Thé Jaune',
-	},
-	{
-		name: 'Vietnam',
-    firstname: 'Ho Chinh Minh',
-    birth: '15/12/2023',
-    address: '3 All Lorentz',
-		email: 'toto2@gmail.com',
-		prize: 'Thé Noir',
-	},
-	{
-		name: 'Brazil',
-    firstname: 'Brasilia',
-    birth: '16/12/2023',
-    address: '3 All Lorentz',
-		email: 'toto2@gmail.com',
-		prize: 'Thé rouge',
-	},
-	{
-		name: 'Mexico',
-    firstname: 'Guadeleja',
-    birth: '18/12/2023',
-    address: '3 All Lorentz',
-		email: 'toto3@gmail.com',
-		prize: 'Thé rouge',
-	},
-	{
-		name: 'United States',
-    firstname: 'New York',
-    birth: '18/12/2023',
-    address: '3 All Lorentz',
-		email: 'toto3@gmail.com',
-		prize: 'Thé',
-	},
-	{
-		name: 'India',
-    firstname: 'Bombai',
-    birth: '18/12/2023',
-    address: '3 All Lorentz',
-		email: 'toto3@gmail.com',
-		prize: 'Thé',
-	},
-	{
-		name: 'Indonesia',
-    firstname: 'Indonesie',
-    birth: '19/12/2023',
-    address: '4 All Lorentz',
-		email: 'toto3@gmail.com',
-		prize: 'Infusion de thé',
-	},
-	{
-		name: 'Tuvalu',
-    firstname: 'Indonesie',
-    birth: '19/12/2023',
-    address: '3 All Lorentz',
-		email: 'toto3@gmail.com',
-		prize: 'Jackpot',
-	},
-	{
-		name: 'China',
-    firstname: 'Indonesie',
-    birth: '19/12/2023',
-    address: '3 All Lorentz',
-		email: 'toto4@gmail.com',
-		prize: 'Aucun',
-	},
-];
 
 @Component({
   selector: 'app-analytics',
@@ -134,45 +28,22 @@ const USERS: User[] = [
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent {
-  totalItems: number = USERS.length;
   page = 1;
 	pageSize = 4;
-	collectionSize = USERS.length;
-	users!: User[];
+  allUsers: User[] = []; // Contient tous les utilisateurs chargés à partir du serveur
+	users: User[] = []; // Contient les utilisateurs actuellement affichés après le filtrage et la pagination
+  filteredUsers: User[] = [];
+  totalItems: number = 0;
+  collectionSize: number = 0;
   filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
 
   // Affichage pour le nombre total de tickets
   ticketUsed: number = 243;
   ticketTotal: number = 1200;
 
-  // Fonction pour gérer le filtre dynamique sur le tableau
-  onFilterChange() { // On appelle cette fonction quand la valeur de filterText change
-    const filteredUser = this.filterText
-        ? USERS.filter(user=>
-              user.name.toLowerCase().includes(this.filterText.toLowerCase()) || // Conditions de filtrage sur name
-              user.firstname.toLowerCase().includes(this.filterText.toLowerCase()) || // Conditions de filtrage sur firstname
-              user.prize.toLowerCase().includes(this.filterText.toLowerCase()) // Conditions de filtrage sur prize
-          )
-        : USERS;
-    this.totalItems = filteredUser.length;
-    this.refreshUsersFilters(filteredUser);
-  }
-
-  // Fonction permettant de paginer un sous-ensemble d'users tout en conservant le comportement par défaut de la pagination entière des USERS.
-  refreshUsersFilters(filteredUser: User[] = USERS) {
-      const startIndex = (this.page - 1) * this.pageSize;
-      this.users = filteredUser.slice(startIndex, startIndex + this.pageSize);
-  }
-  //
-
-  constructor() {
-		this.refreshUsersFilters();
-	}
-
-  // Liée à la pagination, permet de remettre à jour celle-ci en fonction d'un événement qui se déclenche sur la page
-  pageChanged(event: any): void {
-    this.page = event.page;
-    this.refreshUsersFilters();
+  constructor(private adminService: AdminService) {
+    this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
+    this.filteredUsers = [...this.users]; // Initialiser filteredUsers avec une copie de users.
   }
 
   //Chart exemple
@@ -226,6 +97,49 @@ export class AnalyticsComponent {
         // D'autres options peuvent être ajoutées ici si nécessaire
       }
     });
+    this.loadInitialData();
+  }
 
+  loadInitialData() {
+    this.adminService.getUsersWithRoleClient().subscribe(
+      (users: User[]) => {
+        this.allUsers = users; // Stockez les données du serveur dans allUsers
+        this.filteredUsers = [...this.allUsers]; // Initialise filteredUsers avec toutes les données
+        this.totalItems = this.allUsers.length; // Initialise le nombre total d'éléments pour la pagination
+        this.refreshUsersFilters(); // Initialise les utilisateurs affichés
+      },
+      error => {
+        console.error('Error loading users:', error);
+      }
+    );
+  }
+
+  // Fonction pour gérer le filtre dynamique sur le tableau
+  onFilterChange() {
+    console.log('Filter text:', this.filterText); // Vérifier la valeur actuelle du texte de filtrage
+    this.filteredUsers = this.filterText
+      ? this.allUsers.filter(user =>
+          user.lastname.toLowerCase().includes(this.filterText.toLowerCase()) ||
+          user.firstname.toLowerCase().includes(this.filterText.toLowerCase()) ||
+          user.email.toLowerCase().includes(this.filterText.toLowerCase())
+        )
+      : [...this.allUsers]; // Réinitialisez à la copie complète des utilisateurs si le filtre est effacé
+    console.log(this.users)
+    this.totalItems = this.filteredUsers.length; // Mettez à jour le nombre total d'éléments pour la pagination
+    console.log('Filtered users length:', this.filteredUsers.length); // Vérifier le nombre d'utilisateurs filtrés
+    this.refreshUsersFilters(); // Mettez à jour les utilisateurs affichés
+  }
+
+  // Fonction pour gérer uniquement la pagination
+  refreshUsersFilters() {
+    const startIndex = (this.page - 1) * this.pageSize;
+    this.users = this.filteredUsers.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  // Liée à la pagination, permet de remettre à jour celle-ci en fonction d'un événement qui se déclenche sur la page
+  pageChanged(event: any): void {
+    this.page = event.page;
+    this.refreshUsersFilters();
   }
 }
+
