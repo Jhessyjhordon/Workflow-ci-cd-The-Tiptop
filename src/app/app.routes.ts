@@ -8,6 +8,10 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/pages.routes')
     },
     { 
+        path: 'user', component: PagesComponent, 
+        loadChildren: () => import('./user/user.routes')
+    },
+    { 
         path: 'auth', 
         loadChildren: () => import('./auth/auth.routes')
     }, 
