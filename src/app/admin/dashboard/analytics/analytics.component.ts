@@ -14,7 +14,7 @@ interface User {
 	id?: number;
 	lastname: string;
   firstname: string;
-  birth_date: string;
+  birthDate: string;
   address: string;
 	email: string;
 	prize: string;
@@ -107,6 +107,7 @@ export class AnalyticsComponent {
         this.filteredUsers = [...this.allUsers]; // Initialise filteredUsers avec toutes les données
         this.totalItems = this.allUsers.length; // Initialise le nombre total d'éléments pour la pagination
         this.refreshUsersFilters(); // Initialise les utilisateurs affichés
+        //console.log('---->', this.allUsers);
       },
       error => {
         console.error('Error loading users:', error);
@@ -124,9 +125,9 @@ export class AnalyticsComponent {
           user.email.toLowerCase().includes(this.filterText.toLowerCase())
         )
       : [...this.allUsers]; // Réinitialisez à la copie complète des utilisateurs si le filtre est effacé
-    console.log(this.users)
+    //console.log(this.users)
     this.totalItems = this.filteredUsers.length; // Mettez à jour le nombre total d'éléments pour la pagination
-    console.log('Filtered users length:', this.filteredUsers.length); // Vérifier le nombre d'utilisateurs filtrés
+    //console.log('Filtered users length:', this.filteredUsers.length); // Vérifier le nombre d'utilisateurs filtrés
     this.refreshUsersFilters(); // Mettez à jour les utilisateurs affichés
   }
 
