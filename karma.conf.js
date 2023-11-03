@@ -2,6 +2,10 @@ module.exports = function (config) {
   config.set({
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
 
+    files: [
+      'src/app/**/*.spec.ts' // ceci inclut tous les fichiers .spec.ts dans le dossier src/app et ses sous-dossiers
+    ],
+
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
