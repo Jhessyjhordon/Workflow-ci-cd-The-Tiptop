@@ -1,0 +1,51 @@
+<div class="empty"></div>
+<div class="charts row mx-auto">
+    <div class="canvas col-md-5 border border-primary shadow-lg p-4 mx-auto bg-body rounded">
+        <canvas id="canvas">{{chart}}</canvas>
+    </div>
+    <div class="canvas col-md-5 border border-primary shadow-lg p-4 mx-auto bg-body rounded">
+        <canvas id="canvasPie">{{chartPie}}</canvas>
+    </div>      
+</div>
+
+<div class="col-md-6 container table-responsive py-5">
+    <h2>Utilisateurs inscrits</h2> 
+    <input type="text" [(ngModel)]="filterText" placeholder="Filter" (input)="onFilterChange()" class="form-control mb-2" />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Adresse mail</th>
+                <th scope="col">Gains</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname}}</td>
+                <td>{{ user.birthDate }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.email }}</td>
+                <td>BLANK</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="d-flex justify-content-between p-2">
+        <pagination 
+            [(ngModel)]="page" 
+            [totalItems]="totalItems" 
+            [itemsPerPage]="pageSize" 
+            (pageChanged)="pageChanged($event)">
+        </pagination>
+    
+        <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshUsersFilters()">
+            <option [ngValue]="4">4 items per page</option>
+        </select>
+    </div>
+</div>  
