@@ -18,7 +18,7 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],  // Correction : utilisez 'declarations' au lieu de 'imports' pour le composant
+      declarations: [LoginComponent],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [{ provide: AuthService, useClass: MockAuthService }]  // Utiliser le mock service
     });

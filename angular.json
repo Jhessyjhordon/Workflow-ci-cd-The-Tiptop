@@ -41,7 +41,9 @@
               "src/styles.scss",
               "src/app/shared/styles/custom-bootstrap/custom-bootstrap.scss"
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -91,6 +93,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "codeCoverage": true,
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -106,11 +109,23 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
