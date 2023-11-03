@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "eslint": "eslint \"src/**/*.{ts,js}\" --quiet",
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadless",
     "test:unit": "ng test --no-watch --no-progress --include='**/*.unit.spec.ts' --browsers=ChromeHeadless --karma-config=karma.conf.js",
     "test:integration": "ng test --no-watch --no-progress --include='**/*.integration.spec.ts' --browsers=ChromeHeadless --karma-config=karma.conf.js"
@@ -44,6 +45,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "karma-junit-reporter": "^2.0.1",
+    "karma-typescript": "^5.5.4",
     "typescript": "~5.1.3"
   }
 }

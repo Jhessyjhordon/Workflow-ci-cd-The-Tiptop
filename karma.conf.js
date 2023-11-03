@@ -1,6 +1,16 @@
 module.exports = function (config) {
   config.set({
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular', "karma-typescript"],
+    logLevel: config.LOG_DEBUG,
+
+    mime: { //Appel d'un mime pour mapper l'extension de fichier .ts au type MIME text/x-typescript
+      'text/x-typescript': ['ts','tsx']
+    },
+
+    client: {
+      clearContext: false, // laisser le contexte en place
+      useIframe: false // ne pas utiliser d'iframe
+    },
 
     files: [
       'src/app/**/*.spec.ts' // ceci inclut tous les fichiers .spec.ts dans le dossier src/app et ses sous-dossiers
@@ -8,16 +18,13 @@ module.exports = function (config) {
 
     plugins: [
       require('karma-jasmine'),
+      require('karma-typescript'),
       require('karma-chrome-launcher'),
       require('karma-junit-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-coverage'),
       require('karma-coverage-istanbul-reporter')
     ],
-
-    preprocessors: {
-      'src/**/*.ts': ['coverage'] //Activer la couverture de code pendant la compilation
-    },
 
     browsers: ['ChromeHeadless'],
 
