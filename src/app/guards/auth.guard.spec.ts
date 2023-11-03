@@ -1,13 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { authGuard } from './auth.guard';
 
 describe('AuthGuard', () => {
   let guard: authGuard;
-  let route: ActivatedRouteSnapshot;
-  let state: RouterStateSnapshot;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
