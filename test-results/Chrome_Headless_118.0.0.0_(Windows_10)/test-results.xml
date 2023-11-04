@@ -1,67 +1,13 @@
 <?xml version="1.0"?>
-<testsuite name="Chrome Headless 118.0.0.0 (Windows 10)" package="" timestamp="2023-11-03T23:19:33" id="0" hostname="Aru-Desktop" tests="0" errors="1" failures="0" time="0">
+<testsuite name="Chrome Headless 118.0.0.0 (Windows 10)" package="" timestamp="2023-11-04T01:05:07" id="0" hostname="Aru-Desktop" tests="2" errors="0" failures="0" time="0.057">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.0.0 Safari/537.36"/>
   </properties>
+  <testcase name="LoginComponent should create" time="0.052" classname="Chrome_Headless_118_0_0_0_(Windows_10).LoginComponent"/>
+  <testcase name="LoginComponent should login with correct credentials" time="0.005" classname="Chrome_Headless_118_0_0_0_(Windows_10).LoginComponent"/>
   <system-out>
-    <![CDATA[Chrome Headless 118.0.0.0 (Windows 10) ERROR
-  An error was thrown in afterAll
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
-  Uncaught SyntaxError: Cannot use import statement outside a module
-  SyntaxError: Cannot use import statement outside a module
+    <![CDATA[Chrome Headless 118.0.0.0 (Windows 10) LOG: true
+,Chrome Headless 118.0.0.0 (Windows 10) LOG: true
 
 ]]>
   </system-out>

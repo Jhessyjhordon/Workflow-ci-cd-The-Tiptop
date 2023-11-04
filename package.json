@@ -46,6 +46,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "karma-junit-reporter": "^2.0.1",
     "karma-typescript": "^5.5.4",
+    "karma-verbose-reporter": "^0.0.8",
     "typescript": "~5.1.3"
   }
 }

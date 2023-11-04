@@ -9,6 +9,10 @@ class MockAuthService {  // Créer une classe mock pour le service d'authentific
   login(email: string, password: string) {
     return of(true);  // Simuler une réponse réussie
   }
+
+  isLoggedIn() {
+    return of(true);  // ou toute autre valeur que vous voulez retourner
+  }
 }
 
 describe('LoginComponent', () => {
@@ -18,8 +22,7 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule],
+      imports: [LoginComponent, RouterTestingModule, ReactiveFormsModule],
       providers: [{ provide: AuthService, useClass: MockAuthService }]  // Utiliser le mock service
     });
     fixture = TestBed.createComponent(LoginComponent);
