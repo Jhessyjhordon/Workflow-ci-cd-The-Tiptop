@@ -1,5 +1,5 @@
 # Utiliser une image de base Node.js
-FROM node:14-alpine
+FROM node:latest
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /var/jenkins_home/workspace/workflow-test-pipeline/angular
