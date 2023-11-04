@@ -2,9 +2,10 @@ module.exports = function (config) {
   config.set({
     frameworks: ['jasmine', '@angular-devkit/build-angular', "karma-typescript"],
     logLevel: config.LOG_DEBUG,
+    extensions: ['ts', 'tsx', 'js', 'jsx'],
 
     mime: { //Appel d'un mime pour mapper l'extension de fichier .ts au type MIME text/x-typescript
-      'text/x-typescript': ['ts','tsx']
+      'text/x-typescript': ['ts']
     },
 
     client: {
@@ -15,6 +16,14 @@ module.exports = function (config) {
     files: [
       'src/app/**/*.spec.ts' // ceci inclut tous les fichiers .spec.ts dans le dossier src/app et ses sous-dossiers
     ],
+
+    preprocessors: {
+      '**/*.ts': ['karma-typescript'] // Ceci ajoute karma-typescript comme préprocesseur pour tous les fichiers TypeScript
+    },
+
+    karmaTypescriptConfig: {
+      tsconfig: "./tsconfig.json",  // Le chemin vers votre fichier tsconfig.spec.json
+    },
 
     plugins: [
       require('karma-jasmine'),
@@ -51,7 +60,7 @@ module.exports = function (config) {
 
     singleRun: true, // Cela assure que les tests s'exécutent une seule fois
 
-    reporters: ['progress', 'junit', 'coverage', 'coverage-istanbul'], // Rapporteur pour Jenkins
+    reporters: ['progress', 'junit', 'coverage', 'coverage-istanbul', 'karma-typescript'], // Rapporteur pour Jenkins
 
     junitReporter: {
       outputDir: 'test-results', // Répertoire de sortie pour les rapports JUnit
