@@ -6,8 +6,7 @@
     "types": [
       "jasmine"
     ],
-    "target": "ES2015", //Transpile le code vers ES2015
-    "module": "ESNext", //Indiquer à TypeScript d'utiliser la syntaxe de module ESNext.
+    "target": "esnext",
     "moduleResolution": "node", //Indiquer à TypeScript d'utiliser la stratégie de résolution de module Node.js.
     "esModuleInterop": true //Permettre une meilleure interopérabilité entre les modules CommonJS et ES Modules.
   },
