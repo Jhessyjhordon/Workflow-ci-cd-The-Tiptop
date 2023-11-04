@@ -2,7 +2,7 @@
 FROM node:latest
 
 # Définir le répertoire de travail dans le conteneur
-WORKDIR /var/jenkins_home/workspace/workflow-test-pipeline/angular
+WORKDIR /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular
 
 
 # Copier le fichier package.json et package-lock.json (si disponible) dans le conteneur
