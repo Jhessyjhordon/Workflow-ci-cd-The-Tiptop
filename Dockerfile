@@ -1,21 +1,21 @@
 # Utiliser une image de base Node.js
-FROM node:latest
+FROM node:latest AS builder
 
-# Définir le répertoire de travail dans le conteneur
 WORKDIR /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular
 
-
-# Copier le fichier package.json et package-lock.json (si disponible) dans le conteneur
 COPY package*.json ./
-
-# Installer les dépendances de l'application
 RUN npm install
-
-# Copier le reste du code de l'application dans le conteneur
 COPY . .
+RUN ./node_modules/.bin/ng build --configuration development
 
-# Exposer le port sur lequel votre application écoute
-EXPOSE 4200
+# Serve stage: Utiliser une image Nginx pour servir l'application
+FROM nginx:alpine
 
-# Définir la commande pour démarrer votre application
-CMD ["npm", "start"]
+# Copier le build Angular à partir de l'étape de builder
+COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/ /usr/share/nginx/html
+
+# Utiliser votre configuration nginx personnalisée
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
