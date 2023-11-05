@@ -11,7 +11,7 @@
 <div class="col-md-6 container table-responsive py-5">
     <h2>Utilisateurs inscrits</h2> 
     <input type="text" [(ngModel)]="filterText" placeholder="Filter" (input)="onFilterChange()" class="form-control mb-2" />
-    <table class="table table-striped">
+    <table class="table table-striped" aria-label="table-users">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -49,3 +49,7 @@
         </select>
     </div>
 </div>  
+
+<!--<div class="row" *ngFor="let ticket of allTickets">
+    <p>{{ticket.id}}</p>
+</div>-->

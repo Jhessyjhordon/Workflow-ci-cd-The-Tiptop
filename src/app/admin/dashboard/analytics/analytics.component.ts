@@ -6,19 +6,10 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { User } from 'src/app/models/user.model';
 // Appel du service admin
 import { AdminService } from 'src/app/services/admin/admin.service';
-
-// Structure de l'objet User qui va contenir un tableau
-interface User {
-	id?: number;
-	lastname: string;
-  firstname: string;
-  birthDate: string;
-  address: string;
-	email: string;
-	prize: string;
-}
+import { AllTickets } from 'src/app/models/ticket.model';
 
 @Component({
   selector: 'app-analytics',
@@ -37,9 +28,12 @@ export class AnalyticsComponent {
   collectionSize: number = 0;
   filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
 
+  allTickets: AllTickets[]= []; // Contient tous les tickets chargés à partir du serveur
+  totalTickets: number = 0; // On stocke en affichant en nombre, tous les tickets reçu
+  usedTickets: number = 0;
+
   // Affichage pour le nombre total de tickets
   ticketUsed: number = 243;
-  ticketTotal: number = 1200;
 
   constructor(private adminService: AdminService) {
     this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
@@ -49,6 +43,7 @@ export class AnalyticsComponent {
   //Chart exemple
   title = 'ng-chart';
   chart : any = []; //Type la variable chart en any pour qu'elle accepte n'importe quelles données
+  // Définition d'une propriété pour le chart camembert
   chartPie: any = [];
 
   ngOnInit() { // Initialise au chargement du component
@@ -76,17 +71,17 @@ export class AnalyticsComponent {
     this.chartPie = new Chart('canvasPie', {
       type: 'pie', // Type de graphique en camembert
       data: {
-        labels: ['Tickets Used', 'Tickets Remaining'], // Labels pour le camembert
+        labels: ['Tickets attribués', 'Tickets restants'], // Labels pour le camembert
         datasets: [{
           label: 'Ticket Distribution', // Étiquette pour le jeu de données
-          data: [this.ticketUsed, this.ticketTotal - this.ticketUsed], // Données pour le camembert
+          data: [0, 0], // Données pour le camembert
           backgroundColor: [ // Couleurs de fond pour chaque segment
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)'
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 99, 132, 0.2)'
           ],
           borderColor: [ // Couleurs de bordure pour chaque segment
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)'
+            'rgba(54, 162, 235, 1)',
+            'rgba(255,99,132,1)' 
           ],
           borderWidth: 1 // Largeur de la bordure des segments
         }]
@@ -113,6 +108,24 @@ export class AnalyticsComponent {
         console.error('Error loading users:', error);
       }
     );
+
+    this.adminService.getAllTickets().subscribe(
+      (allTickets : AllTickets[]) => {
+        // Filtre les tickets attribués
+        const usedTickets = allTickets.filter(ticket => ticket.gainAttribue === '1.00');
+        console.log(allTickets);
+        this.allTickets = allTickets; // Stock les données du serveur dans allTickets
+        this.totalTickets = allTickets.length;
+        this.usedTickets = usedTickets.length;
+        console.log(this.totalTickets)
+        console.log("Tickets attribués", this.usedTickets)
+        // Met à jour les données graphiques
+        this.chartPie.data.datasets[0].data = [this.usedTickets, this.totalTickets - this.usedTickets];
+        // Met à jour le graphique pour refléter les nouvelles données
+        this.chartPie.update();
+        this.refreshUsersFilters(); // Initialise les utilisateurs affichés
+      }
+    )
   }
 
   // Fonction pour gérer le filtre dynamique sur le tableau
