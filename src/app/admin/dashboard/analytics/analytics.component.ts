@@ -155,8 +155,8 @@ export class AnalyticsComponent {
           user.lastname.toLowerCase().includes(this.filterText.toLowerCase()) ||
           user.firstname.toLowerCase().includes(this.filterText.toLowerCase()) ||
           user.email.toLowerCase().includes(this.filterText.toLowerCase()) ||
-          user.birthDate.toLowerCase().includes(this.filterText.toLowerCase()) ||
-          user.address.toLowerCase().includes(this.filterText.toLowerCase())
+          (user.birthDate && user.birthDate.toLowerCase().includes(this.filterText.toLowerCase())) || // Vérifies sur user.birthDate est non null ensuite convertit celle-ci en minuscule.
+          (user.address && user.address.toLowerCase().includes(this.filterText.toLowerCase())) 
         )
       : [...this.allUsers]; // Réinitialisez à la copie complète des utilisateurs si le filtre est effacé
     //console.log(this.users)
