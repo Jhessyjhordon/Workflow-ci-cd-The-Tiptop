@@ -43,7 +43,11 @@ describe('SignupComponent', () => {
       firstname: 'John',
       phone: '1234567890',
       email: 'john.doe@example.com',
-      password: 'password123'
+      password: 'password123',
+      confirmPassword: 'password123',
+      //birthDate: '01/01/2002',
+      //address: '2 Allée Lorentz Champs-sur-Marne',
+      //role: 'customer'
     });
     // Espionner la méthode 'signup' du service d'authentification
     spyOn(authService, 'signup').and.callThrough();
@@ -56,7 +60,11 @@ describe('SignupComponent', () => {
       lastname: 'Doe',
       phone: '1234567890',
       email: 'john.doe@example.com',
-      password: 'password123'
+      password: 'password123',
+      confirmPassword: 'password123',
+      //birthDate: '01/01/2002',
+      //address: '2 Allée Lorentz Champs-sur-Marne',
+      //role: 'customer'
     });
   });
 });
