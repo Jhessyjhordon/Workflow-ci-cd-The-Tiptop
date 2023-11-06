@@ -7,4 +7,5 @@ export interface User {
     address: string;
     email: string;
     prize: string;
+    anneeDeNaissance?: number;
 }

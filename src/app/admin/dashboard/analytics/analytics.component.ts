@@ -10,6 +10,8 @@ import { User } from 'src/app/models/user.model';
 // Appel du service admin
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { AllTickets } from 'src/app/models/ticket.model';
+import { CurrentDateService } from 'src/app/services/date/current-date.service';
+import { AgeService } from 'src/app/services/ageRanges/age.service';
 
 @Component({
   selector: 'app-analytics',
@@ -35,9 +37,14 @@ export class AnalyticsComponent {
   // Affichage pour le nombre total de tickets
   ticketUsed: number = 243;
 
-  constructor(private adminService: AdminService) {
+  // Déclaration anneeActuelle en number
+  anneeActuelle: number;
+
+  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService) {
     this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
     this.filteredUsers = [...this.users]; // Initialiser filteredUsers avec une copie de users.
+    this.anneeActuelle = this.currentDateService.getAnneeActuelle();
+    console.log("-->", this.anneeActuelle);
   }
 
   //Chart exemple
@@ -54,7 +61,7 @@ export class AnalyticsComponent {
         datasets: [
           {
             label: '# of person age',
-            data: [12, 19, 3, 5, 2, 3, 9], //Data en dur pour simuler des données sur le chart
+            data: [], //Initialisation du tableau avec des données vides
             borderWidth: 1,
           },
         ],
@@ -101,6 +108,8 @@ export class AnalyticsComponent {
         this.allUsers = users; // Stockez les données du serveur dans allUsers
         this.filteredUsers = [...this.allUsers]; // Initialise filteredUsers avec toutes les données
         this.totalItems = this.allUsers.length; // Initialise le nombre total d'éléments pour la pagination
+        const ageCounts = this.ageService.calculateAgeCounts(this.allUsers); // Appel du service age pour calculer l'âge de chaque user
+        this.updateChartData(ageCounts);
         this.refreshUsersFilters(); // Initialise les utilisateurs affichés
         //console.log('---->', this.allUsers);
       },
@@ -108,6 +117,7 @@ export class AnalyticsComponent {
         console.error('Error loading users:', error);
       }
     );
+    
 
     this.adminService.getAllTickets().subscribe(
       (allTickets : AllTickets[]) => {
@@ -126,6 +136,14 @@ export class AnalyticsComponent {
         this.refreshUsersFilters(); // Initialise les utilisateurs affichés
       }
     )
+  }
+
+  updateChartData(ageCounts: any) {
+    // Conversion de l'objet ageCounts en un tableau pour le graphique
+    const chartData = Object.values(ageCounts);
+    // Mise à jour des données du graphique
+    this.chart.data.datasets[0].data = chartData;
+    this.chart.update(); // Redessine le graphique avec les nouvelles données
   }
 
   // Fonction pour gérer le filtre dynamique sur le tableau
@@ -156,4 +174,3 @@ export class AnalyticsComponent {
     this.refreshUsersFilters();
   }
 }
-
