@@ -27,7 +27,7 @@ pipeline {
                                     doGenerateSubmoduleConfigurations: false,
                                     extensions: [[$class: 'CleanCheckout']],
                                     submoduleCfg: [],
-                                    userRemoteConfigs: [[credentialsId: 'the-tiptop-front-repo-token', url: 'http://gitlab.dsp-archiwebo22b-ji-rw-ah.fr/dev/the-tiptop-front/']]])
+                                    userRemoteConfigs: [[credentialsId: 'the-tiptop-front-repo-token', url: 'https://gitlab.dsp-archiwebo22b-ji-rw-ah.fr/dev/the-tiptop-front/']]])
                             }
                         } else {
                             echo "Le dossier 'angular' existe déjà."
@@ -37,7 +37,7 @@ pipeline {
                                     doGenerateSubmoduleConfigurations: false,
                                     extensions: [[$class: 'CleanCheckout']],
                                     submoduleCfg: [],
-                                    userRemoteConfigs: [[credentialsId: 'the-tiptop-front-repo-token', url: 'http://gitlab.dsp-archiwebo22b-ji-rw-ah.fr/dev/the-tiptop-front/']]])
+                                    userRemoteConfigs: [[credentialsId: 'the-tiptop-front-repo-token', url: 'https://gitlab.dsp-archiwebo22b-ji-rw-ah.fr/dev/the-tiptop-front/']]])
                             }
                         }
                     }
