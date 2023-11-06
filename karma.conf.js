@@ -9,6 +9,7 @@ module.exports = function (config) {
       require('karma-junit-reporter'),
       require('karma-verbose-reporter'),
       require('karma-coverage'),
+      require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
 
@@ -29,9 +30,15 @@ module.exports = function (config) {
       }
     },
 
+    coverageIstanbulReporter: { //Configuration du reporter coverage-istanbul
+      dir: require('path').join(__dirname, './coverage'),
+      reports: ['html', 'lcovonly', 'text-summary'],
+      fixWebpackSourcePaths: true
+    },
+
     singleRun: true, // Cela assure que les tests s'exécutent une seule fois
 
-    reporters: ['progress', 'junit', 'verbose'], // Rapporteur pour Jenkins
+    reporters: ['progress', 'junit', 'verbose', 'coverage-istanbul'], // Rapporteur pour Jenkins
 
     junitReporter: {
       outputDir: 'test-results', // Répertoire de sortie pour les rapports JUnit
