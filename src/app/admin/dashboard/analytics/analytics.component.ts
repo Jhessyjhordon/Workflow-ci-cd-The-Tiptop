@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user.model';
 // Appel du service admin
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { AllTickets } from 'src/app/models/ticket.model';
+import { CurrentDateService } from 'src/app/services/date/current-date.service';
 
 @Component({
   selector: 'app-analytics',
@@ -35,9 +36,14 @@ export class AnalyticsComponent {
   // Affichage pour le nombre total de tickets
   ticketUsed: number = 243;
 
-  constructor(private adminService: AdminService) {
+  // Déclaration anneeActuelle en string
+  anneeActuelle: string;
+
+  constructor(private adminService: AdminService, private currentDateService: CurrentDateService) {
     this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
     this.filteredUsers = [...this.users]; // Initialiser filteredUsers avec une copie de users.
+    this.anneeActuelle = this.currentDateService.getAnneeActuelle();
+    console.log(this.anneeActuelle);
   }
 
   //Chart exemple
