@@ -153,7 +153,9 @@ export class AnalyticsComponent {
       ? this.allUsers.filter(user =>
           user.lastname.toLowerCase().includes(this.filterText.toLowerCase()) ||
           user.firstname.toLowerCase().includes(this.filterText.toLowerCase()) ||
-          user.email.toLowerCase().includes(this.filterText.toLowerCase())
+          user.email.toLowerCase().includes(this.filterText.toLowerCase()) ||
+          user.birthDate.toLowerCase().includes(this.filterText.toLowerCase()) ||
+          user.address.toLowerCase().includes(this.filterText.toLowerCase())
         )
       : [...this.allUsers]; // Réinitialisez à la copie complète des utilisateurs si le filtre est effacé
     //console.log(this.users)
