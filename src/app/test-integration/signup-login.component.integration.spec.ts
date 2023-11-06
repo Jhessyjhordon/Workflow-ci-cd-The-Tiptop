@@ -60,7 +60,8 @@ describe('Integration Test: Signup and Login', () => {
               firstname: 'John',
               phone: '1234567890',
               email: 'john.doe@example.com',
-              password: 'password123'
+              password: 'password123',
+              confirmPassword: 'password123'
           });
           // On envoi le formulaire
           signupComponent.onSubmit();
