@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class CurrentDateService {
   constructor() {}
 
-  getAnneeActuelle(): string {
-    return new Date().getFullYear().toString();
+  getAnneeActuelle(): number {
+    return new Date().getFullYear();
   }
 }
