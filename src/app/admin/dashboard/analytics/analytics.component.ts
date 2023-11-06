@@ -6,10 +6,11 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+// Appel des models 
 import { User } from 'src/app/models/user.model';
-// Appel du service admin
-import { AdminService } from 'src/app/services/admin/admin.service';
 import { AllTickets } from 'src/app/models/ticket.model';
+// Appel du service admin & currentDateService et AgeService
+import { AdminService } from 'src/app/services/admin/admin.service';
 import { CurrentDateService } from 'src/app/services/date/current-date.service';
 import { AgeService } from 'src/app/services/ageRanges/age.service';
 
@@ -146,7 +147,7 @@ export class AnalyticsComponent {
     this.chart.update(); // Redessine le graphique avec les nouvelles données
   }
 
-  // Fonction pour gérer le filtre dynamique sur le tableau
+  // Méthode pour gérer le filtre dynamique sur le tableau
   onFilterChange() {
     console.log('Filter text:', this.filterText); // Vérifier la valeur actuelle du texte de filtrage
     this.filteredUsers = this.filterText
@@ -164,7 +165,7 @@ export class AnalyticsComponent {
     this.refreshUsersFilters(); // Mettez à jour les utilisateurs affichés
   }
 
-  // Fonction pour gérer uniquement la pagination
+  // Méthode pour gérer uniquement la pagination
   refreshUsersFilters() {
     const startIndex = (this.page - 1) * this.pageSize;
     this.users = this.filteredUsers.slice(startIndex, startIndex + this.pageSize);

@@ -45,11 +45,15 @@ export class SignupComponent implements OnInit  {
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern(emailRegex)]],
       password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]]
+    }, {
+      validator: this.mustMatch('password', 'confirmPassword') // On gère ici la comparaison de pass et confirm password pour qu'ils soient à l'identique
     });
 
     return authForm;
   }
 
+  // Méthode pour les champs du formulaire d'inscription s'ils sont invalides
   isFieldInvalid(form: FormGroup, field: string): boolean {
     const control = form.get(field);
     return control!.invalid && (control!.touched || control!.dirty) && control!.value === false;
@@ -67,13 +71,13 @@ export class SignupComponent implements OnInit  {
     this.markFieldsAsTouched(this.loginForm);
 
 
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid) { // Si le formulaire d'inscription est valide
       this.formSubmitted = false;
-      const loginData = this.loginForm.value;
+      const loginData = this.loginForm.value; // On créer une constante et on ajoute les valeurs du formulaire d'inscription dedans
 
       console.log("~~~~~~~>", loginData );
       
-
+      // On fait appel à la méthode signup du Service AuthService pour effectuer l'inscription
       this.auth.signup(loginData).subscribe(
         (result) => {
           this.submissionResult = {
@@ -81,7 +85,7 @@ export class SignupComponent implements OnInit  {
             message: result.message,
           };
           this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-          this.router.navigate(['home'])
+          this.router.navigate(['home']) // Redirige vers la home
         },
         (err: Error) => {
           console.error("==============>>>>>>>>", err);
@@ -93,5 +97,25 @@ export class SignupComponent implements OnInit  {
         }
       )
     }
+  }
+
+  // Méthode qui permet de vérifier si 2 champs ont la même valeur lors de la saisie
+  mustMatch(controlName: string, matchingControlName: string){
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+  
+      if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
+        // retourner si un autre validateur a déjà trouvé une erreur sur le MatchingControl
+        return;
+      }
+  
+      // définir une erreur sur matchingControl si la validation échoue
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 }
