@@ -45,8 +45,13 @@
             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small shadow dropdown-menu-end ">
-            <li><a class="dropdown-item"  [routerLink]="'/user/parametre'">Settings</a></li>
-            <li><a class="dropdown-item"  [routerLink]="'/user/mon-compte'">Profile</a></li>
+            <!-- ici on s'assure que "userData" contient des données avant de tenter d'accéder à ses propriétés  -->
+            <li *ngIf="userData"><p class="dropdown-item m-0">{{userData.firstname}} {{userData.lastname}}</p></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" [routerLink]="'/user/profile-detail'">profile-detail</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/user/profile'">Profile</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>

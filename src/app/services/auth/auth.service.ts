@@ -17,7 +17,7 @@ interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les 
 export class AuthService {
 
   private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private apiUrl = 'http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr/user/login';
+  private apiUrl = 'http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr';
 
   constructor(private router: Router, private http: HttpClient) {
     // Vérifiez si un token est déjà présent lors de l'initialisation du service
@@ -58,7 +58,7 @@ export class AuthService {
     const credentials = { email, password };
     console.log("user try to log with user name : ", credentials.email, " and password : ", credentials.password);
 
-    return this.http.post<AuthResponse>(this.apiUrl, credentials).pipe(
+    return this.http.post<AuthResponse>(this.apiUrl  + '/user/login', credentials).pipe(
       switchMap((response) => {
         if (!response.error) {
           this.setToken(response.jwt);
@@ -75,8 +75,12 @@ export class AuthService {
       map(roleUser => {
         if (roleUser === 'admin') {
           this.router.navigate(['/admin/dashboard']);
-        } else {
+        } else if (roleUser === 'employee')  {
           // Gérez les autres cas de rôle ici.
+        } else if (roleUser === 'customer') {
+          this.router.navigate(['/home']);
+        } else {
+
         }
         return roleUser; // Vous pouvez toujours renvoyer le rôle si nécessaire pour la suite du traitement.
       }),

@@ -4,11 +4,11 @@ import { authGuard } from '../guards/auth.guard';
 export default [
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { 
-        path: 'parametre', loadComponent: () =>
-        import('./dashboard/parametre/parametre.component').then((c) => c.ParametreComponent)
+        path: 'profile-detail', loadComponent: () =>
+        import('./dashboard/profile-detail/profile-detail.component').then((c) => c.ProfileDetailComponent)
     },
     { 
-        path: 'mon-compte', loadComponent: () =>
-        import('./dashboard/mon-compte/mon-compte.component').then((c) => c.MonCompteComponent)
+        path: 'profile', loadComponent: () =>
+        import('./dashboard/profile/profile.component').then((c) => c.ProfileComponent)
     }
 ] as Routes;
