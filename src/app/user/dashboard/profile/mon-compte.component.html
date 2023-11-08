@@ -1,12 +1,12 @@
 <div class="container px-2 p-md-5">
     <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 g-lg-4 g-xl-5"> -->
     <h5 class="text-center py-3 py-md-5 text-break">MES INFORMATIONS</h5>
-    <div class="row row-cols-1 row-cols-lg-2  g-3"> <!-- Suppression de row-cols-* -->
+    <div class="row row-cols-1 row-cols-lg-2  g-3"> 
 
         <div class="col">
             <div class="card border-0 d-flex align-items-center text-center py-lg-3 px-lg-4">
                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end w-100">
-                    <div class="border border-5 rounded-circle px-4 order-first order-lg-last ">
+                    <div  [routerLink]="'/user/profile-detail'" [queryParams]="{ type: 'nom-prenom' }" class="updateLink border border-5 rounded-circle px-4 order-first order-lg-last ">
                         <i class="fa-solid fa-user fa-6x pt-3 px-3"></i>
                         <div class="card-body p-0 pt-1 pb-4">
                             <p class="card-text">Modifier</p>
@@ -22,7 +22,7 @@
         <div class="col">
             <div class="card border-0 d-flex align-items-center text-center py-lg-3 px-lg-4">
                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-start w-100">
-                    <div class="border border-5 rounded-circle px-4 ">
+                    <div  [routerLink]="'/user/profile-detail'" [queryParams]="{ type: 'adresse' }" class="updateLink border border-5 rounded-circle px-4 ">
                         <i class="fa-solid fa-tree-city fa-6x pt-3"></i>
                         <div class="card-body p-0 pt-1 pb-4">
                             <p class="card-text">Modifier</p>
@@ -40,7 +40,7 @@
         <div class="col">
             <div class="card border-0 d-flex align-items-center text-center py-lg-3 px-lg-4">
                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end w-100">
-                    <div class="border border-5 rounded-circle px-4 order-first order-lg-last ">
+                    <div  [routerLink]="'/user/profile-detail'" [queryParams]="{ type: 'mot-de-passe' }" class="updateLink border border-5 rounded-circle px-4 order-first order-lg-last ">
                         <i class="fa-solid fa-lock fa-6x pt-3 px-3"></i>
                         <div class="card-body p-0 pt-1 pb-4">
                             <p class="card-text">Modifier</p>
@@ -56,7 +56,7 @@
         <div class="col">
             <div class="card border-0 d-flex align-items-center text-center py-lg-3 px-lg-4">
                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-start w-100">
-                    <div class="border border-5 rounded-circle px-4 ">
+                    <div  [routerLink]="'/user/profile-detail'" [queryParams]="{ type: 'email' }" class="updateLink border border-5 rounded-circle px-4 ">
                         <i class="fa-solid fa-envelope fa-6x pt-3 px-2"></i>
                         <div class="card-body p-0 pt-1 pb-4">
                             <p class="card-text">Modifier</p>
@@ -72,7 +72,7 @@
         <div class="col">
             <div class="card border-0 d-flex align-items-center text-center py-lg-3 px-lg-4">
                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end w-100">
-                    <div class="border border-5 rounded-circle px-4 order-first order-lg-last ">
+                    <div  [routerLink]="'/user/profile-detail'" [queryParams]="{ type: 'phone' }" class="updateLink border border-5 rounded-circle px-4 order-first order-lg-last ">
                         <i class="fa-solid fa-phone fa-6x pt-3 px-2"></i>
                         <div class="card-body p-0 pt-1 pb-4">
                             <p class="card-text">Modifier</p>
@@ -88,7 +88,7 @@
         <div class="col">
             <div class="card border-0 d-flex align-items-center text-center py-lg-3 px-lg-4">
                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-start w-100">
-                    <div class="border border-5 rounded-circle px-4 ">
+                    <div  [routerLink]="'/user/profile-detail'" [queryParams]="{ type: 'birthDate' }" class="updateLink border border-5 rounded-circle px-4 ">
                         <i class="fa-solid fa-calendar-days fa-6x pt-3 px-3"></i>
                         <div class="card-body p-0 pt-1 pb-4">
                             <p class="card-text">Modifier</p>

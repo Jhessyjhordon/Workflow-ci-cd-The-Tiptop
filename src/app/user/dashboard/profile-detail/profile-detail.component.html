@@ -1,0 +1,68 @@
+<div class="container px-2 p-md-5">
+    <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 g-lg-4 g-xl-5"> -->
+    <h3 class="text-center py-3 py-md-5 text-break">Modifier {{ informationType }}</h3>
+    <div class="row row-cols-1 row-cols-lg-2  g-3 pb-4 d-flex justify-content-end child-selection">
+
+        <div *ngIf="informationType === 'nom-prenom'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-center ">
+                <label class="px-3">Nouveau nom</label>
+                <input type="text" [(ngModel)]="nouveauNom">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'nom-prenom'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-center ">
+                <label class="px-3">Nouveau prénom</label>
+                <input type="text" [(ngModel)]="nouveauPrenom">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'adresse'" class="col new-adress">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-start">
+                <label class="px-3">Nouvelle adresse</label>
+                <input type="text" [(ngModel)]="nouvelleAdresse">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'mot-de-passe'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-center ">
+                <label class="px-3">Mot de passe actuel</label>
+                <input type="password" [(ngModel)]="password.current">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'mot-de-passe'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end ">
+                <label class="px-3">Nouveau mot de passe</label>
+                <input type="password" [(ngModel)]="password.new">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'mot-de-passe'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end ">
+                <label class="px-3">Confirmation du mot de passe</label>
+                <input type="password" [(ngModel)]="password.confirm">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'email'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end ">
+                <label class="px-3">Nouvelle adresse email</label>
+                <input type="email" [(ngModel)]="email">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'phone'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end ">
+                <label class="px-3">Nouveau téléphone</label>
+                <input type="phone" [(ngModel)]="phone">
+            </div>
+        </div>
+        <div *ngIf="informationType === 'birthDate'" class="col">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-lg-end ">
+                <label class="px-3">Modification de la date de naissance</label>
+                <input type="date" [(ngModel)]="birthDate">
+            </div>
+        </div>
+    </div>
+
+    <!-- Ajoutez d'autres blocs de formulaire pour d'autres types d'informations -->
+
+    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between ">
+        <button class="annuler my-3" [routerLink]="['/user/profile']">Annuler</button>
+        <button class="enregistrer my-3" (click)="enregistrer()">Enregistrer</button>
+    </div>
+</div>

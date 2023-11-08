@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-mon-compte',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  templateUrl: './mon-compte.component.html',
+  styleUrls: ['./mon-compte.component.scss']
 })
-export class DashboardComponent {
+export class MonCompteComponent {
 
 }
