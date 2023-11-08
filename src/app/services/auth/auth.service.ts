@@ -58,7 +58,7 @@ export class AuthService {
     const credentials = { email, password };
     console.log("user try to log with user name : ", credentials.email, " and password : ", credentials.password);
 
-    return this.http.post<AuthResponse>(this.apiUrl + '/user/login', credentials).pipe(
+    return this.http.post<AuthResponse>(this.apiUrl  + '/user/login', credentials).pipe(
       switchMap((response) => {
         if (!response.error) {
           this.setToken(response.jwt);
@@ -75,8 +75,12 @@ export class AuthService {
       map(roleUser => {
         if (roleUser === 'admin') {
           this.router.navigate(['/admin/dashboard']);
-        } else {
+        } else if (roleUser === 'employee')  {
           // Gérez les autres cas de rôle ici.
+        } else if (roleUser === 'customer') {
+          this.router.navigate(['/home']);
+        } else {
+
         }
         return roleUser; // Vous pouvez toujours renvoyer le rôle si nécessaire pour la suite du traitement.
       }),

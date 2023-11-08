@@ -6,8 +6,9 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-// Appel des models 
-import { User } from 'src/app/models/user.model';
+import { UserAdmin } from 'src/app/models/user-admin.model';
+// Appel du service admin
+import { AdminService } from 'src/app/services/admin/admin.service';
 import { AllTickets } from 'src/app/models/ticket.model';
 // Appel du service admin & currentDateService et AgeService
 import { AdminService } from 'src/app/services/admin/admin.service';
@@ -24,9 +25,9 @@ import { AgeService } from 'src/app/services/ageRanges/age.service';
 export class AnalyticsComponent {
   page = 1;
 	pageSize = 4;
-  allUsers: User[] = []; // Contient tous les utilisateurs chargés à partir du serveur
-	users: User[] = []; // Contient les utilisateurs actuellement affichés après le filtrage et la pagination
-  filteredUsers: User[] = [];
+  allUsers: UserAdmin[] = []; // Contient tous les utilisateurs chargés à partir du serveur
+	users: UserAdmin[] = []; // Contient les utilisateurs actuellement affichés après le filtrage et la pagination
+  filteredUsers: UserAdmin[] = [];
   totalItems: number = 0;
   collectionSize: number = 0;
   filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
@@ -105,7 +106,7 @@ export class AnalyticsComponent {
 
   loadInitialData() {
     this.adminService.getUsersWithRoleClient().subscribe(
-      (users: User[]) => {
+      (users: UserAdmin[]) => {
         this.allUsers = users; // Stockez les données du serveur dans allUsers
         this.filteredUsers = [...this.allUsers]; // Initialise filteredUsers avec toutes les données
         this.totalItems = this.allUsers.length; // Initialise le nombre total d'éléments pour la pagination

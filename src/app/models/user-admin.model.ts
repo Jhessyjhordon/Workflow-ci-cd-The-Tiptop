@@ -1,5 +1,5 @@
 // user.model.ts
-export interface User {
+export interface UserAdmin {
     id?: number;
     lastname: string;
     firstname: string;
