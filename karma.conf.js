@@ -1,36 +1,16 @@
 require('events').EventEmitter.defaultMaxListeners = 100; // limite plus élevée pour les listeners
 module.exports = function (config) {
   config.set({
-    frameworks: ['jasmine', '@angular-devkit/build-angular', "karma-typescript"],
-    logLevel: config.LOG_DEBUG,
-    extensions: ['ts', 'tsx', 'js', 'jsx'],
-
-    mime: { //Appel d'un mime pour mapper l'extension de fichier .ts au type MIME text/x-typescript
-      'text/x-typescript': ['ts']
-    },
-
-    client: {
-      clearContext: false, // laisser le contexte en place
-      useIframe: false // ne pas utiliser d'iframe
-    },
-
-    preprocessors: {
-      '**/*.ts': ['karma-typescript'] // Ceci ajoute karma-typescript comme préprocesseur pour tous les fichiers TypeScript
-    },
-
-    karmaTypescriptConfig: {
-      tsconfig: "./tsconfig.spec.json",  // Le chemin vers votre fichier tsconfig.spec.json
-    },
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
 
     plugins: [
       require('karma-jasmine'),
-      require('karma-typescript'),
       require('karma-chrome-launcher'),
       require('karma-junit-reporter'),
       require('karma-verbose-reporter'),
-      require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-coverage'),
-      require('karma-coverage-istanbul-reporter')
+      require('karma-coverage-istanbul-reporter'),
+      require('@angular-devkit/build-angular/plugins/karma')
     ],
 
     browsers: ['ChromeHeadless'],
@@ -58,7 +38,7 @@ module.exports = function (config) {
 
     singleRun: true, // Cela assure que les tests s'exécutent une seule fois
 
-    reporters: ['progress', 'junit', 'coverage', 'coverage-istanbul', 'karma-typescript', 'verbose'], // Rapporteur pour Jenkins
+    reporters: ['progress', 'junit', 'verbose', 'coverage-istanbul'], // Rapporteur pour Jenkins
 
     junitReporter: {
       outputDir: 'test-results', // Répertoire de sortie pour les rapports JUnit

@@ -104,21 +104,25 @@
                 <label for="floatingInputMail">Mail</label>
               </div>
             </div>
+            
             <div class="col px-md-5">
               <!-- Afficher les erreurs pour le champ 'confirmPassword' -->
               <div *ngIf="loginForm.get('confirmPassword')?.invalid && loginForm.get('confirmPassword')?.touched" class="text-danger">
                 <div *ngIf="loginForm.get('confirmPassword')?.errors?.['required']" class="text-start">
-                  La confirmation du mot de passe est requis.
+                  La confirmation du mot de passe est requise.
                 </div>
                 <div *ngIf="loginForm.get('confirmPassword')?.errors?.['pattern']" class="text-start">
                   Le mot de passe doit contenir uniquement des caractères alphabétiques, des chiffres,
                   des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
                   avoir une longueur maximale de 50 caractères.
                 </div>
+                <div *ngIf="loginForm.get('confirmPassword')?.errors?.['mustMatch']" class="text-start">
+                  Les mots de passe ne correspondent pas.
+                </div>
               </div>
               <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-5" placeholder="Confirmer le mot de passe .."
-                  id="floatingInputConfirmPsw" />
+                <input type="password" class="form-control rounded-5" placeholder="Confirmer le mot de passe .."
+                  id="floatingInputConfirmPsw" formControlName="confirmPassword" />
                 <label for="floatingInputConfirmPsw">Confirmer le mot de passe</label>
               </div>
             </div>

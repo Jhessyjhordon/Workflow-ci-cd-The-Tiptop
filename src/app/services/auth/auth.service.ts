@@ -103,9 +103,31 @@ export class AuthService {
     }
   }
 
+  //Methode pour l'inscription
   signup({ firstname, lastname, phone, email, password }: any): Observable<any> {
+    // Valeurs en dur pour birthDate, address et role
+    const birthDate = '01/01/2002';
+    const address = '2 Allée Lorentz Champs-sur-Marne';
+    const role ='customer';
     console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " and password : ", password);
-
-    return throwError(new Error('Failed to signup'));
+    return this.http.post(this.apiUrl + '/user', {
+      firstname,
+      lastname,
+      address,
+      birthDate,
+      phone,
+      email,
+      password,
+      role
+    }).pipe(
+      catchError((error) => {
+        if (error.status === 409) {
+          // Gérez l'erreur spécifique ici, par exemple en informant l'utilisateur
+          alert('Un conflit est survenu : ' + error.error.message);
+        }
+        // Vous pouvez aussi retransmettre l'erreur si vous voulez la gérer ailleurs
+        return throwError(() => new Error('Une erreur est survenue lors de l\'inscription : ' + error.message));
+      })
+    );
   }
 }

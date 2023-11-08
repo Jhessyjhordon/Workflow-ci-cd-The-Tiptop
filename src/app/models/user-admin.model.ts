@@ -7,4 +7,5 @@ export interface UserAdmin {
     address: string;
     email: string;
     prize: string;
+    anneeDeNaissance?: number;
 }
