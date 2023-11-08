@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ageRanges } from 'src/app/models/ageRanges.model';
-import { User } from 'src/app/models/user.model';
+import { UserAdmin } from 'src/app/models/user-admin.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgeService {
-  calculateAgeCounts(users: User[]) {
+  calculateAgeCounts(users: UserAdmin[]) {
     // Crée une copie des tranches d'âge pour éviter de modifier l'objet original
     const ageCounts = { ...ageRanges };
     

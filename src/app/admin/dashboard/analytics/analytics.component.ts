@@ -7,8 +7,6 @@ import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserAdmin } from 'src/app/models/user-admin.model';
-// Appel du service admin
-import { AdminService } from 'src/app/services/admin/admin.service';
 import { AllTickets } from 'src/app/models/ticket.model';
 // Appel du service admin & currentDateService et AgeService
 import { AdminService } from 'src/app/services/admin/admin.service';
