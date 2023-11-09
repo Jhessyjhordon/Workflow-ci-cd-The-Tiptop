@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/the-tiptop-front",
+            "outputPath": "dist/the-tiptop-front/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -115,6 +115,61 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/the-tiptop-front/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "the-tiptop-front:build:development",
+              "serverTarget": "the-tiptop-front:server:development"
+            },
+            "production": {
+              "browserTarget": "the-tiptop-front:build:production",
+              "serverTarget": "the-tiptop-front:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "the-tiptop-front:build:production",
+              "serverTarget": "the-tiptop-front:server:production"
+            },
+            "development": {
+              "browserTarget": "the-tiptop-front:build:development",
+              "serverTarget": "the-tiptop-front:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
