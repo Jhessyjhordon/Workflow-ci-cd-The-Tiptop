@@ -94,7 +94,7 @@ export class ProfileDetailComponent implements OnInit {
         case 'phone':
           this.userData!.phone = this.phone;
           break;
-        case 'password':
+        case 'mot-de-passe':
           // Vérification du password actuel
           // bcrypt.compareSync(this.userData.password, this.password.new);
           // Vérifiez si le nouveau mot de passe et la confirmation correspondent

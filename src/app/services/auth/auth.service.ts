@@ -78,7 +78,7 @@ export class AuthService {
         } else if (roleUser === 'employee')  {
           // Gérez les autres cas de rôle ici.
         } else if (roleUser === 'customer') {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/recompenses']);
         } else {
 
         }
@@ -104,12 +104,12 @@ export class AuthService {
   }
 
   //Methode pour l'inscription
-  signup({ firstname, lastname, phone, email, password }: any): Observable<any> {
+  signup({ firstname, lastname, phone, email, password, address, birthDate }: any): Observable<any> {
     // Valeurs en dur pour birthDate, address et role
-    const birthDate = '01/01/2002';
-    const address = '2 Allée Lorentz Champs-sur-Marne';
+    // const birthDate = '01/01/2002';
+    // const address = '2 Allée Lorentz Champs-sur-Marne';
     const role ='customer';
-    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " and password : ", password);
+    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " password : ", password, " address : ", address, " and birthDate : ", birthDate);
     return this.http.post(this.apiUrl + '/user', {
       firstname,
       lastname,

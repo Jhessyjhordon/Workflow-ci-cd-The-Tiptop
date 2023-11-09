@@ -38,14 +38,21 @@ export class SignupComponent implements OnInit  {
   buildCommonForm(): FormGroup {
     // Définir les regex pour la validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/u;
+    const namesRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s'-]+$/u; // Pour les noms (autorise les espaces et tirets et carractère unicode)
+    const phoneRegex = /^\d{10}$/; // Exemple pour un numéro de téléphone à 10 chiffres
+    const passwordsRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Exemple pour un mot de passe fort
+    const addressRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9\s,'-]+$/u; // Autorise les chiffres, lettres, carractère unicode, espaces, virgules et tirets
+    // const birthDateRegex = /^\d{4}-\d{2}-\d{2}$/; // Format date "yyyy-MM-dd"
 
     const authForm = this.fb.group({
-      lastname: ['', [Validators.required]],
-      firstname: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      lastname: ['', [Validators.required, Validators.pattern(namesRegex)]],
+      firstname: ['', [Validators.required, Validators.pattern(namesRegex)]],
+      phone: ['', [Validators.required, Validators.pattern(phoneRegex)]],
       email: ['', [Validators.required, Validators.pattern(emailRegex)]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]]
+      password: ['', [Validators.required, Validators.pattern(passwordsRegex)]],
+      confirmPassword: ['', [Validators.required, Validators.pattern(passwordsRegex)]],
+      address: ['', [Validators.required, Validators.pattern(addressRegex)]],
+      birthDate: ['', [Validators.required]]
     }, {
       validator: this.mustMatch('password', 'confirmPassword') // On gère ici la comparaison de pass et confirm password pour qu'ils soient à l'identique
     });

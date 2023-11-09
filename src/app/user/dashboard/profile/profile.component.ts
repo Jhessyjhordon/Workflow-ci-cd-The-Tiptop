@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
   // 
   ngOnInit() {
     this.userService.userData$.subscribe(user => {
-      this.userData = user;
+      this.userData = user;      
     });
   }
 }
