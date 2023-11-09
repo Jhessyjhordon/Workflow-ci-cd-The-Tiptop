@@ -75,7 +75,7 @@ export class UserService {
     //   photoUrl: userData.photoUrl,
     //   updatedAt: userData.updatedAt,
     // };
-    this.userDataSubject.next(userData);
+    this.userDataSubject.next(userData);    
   }
 
   updateUserData(userData: UserCustomer): Observable<UserCustomer> {
