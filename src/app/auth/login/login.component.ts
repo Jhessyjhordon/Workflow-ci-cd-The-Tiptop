@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
           this.submissionResult = {
             success: false,
             message:
-              "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
+              "Une erreur s'est produite lors de la connexion. Veuillez réessayer plus tard.",
           };
         }
       )

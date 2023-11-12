@@ -15,6 +15,7 @@ import { UserCustomer } from 'src/app/models/user-custumer.model';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isLoggedAsAdmin: boolean = false;
   userData!: UserCustomer | null;
 
   constructor(private auth: AuthService, private userService: UserService) { }
@@ -23,6 +24,12 @@ export class HeaderComponent implements OnInit {
     this.auth.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
     });
+    // console.log(this.auth.getRoleUser());
+    if (this.auth.getRoleUser() === "admin") {
+      console.log("ok");
+      this.isLoggedAsAdmin = true;
+    } 
+    
     // this.getUserData();
 
     // Récupérez les données de l'utilisateur en utilisant le service

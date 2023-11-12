@@ -77,7 +77,7 @@
                   L'e-mail est requis.
                 </div>
                 <div *ngIf="loginForm.get('email')?.errors?.['pattern']" class="text-start">
-                  L'e-mail doit être une adresse e-mail valide (exemple@domaine.com).
+                  L'e-mail doit être une adresse e-mail valide (exemple@gmail.com).
                 </div>
               </div>
               <div class="form-floating mb-3">
@@ -162,6 +162,26 @@
                 <input type="password" class="form-control rounded-5" placeholder="Confirmer le mot de passe .."
                   id="floatingInputConfirmPsw" formControlName="confirmPassword" />
                 <label for="floatingInputConfirmPsw" class="w-100">Confirmer le  mot de passe</label>
+              </div>
+            </div>
+            <!-- Role -->
+            <div class="col px-md-5"  *ngIf="isLoggedAsAdmin">
+              <!-- Afficher les erreurs pour le champ 'role' -->
+              <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched"
+                class="text-danger">
+                <div *ngIf="loginForm.get('role')?.errors?.['required']" class="text-start">
+                  Le role est requise.
+                </div>
+                <div *ngIf="loginForm.get('role')?.errors?.['pattern']" class="text-start">
+                  Les roles autorisées sont : customer et employee.
+                </div>
+              </div>
+              <div class="form-floating mb-3">
+                <select class="form-select rounded-5" id="floatingInputRole" formControlName="role">
+                  <option value="customer">Customer</option>
+                  <option value="employee">Employee</option>
+                </select>
+                <label for="floatingInputRole" class="w-100">Choisir le rôle</label>
               </div>
             </div>
 

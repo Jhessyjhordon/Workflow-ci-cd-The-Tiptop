@@ -10,6 +10,9 @@
                 <a class="analytics" [routerLink]="'./analytics'">Analytics</a>
             </li>
             <li>
+                <a class="analytics" [routerLink]="'./tickets'">Tickets</a>
+            </li>
+            <li>
                 <a href="#">Contact</a>
             </li>
         </ul>
@@ -25,17 +28,19 @@
                     <i class="fas fa-align-left"></i>
                     <span>Toggle Sidebar</span>
                 </button>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="btn btn-dark d-inline-block d-lg-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-align-justify"></i>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item active">
+                    <ul class="nav navbar-nav w-100">
+                        <li class="nav-item active ms-auto ms-lg-2 me-lg-auto">
                             <a class="nav-link" [routerLink]="'/../home'">Retour à l'accueil</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link logout" (click)="logout()">Logout</a>
+                        <li class="nav-item ms-auto">
+                            <button type="button" class="btn btn-danger" (click)="logout()">
+                                <span>Logout</span>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -43,7 +48,7 @@
         </nav>
         
         <router-outlet>
-            <h2>Welcome to the The Tiptop Dashboard !</h2>
+            <!-- <h2>Welcome to the The Tiptop Dashboard !</h2> -->
         </router-outlet>
         
     </div>

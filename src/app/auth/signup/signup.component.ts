@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -19,11 +19,19 @@ export class SignupComponent implements OnInit  {
 
   submissionResult: { success: boolean; message: string } | null = null;
 
+  isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
+
   constructor(private auth: AuthService, private router: Router, private fb: FormBuilder) {
     this.loginForm = this.buildCommonForm();
   }
 
   ngOnInit() {
+    console.log(this.auth.getRoleUser());
+    // Vérification du role pour passer true à la variable "isLoggedAsAdmin"
+    if (this.auth.getRoleUser() === "admin") {
+      console.log("ok");
+      this.isLoggedAsAdmin = true;
+    } else console.log("not admin");
     // this.auth.isLoggedIn().subscribe((loggedIn) => {
     //   this.isLoggedIn = loggedIn; // vérifie l'etat de la connexion (true si connecté)
     //   console.log(loggedIn);
@@ -43,6 +51,7 @@ export class SignupComponent implements OnInit  {
     const passwordsRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Exemple pour un mot de passe fort
     const addressRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9\s,'-]+$/u; // Autorise les chiffres, lettres, carractère unicode, espaces, virgules et tirets
     // const birthDateRegex = /^\d{4}-\d{2}-\d{2}$/; // Format date "yyyy-MM-dd"
+    const rolesRegex = /^(customer|employee)$/;
 
     const authForm = this.fb.group({
       lastname: ['', [Validators.required, Validators.pattern(namesRegex)]],
@@ -52,7 +61,8 @@ export class SignupComponent implements OnInit  {
       password: ['', [Validators.required, Validators.pattern(passwordsRegex)]],
       confirmPassword: ['', [Validators.required, Validators.pattern(passwordsRegex)]],
       address: ['', [Validators.required, Validators.pattern(addressRegex)]],
-      birthDate: ['', [Validators.required]]
+      birthDate: ['', [Validators.required]],
+      role: ['customer', [Validators.required, Validators.pattern(rolesRegex)]]
     }, {
       validator: this.mustMatch('password', 'confirmPassword') // On gère ici la comparaison de pass et confirm password pour qu'ils soient à l'identique
     });
@@ -61,11 +71,12 @@ export class SignupComponent implements OnInit  {
   }
 
   // Méthode pour les champs du formulaire d'inscription s'ils sont invalides
-  isFieldInvalid(form: FormGroup, field: string): boolean {
-    const control = form.get(field);
-    return control!.invalid && (control!.touched || control!.dirty) && control!.value === false;
-  }
+  // isFieldInvalid(form: FormGroup, field: string): boolean {
+  //   const control = form.get(field);
+  //   return control!.invalid && (control!.touched || control!.dirty) && control!.value === false;
+  // }
 
+  // Methode pour afficher  tous les champ requis lors du submis du formulaire pour éviter les oublie
   markFieldsAsTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -85,24 +96,24 @@ export class SignupComponent implements OnInit  {
       console.log("~~~~~~~>", loginData );
       
       // On fait appel à la méthode signup du Service AuthService pour effectuer l'inscription
-      this.auth.signup(loginData).subscribe(
-        (result) => {
-          this.submissionResult = {
-            success: true,
-            message: result.message,
-          };
-          this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-          this.router.navigate(['home']) // Redirige vers la home
-        },
-        (err: Error) => {
-          console.error("==============>>>>>>>>", err);
-          this.submissionResult = {
-            success: false,
-            message:
-              "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
-          };
-        }
-      )
+      // this.auth.signup(loginData).subscribe(
+      //   (result) => {
+      //     this.submissionResult = {
+      //       success: true,
+      //       message: result.message,
+      //     };
+      //     this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
+      //     this.router.navigate(['home']) // Redirige vers la home
+      //   },
+      //   (err: Error) => {
+      //     console.error("==============>>>>>>>>", err);
+      //     this.submissionResult = {
+      //       success: false,
+      //       message:
+      //         "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
+      //     };
+      //   }
+      // )
     }
   }
 
