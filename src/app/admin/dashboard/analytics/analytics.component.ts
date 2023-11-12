@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Chart } from 'chart.js/auto';
@@ -12,6 +12,7 @@ import { AllTickets } from 'src/app/models/ticket.model';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { CurrentDateService } from 'src/app/services/date/current-date.service';
 import { AgeService } from 'src/app/services/ageRanges/age.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-analytics',
@@ -20,17 +21,17 @@ import { AgeService } from 'src/app/services/ageRanges/age.service';
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.scss']
 })
-export class AnalyticsComponent {
+export class AnalyticsComponent implements OnInit {
   page = 1;
-	pageSize = 4;
+  pageSize = 5;
   allUsers: UserAdmin[] = []; // Contient tous les utilisateurs chargés à partir du serveur
-	users: UserAdmin[] = []; // Contient les utilisateurs actuellement affichés après le filtrage et la pagination
+  users: UserAdmin[] = []; // Contient les utilisateurs actuellement affichés après le filtrage et la pagination
   filteredUsers: UserAdmin[] = [];
   totalItems: number = 0;
   collectionSize: number = 0;
   filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
 
-  allTickets: AllTickets[]= []; // Contient tous les tickets chargés à partir du serveur
+  allTickets: AllTickets[] = []; // Contient tous les tickets chargés à partir du serveur
   totalTickets: number = 0; // On stocke en affichant en nombre, tous les tickets reçu
   usedTickets: number = 0;
 
@@ -40,20 +41,32 @@ export class AnalyticsComponent {
   // Déclaration anneeActuelle en number
   anneeActuelle: number;
 
-  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService) {
+  //Chart exemple
+  title = 'ng-chart';
+  chart: any = []; //Type la variable chart en any pour qu'elle accepte n'importe quelles données
+  // Définition d'une propriété pour le chart camembert
+  chartPie: any = [];
+
+  isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
+
+  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService) {
     this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
     this.filteredUsers = [...this.users]; // Initialiser filteredUsers avec une copie de users.
     this.anneeActuelle = this.currentDateService.getAnneeActuelle();
     console.log("-->", this.anneeActuelle);
   }
 
-  //Chart exemple
-  title = 'ng-chart';
-  chart : any = []; //Type la variable chart en any pour qu'elle accepte n'importe quelles données
-  // Définition d'une propriété pour le chart camembert
-  chartPie: any = [];
+
 
   ngOnInit() { // Initialise au chargement du component
+    console.log(this.auth.getRoleUser());
+    // Vérification du role pour passer true à la variable "isLoggedAsAdmin"
+    if (this.auth.getRoleUser() === "admin") {
+      console.log("ok");
+      this.isLoggedAsAdmin = true;
+    } else console.log("not admin");
+
+
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
@@ -88,7 +101,7 @@ export class AnalyticsComponent {
           ],
           borderColor: [ // Couleurs de bordure pour chaque segment
             'rgba(54, 162, 235, 1)',
-            'rgba(255,99,132,1)' 
+            'rgba(255,99,132,1)'
           ],
           borderWidth: 1 // Largeur de la bordure des segments
         }]
@@ -117,10 +130,10 @@ export class AnalyticsComponent {
         console.error('Error loading users:', error);
       }
     );
-    
+
 
     this.adminService.getAllTickets().subscribe(
-      (allTickets : AllTickets[]) => {
+      (allTickets: AllTickets[]) => {
         // Filtre les tickets attribués
         const usedTickets = allTickets.filter(ticket => ticket.gainAttribue === '1.00');
         console.log(allTickets);
@@ -151,12 +164,12 @@ export class AnalyticsComponent {
     console.log('Filter text:', this.filterText); // Vérifier la valeur actuelle du texte de filtrage
     this.filteredUsers = this.filterText
       ? this.allUsers.filter(user =>
-          user.lastname.toLowerCase().includes(this.filterText.toLowerCase()) ||
-          user.firstname.toLowerCase().includes(this.filterText.toLowerCase()) ||
-          user.email.toLowerCase().includes(this.filterText.toLowerCase()) ||
-          (user.birthDate && user.birthDate.toLowerCase().includes(this.filterText.toLowerCase())) || // Vérifies sur user.birthDate est non null ensuite convertit celle-ci en minuscule.
-          (user.address && user.address.toLowerCase().includes(this.filterText.toLowerCase())) 
-        )
+        user.lastname.toLowerCase().includes(this.filterText.toLowerCase()) ||
+        user.firstname.toLowerCase().includes(this.filterText.toLowerCase()) ||
+        user.email.toLowerCase().includes(this.filterText.toLowerCase()) ||
+        (user.birthDate && user.birthDate.toLowerCase().includes(this.filterText.toLowerCase())) || // Vérifies sur user.birthDate est non null ensuite convertit celle-ci en minuscule.
+        (user.address && user.address.toLowerCase().includes(this.filterText.toLowerCase()))
+      )
       : [...this.allUsers]; // Réinitialisez à la copie complète des utilisateurs si le filtre est effacé
     //console.log(this.users)
     this.totalItems = this.filteredUsers.length; // Mettez à jour le nombre total d'éléments pour la pagination
@@ -175,4 +188,39 @@ export class AnalyticsComponent {
     this.page = event.page;
     this.refreshUsersFilters();
   }
+
+  visiblePages(): number[] {
+    const visiblePageCount = 5; // Changer cela selon vos besoins
+    const totalPages = Math.ceil(this.totalItems / this.pageSize);
+    const startPage = Math.max(1, this.page - Math.floor(visiblePageCount / 2));
+    const endPage = Math.min(totalPages, startPage + visiblePageCount - 1);
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  }
+
+  goToPage(pageNumber: number): void {
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalItems / this.pageSize)) {
+      this.page = pageNumber;
+      this.refreshUsersFilters();
+    }
+  }
+
+  // Nouvelle méthode pour effectuer le calcul avec Math.ceil
+  calculatePageCount(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
+  }
+
+  deleteUser(userId: number) {
+    this.adminService.deleteUserById(userId).subscribe(
+      () => {
+        console.log(`User with ID ${userId} deleted successfully.`);
+        // Ajoutez ici une logique supplémentaire si nécessaire, par exemple, mettre à jour la liste des utilisateurs
+      },
+      (error) => {
+        console.error('Error deleting user:', error);
+        // Ajoutez ici une logique supplémentaire si nécessaire, par exemple, afficher un message d'erreur à l'utilisateur
+      }
+    );
+  }
+
 }

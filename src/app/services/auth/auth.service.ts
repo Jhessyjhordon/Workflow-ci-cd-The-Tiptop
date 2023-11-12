@@ -104,12 +104,12 @@ export class AuthService {
   }
 
   //Methode pour l'inscription
-  signup({ firstname, lastname, phone, email, password, address, birthDate }: any): Observable<any> {
+  signup({ firstname, lastname, phone, email, password, address, birthDate, role }: any): Observable<any> {
     // Valeurs en dur pour birthDate, address et role
     // const birthDate = '01/01/2002';
     // const address = '2 Allée Lorentz Champs-sur-Marne';
-    const role ='customer';
-    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " password : ", password, " address : ", address, " and birthDate : ", birthDate);
+    // const role ='customer';
+    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " password : ", password, " address : ", address, " birthDate : ", birthDate, " and role : ", role);
     return this.http.post(this.apiUrl + '/user', {
       firstname,
       lastname,

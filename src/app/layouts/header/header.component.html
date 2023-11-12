@@ -50,6 +50,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
+            <li *ngIf="isLoggedAsAdmin"><a class="dropdown-item" [routerLink]="'/admin/dashboard'">Dashboard admin</a></li>
             <li><a class="dropdown-item" [routerLink]="'/user/profile-detail'">profile-detail</a></li>
             <li><a class="dropdown-item" [routerLink]="'/user/profile'">Profile</a></li>
             <li>
