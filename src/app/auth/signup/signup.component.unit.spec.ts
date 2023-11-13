@@ -31,7 +31,7 @@ describe('SignupComponent', () => {
       fixture = TestBed.createComponent(SignupComponent);
       component = fixture.componentInstance;
       authService = TestBed.inject(AuthService);
-      spyOn(component, 'isFieldInvalid').and.callFake(() => false);  // Toujours retourner false
+      // spyOn(component, 'isFieldInvalid').and.callFake(() => false);  // Toujours retourner false
       fixture.detectChanges();
       
   });
