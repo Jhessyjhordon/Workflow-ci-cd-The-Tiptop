@@ -16,6 +16,7 @@ import { UserCustomer } from 'src/app/models/user-custumer.model';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
   isLoggedAsAdmin: boolean = false;
+  isLoggedAsEmploye: boolean = false;
   userData!: UserCustomer | null;
 
   constructor(private auth: AuthService, private userService: UserService) { }
@@ -26,9 +27,10 @@ export class HeaderComponent implements OnInit {
     });
     // console.log(this.auth.getRoleUser());
     if (this.auth.getRoleUser() === "admin") {
-      console.log("ok");
       this.isLoggedAsAdmin = true;
-    } 
+    } else if (this.auth.getRoleUser() === "employee") {
+      this.isLoggedAsEmploye = true;
+    }
     
     // this.getUserData();
 

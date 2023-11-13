@@ -1,5 +1,5 @@
 <div class="empty"></div>
-<div class="charts row mx-auto">
+<div class="charts row mx-auto" *ngIf="isLoggedAsAdmin">
     <div class="canvas col-md-5 border border-primary shadow-lg p-4 mx-auto bg-body rounded">
         <canvas id="canvas">{{chart}}</canvas>
     </div>
