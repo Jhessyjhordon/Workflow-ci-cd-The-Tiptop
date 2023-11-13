@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit  {
   }
 
   ngOnInit() {
-    console.log(this.auth.getRoleUser());
+    // console.log(this.auth.getRoleUser());
     // Vérification du role pour passer true à la variable "isLoggedAsAdmin"
     if (this.auth.getRoleUser() === "admin") {
       console.log("ok");
@@ -96,24 +96,24 @@ export class SignupComponent implements OnInit  {
       console.log("~~~~~~~>", loginData );
       
       // On fait appel à la méthode signup du Service AuthService pour effectuer l'inscription
-      // this.auth.signup(loginData).subscribe(
-      //   (result) => {
-      //     this.submissionResult = {
-      //       success: true,
-      //       message: result.message,
-      //     };
-      //     this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-      //     this.router.navigate(['home']) // Redirige vers la home
-      //   },
-      //   (err: Error) => {
-      //     console.error("==============>>>>>>>>", err);
-      //     this.submissionResult = {
-      //       success: false,
-      //       message:
-      //         "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
-      //     };
-      //   }
-      // )
+      this.auth.signup(loginData).subscribe(
+        (result) => {
+          this.submissionResult = {
+            success: true,
+            message: result.message,
+          };
+          this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
+          this.router.navigate(['home']) // Redirige vers la home
+        },
+        (err: Error) => {
+          console.error("==============>>>>>>>>", err);
+          this.submissionResult = {
+            success: false,
+            message:
+              "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
+          };
+        }
+      )
     }
   }
 

@@ -13,6 +13,10 @@ class MockAuthService {
   signup(user: any) {
     return of(true);
   }
+
+  getRoleUser(){
+    return 'mocked-role';
+  }
 }
 
 describe('SignupComponent', () => {
@@ -43,11 +47,11 @@ describe('SignupComponent', () => {
       firstname: 'John',
       phone: '1234567890',
       email: 'john.doe@example.com',
-      password: 'password123',
-      confirmPassword: 'password123',
-      //birthDate: '01/01/2002',
-      //address: '2 Allée Lorentz Champs-sur-Marne',
-      //role: 'customer'
+      password: 'Password-123',
+      confirmPassword: 'Password-123',
+      address: '2 Allée Lorentz Champs-sur-Marne',
+      birthDate: '2002-01-01',
+      role: 'customer'
     });
     // Espionner la méthode 'signup' du service d'authentification
     spyOn(authService, 'signup').and.callThrough();
@@ -60,11 +64,11 @@ describe('SignupComponent', () => {
       lastname: 'Doe',
       phone: '1234567890',
       email: 'john.doe@example.com',
-      password: 'password123',
-      confirmPassword: 'password123',
-      //birthDate: '01/01/2002',
-      //address: '2 Allée Lorentz Champs-sur-Marne',
-      //role: 'customer'
+      password: 'Password-123',
+      confirmPassword: 'Password-123',
+      birthDate:  '2002-01-01',
+      address: '2 Allée Lorentz Champs-sur-Marne',
+      role: 'customer'
     });
   });
 });
