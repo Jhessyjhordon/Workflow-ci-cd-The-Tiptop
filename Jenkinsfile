@@ -243,7 +243,7 @@ pipeline {
                 script {
                     def buildNumber = env.BUILD_NUMBER
                     // Créer une image Docker pour l'application Angular
-                    def angularImageName = "angular:${buildNumber}"
+                    def angularImageName = "${env.folderName}:${buildNumber}"
                     dir("${WORKSPACE}/${env.folderName}") {
                         sh "docker build -t ${angularImageName} ."
                     }
