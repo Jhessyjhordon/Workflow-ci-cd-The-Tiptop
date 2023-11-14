@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<testsuite name="Chrome Headless 118.0.0.0 (Windows 10)" package="" timestamp="2023-11-06T21:13:00" id="0" hostname="Aru-Desktop" tests="3" errors="0" failures="0" time="0.07">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.0.0 Safari/537.36"/>
+  </properties>
+  <testcase name="SignupComponent should register with valid form data" time="0.058" classname="Chrome_Headless_118_0_0_0_(Windows_10).SignupComponent"/>
+  <testcase name="LoginComponent should login with correct credentials" time="0.009" classname="Chrome_Headless_118_0_0_0_(Windows_10).LoginComponent"/>
+  <testcase name="LoginComponent should create" time="0.003" classname="Chrome_Headless_118_0_0_0_(Windows_10).LoginComponent"/>
+  <system-out>
+    <![CDATA[Chrome Headless 118.0.0.0 (Windows 10) LOG: '~~~~~~~>', Object{lastname: 'Doe', firstname: 'John', phone: '1234567890', email: 'john.doe@example.com', password: 'password123', confirmPassword: 'password123'}
+,Chrome Headless 118.0.0.0 (Windows 10) WARN: 'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'
+,Chrome Headless 118.0.0.0 (Windows 10) LOG: true
+,Chrome Headless 118.0.0.0 (Windows 10) LOG: true
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

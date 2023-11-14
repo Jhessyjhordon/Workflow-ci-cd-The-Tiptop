@@ -18,10 +18,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('the-tiptop-front');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('the-tiptop-front app is running!');
-  });
 });

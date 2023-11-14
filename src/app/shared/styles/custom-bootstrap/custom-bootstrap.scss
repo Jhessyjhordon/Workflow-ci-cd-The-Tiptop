@@ -1,0 +1,10 @@
+$white: #ffffff;
+$bg-green: #3E5140; 
+$carousel-control-prev-icon-bg: url('data:image/svg+xml, <svg width="84" height="80" viewBox="0 0 84 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.57825 37.4127L53.1047 63.4905C55.1087 64.5679 57.5358 63.1096 57.5252 60.8343L57.7511 4.86231C57.7404 2.53578 55.2003 1.10639 53.2061 2.30465L3.45376 32.1989C1.45952 33.3971 1.52909 36.3109 3.57825 37.4127Z" fill="white" /></svg>');
+$carousel-control-next-icon-bg: url('data:image/svg+xml, <svg width="54" height="65" viewBox="0 0 54 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.53323 63.6253L52.3943 34.6039C54.35 33.4411 54.35 30.6095 52.3943 29.4467L4.53322 0.425346C2.53347 -0.763695 -2.77014e-06 0.677406 -2.66844e-06 3.00395L-1.31315e-07 61.0467C-2.9618e-08 63.3732 2.53347 64.8143 4.53323 63.6253Z" fill="white" /></svg>');
+
+
+// $orange:                     #FFC451;
+// $btn-close-bg:               url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$orange}'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/></svg>");
+
+@import "/node_modules/bootstrap/scss/bootstrap.scss";
