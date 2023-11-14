@@ -244,16 +244,7 @@ pipeline {
                         sh "docker stop ${angularContainerName}"
                         sh "docker rm ${angularContainerName}"
                     }
-        
-                    // Supprimer l'ancienne image Docker
-                    //def previousBuildNumber = Integer.parseInt(buildNumber) - 1
-                    //def previousAngularImageId = sh(script: "docker images --filter 'reference=angular:${previousBuildNumber}' --format '{{.ID}}'", returnStdout: true).trim()
-                    //def previousAngularImageId = sh(script: "docker images --filter 'reference=angular' --format '{{.ID}}'", returnStdout: true).trim()
-                    //if (previousAngularImageId) {
-                    //    sh "docker rmi ${previousAngularImageId}"
-                    //}
 
-                    
                     // Récupérer l'ID de l'image actuellement utilisée par le conteneur
                     echo "----==>>> Récupérer l'ID de l'image actuellement utilisée par le conteneur"
                     def currentImageId = sh(script: "docker ps -a --filter 'name=dev-angular' --format '{{.Image}}'", returnStdout: true).trim()
@@ -268,6 +259,36 @@ pipeline {
                     //def angularImageName = "angular:${buildNumber}"
                     //sh "docker run -d -p 82:4200 --name ${angularContainerName} ${angularImageName}"
                     sh "WORKSPACE_PATH=${WORKSPACE} /usr/local/bin/docker-compose -f /home/debian/docker-compose.yml up -d angular-dev --build"
+                }
+            }
+        }
+
+        stage('Backup Docker Image to Docker Hub') {
+            steps {
+                script {
+                    // Récupère la date et l'heure
+                    def currentDate = sh(script: "date '+%d-%m-%Y-%Hh%M'", returnStdout: true).trim()
+
+                    // Authentification à Docker Hub
+                    def dockerHubCredentialsId = 'fducks196' 
+                    withDockerRegistry([credentialsId: dockerHubCredentialsId, url: 'https://index.docker.io/v1/']) {
+
+                        // Nom d'utilisateur Docker Hub et nom du repo
+                        def dockerHubUsername = 'fducks196'
+                        def dockerRepoName = 'backup'
+
+                        // Nom de l'image originale basée sur le numéro de build
+                        def angularImageName = "angular-dev:${env.BUILD_NUMBER}"
+                        
+                        // Nom de l'image pour Docker Hub basé sur la date
+                        def dockerHubImageName = "${dockerHubUsername}/${dockerRepoName}:${currentDate}"
+                        
+                        // Tagger l'image originale avec le nom destiné à Docker Hub
+                        sh "docker tag ${angularImageName} ${dockerHubImageName}"
+
+                        // Pousser (push) l'image vers Docker Hub avec le tag basé sur la date
+                        sh "docker push ${dockerHubImageName}"
+                    }
                 }
             }
         }
