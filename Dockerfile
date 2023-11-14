@@ -12,7 +12,7 @@ RUN ./node_modules/.bin/ng build --configuration development
 FROM nginx:alpine
 
 # Copier le build Angular à partir de l'étape de builder
-COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/the-tiptop-front /usr/share/nginx/html
+COPY --from=builder /var/jenkins_home/workspace/t-multibranches-pipeline_preprod/preprod-angular/dist/the-tiptop-front /usr/share/nginx/html
 
 # Utiliser votre configuration nginx personnalisée
 COPY nginx.conf /etc/nginx/conf.d/default.conf
