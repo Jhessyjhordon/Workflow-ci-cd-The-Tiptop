@@ -1,7 +1,7 @@
 # Utiliser une image de base Node.js
 FROM node:latest AS builder
 
-WORKDIR /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular
+WORKDIR /var/jenkins_home/workspace/t-multibranches-pipeline_preprod/preprod-angular
 
 COPY package*.json ./
 RUN npm install
