@@ -23,7 +23,7 @@ export class authGuard implements CanActivate {
 
         if (userRole === 'admin' || userRole === 'employee') {
           // Pas besoin de rediriger ici car si le garde passe, la navigation vers le DashboardComponent se produira automatiquement
-          this.router.navigate(['admin/dashboard']);
+          //this.router.navigate(['admin/dashboard']);
           console.log('Je suis dedans')
           return true;
         }
