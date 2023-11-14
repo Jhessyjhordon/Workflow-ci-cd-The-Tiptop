@@ -278,7 +278,7 @@ pipeline {
                         def dockerRepoName = 'backup'
 
                         // Nom de l'image originale basée sur le numéro de build
-                        def angularImageName = "dev-angular:${env.BUILD_NUMBER}"
+                        def angularImageName = "angular:${env.BUILD_NUMBER}"
                         
                         // Nom de l'image pour Docker Hub basé sur la date
                         def dockerHubImageName = "${dockerHubUsername}/${dockerRepoName}:${currentDate}"
