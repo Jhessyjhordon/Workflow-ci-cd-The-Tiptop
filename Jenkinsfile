@@ -13,13 +13,13 @@ pipeline {
 
     def folderName // Iniatialisation variable pour folderName
     def currentBranch // Iniatialisation variable pour currentBranch
-    
+
     stages {
         stage('Initialize'){
             steps{
                 script{
                     // Obtenez la branche actuelle et ajustez le nom du dossier
-                    def currentBranch = env.BRANCH_NAME ?: 'dev' // Par défaut, utilisez 'dev' si BRANCH_NAME n'est pas défini
+                    currentBranch = env.BRANCH_NAME ?: 'dev' // Par défaut, utilisez 'dev' si BRANCH_NAME n'est pas défini
 
                     // Ajustez le nom du dossier en fonction de la branche
                     folderName = (currentBranch == 'main') ? 'prod-angular' :
