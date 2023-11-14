@@ -271,15 +271,15 @@ pipeline {
         
                     // Supprimer l'ancien conteneur, s'il existe
                     // def angularContainerExists = sh(script: "docker ps -a --filter 'name=${angularContainerName}' --format '{{.Names}}'", returnStatus: true) == 0
-                    def angularContainerExists = sh(script: "docker ps -a | grep -w ${containerName}", returnStatus: true) == 0
-                    if (angularContainerExists) {
+                    def containerExists = sh(script: "docker ps -a | grep -w ${containerName}", returnStatus: true) == 0
+                    if (containerExists) {
                         sh "docker stop ${containerName}"
                         sh "docker rm ${containerName}"
                     }
 
                     // Récupérer l'ID de l'image actuellement utilisée par le conteneur
                     echo "----==>>> Récupérer l'ID de l'image actuellement utilisée par le conteneur"
-                    def currentImageId = sh(script: "docker ps -a --filter 'name=dev-angular' --format '{{.Image}}'", returnStdout: true).trim()
+                    def currentImageId = sh(script: "docker ps -a --filter 'name=${containerName}' --format '{{.Image}}'", returnStdout: true).trim()
                     if (currentImageId) {
                         // Supprimer l'image
                         echo "----==>>> Suppréssion de l'image"
@@ -290,7 +290,7 @@ pipeline {
                     // Créer et déployer la nouvelle image Docker pour l'application Angular
                     //def angularImageName = "angular:${buildNumber}"
                     //sh "docker run -d -p 82:4200 --name ${angularContainerName} ${angularImageName}"
-                    sh "WORKSPACE_PATH=${WORKSPACE} /usr/local/bin/docker-compose -f /home/debian/docker-compose.yml up -d angular-dev --build"
+                    sh "WORKSPACE_PATH=${WORKSPACE} /usr/local/bin/docker-compose -f /home/debian/docker-compose.yml up -d ${containerName} --build"
                 }
             }
         }
@@ -299,7 +299,7 @@ pipeline {
             steps {
                 script {
                     // Récupère la date et l'heure
-                    def currentDate = sh(script: "${env.containerName} date '+%d-%m-%Y-%Hh%M'", returnStdout: true).trim()
+                    def currentDate = sh(script: "date '+%d-%m-%Y-%Hh%M'", returnStdout: true).trim()
 
                     // Authentification à Docker Hub
                     def dockerHubCredentialsId = 'fducks196' 
@@ -313,7 +313,7 @@ pipeline {
                         def imageName = "${env.folderName}:${env.BUILD_NUMBER}"
                         
                         // Nom de l'image pour Docker Hub basé sur la date
-                        def dockerHubImageName = "${dockerHubUsername}/${dockerRepoName}:${currentDate}"
+                        def dockerHubImageName = "${dockerHubUsername}/${dockerRepoName}:${env.containerName}-${currentDate}"
                         
                         // Tagger l'image originale avec le nom destiné à Docker Hub
                         sh "docker tag ${imageName} ${dockerHubImageName}"
