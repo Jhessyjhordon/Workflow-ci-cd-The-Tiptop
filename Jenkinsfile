@@ -258,14 +258,23 @@ pipeline {
                     def buildNumber = env.BUILD_NUMBER
         
                     // Nom du conteneur pour l'application Angular
-                    def angularContainerName = "angular-dev"
+                    // Définir le nom du conteneur en fonction de la branche actuelle
+                    def containerName = (env.currentBranch == 'dev') ? "angular-dev" :
+                                       (env.currentBranch == 'preprod') ? "angular-preprod" :
+                                       (env.currentBranch == 'main') ? "prod-angular" :
+                                       "angular-unknown" // Valeur par défaut ou pour les branches non spécifiées
+
+                    echo "Container Name: ${containerName}"
+
+                    // Enregistrer les variables pour utilisation dans les stages suivants
+                    env.containerName = containerName
         
                     // Supprimer l'ancien conteneur, s'il existe
                     // def angularContainerExists = sh(script: "docker ps -a --filter 'name=${angularContainerName}' --format '{{.Names}}'", returnStatus: true) == 0
-                    def angularContainerExists = sh(script: "docker ps -a | grep -w ${angularContainerName}", returnStatus: true) == 0
+                    def angularContainerExists = sh(script: "docker ps -a | grep -w ${containerName}", returnStatus: true) == 0
                     if (angularContainerExists) {
-                        sh "docker stop ${angularContainerName}"
-                        sh "docker rm ${angularContainerName}"
+                        sh "docker stop ${containerName}"
+                        sh "docker rm ${containerName}"
                     }
 
                     // Récupérer l'ID de l'image actuellement utilisée par le conteneur
@@ -290,7 +299,7 @@ pipeline {
             steps {
                 script {
                     // Récupère la date et l'heure
-                    def currentDate = sh(script: "date '+%d-%m-%Y-%Hh%M'", returnStdout: true).trim()
+                    def currentDate = sh(script: "${env.containerName} date '+%d-%m-%Y-%Hh%M'", returnStdout: true).trim()
 
                     // Authentification à Docker Hub
                     def dockerHubCredentialsId = 'fducks196' 
@@ -301,13 +310,13 @@ pipeline {
                         def dockerRepoName = 'backup'
 
                         // Nom de l'image originale basée sur le numéro de build
-                        def angularImageName = "angular:${env.BUILD_NUMBER}"
+                        def imageName = "${env.folderName}:${env.BUILD_NUMBER}"
                         
                         // Nom de l'image pour Docker Hub basé sur la date
                         def dockerHubImageName = "${dockerHubUsername}/${dockerRepoName}:${currentDate}"
                         
                         // Tagger l'image originale avec le nom destiné à Docker Hub
-                        sh "docker tag ${angularImageName} ${dockerHubImageName}"
+                        sh "docker tag ${imageName} ${dockerHubImageName}"
 
                         // Pousser (push) l'image vers Docker Hub avec le tag basé sur la date
                         sh "docker push ${dockerHubImageName}"
