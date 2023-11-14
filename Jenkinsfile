@@ -11,23 +11,33 @@ pipeline {
         nodejs 'nodejs'
     }
 
+    def folderName // Iniatialisation variable pour folderName
+    def currentBranch // Iniatialisation variable pour currentBranch
+    
     stages {
+        stage('Initialize'){
+            steps{
+                script{
+                    // Obtenez la branche actuelle et ajustez le nom du dossier
+                    def currentBranch = env.BRANCH_NAME ?: 'dev' // Par défaut, utilisez 'dev' si BRANCH_NAME n'est pas défini
+
+                    // Ajustez le nom du dossier en fonction de la branche
+                    folderName = (currentBranch == 'main') ? 'prod-angular' :
+                                 (currentBranch == 'preprod') ? 'preprod-angular' :
+                                 'angular' // 'DEV' utilisera le nom 'angular' par défaut
+
+                    echo "Current branch: ${currentBranch}"
+                    echo "Folder name set to: ${folderName}"
+                }
+            }
+        }
+
         stage('Clone Repository') {
             steps {
                     
                 // Cloner le référentiel GitLab pour l'application Angular dans le sous-dossier 'angular'
                 dir("${WORKSPACE}/") {
                     script {
-                        // Obtenez la branche actuelle
-                        def currentBranch = env.BRANCH_NAME ?: 'dev' // Par défaut, utilisez 'dev' si BRANCH_NAME n'est pas défini
-                        def folderName = 'angular' // Nom par défaut
-
-                        // Ajustez le nom du dossier en fonction de la branche
-                        if (currentBranch == 'main') {
-                            folderName = 'prod-angular'
-                        } else if (currentBranch == 'preprod') {
-                            folderName = 'preprod-angular'
-                        } // 'DEV' utilisera le nom 'angular' par défaut
 
                         // Afficher la branche qui sera clonée
                         echo "Cloning branch: ${currentBranch}"
