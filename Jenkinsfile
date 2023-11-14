@@ -11,23 +11,22 @@ pipeline {
         nodejs 'nodejs'
     }
 
-    def folderName // Iniatialisation variable pour folderName
-    def currentBranch // Iniatialisation variable pour currentBranch
-
     stages {
         stage('Initialize'){
             steps{
                 script{
-                    // Obtenez la branche actuelle et ajustez le nom du dossier
-                    currentBranch = env.BRANCH_NAME ?: 'dev' // Par défaut, utilisez 'dev' si BRANCH_NAME n'est pas défini
-
-                    // Ajustez le nom du dossier en fonction de la branche
-                    folderName = (currentBranch == 'main') ? 'prod-angular' :
-                                 (currentBranch == 'preprod') ? 'preprod-angular' :
-                                 'angular' // 'DEV' utilisera le nom 'angular' par défaut
+                    // Déclaration et initialisation des variables ici
+                    def currentBranch = env.BRANCH_NAME ?: 'dev' 
+                    def folderName = (currentBranch == 'main') ? 'prod-angular' :
+                                     (currentBranch == 'preprod') ? 'preprod-angular' :
+                                     'angular' 
 
                     echo "Current branch: ${currentBranch}"
                     echo "Folder name set to: ${folderName}"
+
+                    // Enregistrer les variables pour utilisation dans les stages suivants
+                    env.folderName = folderName
+                    env.currentBranch = currentBranch
                 }
             }
         }
@@ -40,24 +39,24 @@ pipeline {
                     script {
 
                         // Afficher la branche qui sera clonée
-                        echo "Cloning branch: ${currentBranch}"
+                        echo "Cloning branch: ${env.currentBranch}"
 
-                        if (!fileExists(folderName)) {
-                            sh "mkdir ${folderName}"
-                            echo "Workspace : ${WORKSPACE}/${folderName}"
-                            dir("${WORKSPACE}/${folderName}") {
+                        if (!fileExists(env.folderName)) {
+                            sh "mkdir ${env.folderName}"
+                            echo "Workspace : ${WORKSPACE}/${env.folderName}"
+                            dir("${WORKSPACE}/${env.folderName}") {
                                 checkout([$class: 'GitSCM',
-                                    branches: [[name: "*/${currentBranch}"]],
+                                    branches: [[name: "*/${env.currentBranch}"]],
                                     doGenerateSubmoduleConfigurations: false,
                                     extensions: [[$class: 'CleanCheckout']],
                                     submoduleCfg: [],
                                     userRemoteConfigs: [[credentialsId: 'the-tiptop-front-repo-token', url: 'https://gitlab.dsp-archiwebo22b-ji-rw-ah.fr/dev/the-tiptop-front/']]])
                             }
                         } else {
-                            echo "Le dossier '${folderName}' existe déjà."
-                            dir("${WORKSPACE}/${folderName}") {
+                            echo "Le dossier '${env.folderName}' existe déjà."
+                            dir("${WORKSPACE}/${env.folderName}") {
                                 checkout([$class: 'GitSCM',
-                                    branches: [[name: "*/${currentBranch}"]],
+                                    branches: [[name: "*/${env.currentBranch}"]],
                                     doGenerateSubmoduleConfigurations: false,
                                     extensions: [[$class: 'CleanCheckout']],
                                     submoduleCfg: [],
