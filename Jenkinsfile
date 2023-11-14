@@ -18,22 +18,36 @@ pipeline {
                 // Cloner le référentiel GitLab pour l'application Angular dans le sous-dossier 'angular'
                 dir("${WORKSPACE}/") {
                     script {
-                        if (!fileExists('angular')) {
-                            sh "mkdir angular"
-                            echo "Workspace : ${WORKSPACE}/angular"
-                            dir("${WORKSPACE}/angular") {
+                        // Obtenez la branche actuelle
+                        def currentBranch = env.BRANCH_NAME ?: 'dev' // Par défaut, utilisez 'dev' si BRANCH_NAME n'est pas défini
+                        def folderName = 'angular' // Nom par défaut
+
+                        // Ajustez le nom du dossier en fonction de la branche
+                        if (currentBranch == 'main') {
+                            folderName = 'prod-angular'
+                        } else if (currentBranch == 'preprod') {
+                            folderName = 'preprod-angular'
+                        } // 'DEV' utilisera le nom 'angular' par défaut
+
+                        // Afficher la branche qui sera clonée
+                        echo "Cloning branch: ${currentBranch}"
+
+                        if (!fileExists(folderName)) {
+                            sh "mkdir ${folderName}"
+                            echo "Workspace : ${WORKSPACE}/${folderName}"
+                            dir("${WORKSPACE}/${folderName}") {
                                 checkout([$class: 'GitSCM',
-                                    branches: [[name: '*/dev']],
+                                    branches: [[name: "*/${currentBranch}"]],
                                     doGenerateSubmoduleConfigurations: false,
                                     extensions: [[$class: 'CleanCheckout']],
                                     submoduleCfg: [],
                                     userRemoteConfigs: [[credentialsId: 'the-tiptop-front-repo-token', url: 'https://gitlab.dsp-archiwebo22b-ji-rw-ah.fr/dev/the-tiptop-front/']]])
                             }
                         } else {
-                            echo "Le dossier 'angular' existe déjà."
-                            dir("${WORKSPACE}/angular") {
+                            echo "Le dossier '${folderName}' existe déjà."
+                            dir("${WORKSPACE}/${folderName}") {
                                 checkout([$class: 'GitSCM',
-                                    branches: [[name: '*/dev']],
+                                    branches: [[name: "*/${currentBranch}"]],
                                     doGenerateSubmoduleConfigurations: false,
                                     extensions: [[$class: 'CleanCheckout']],
                                     submoduleCfg: [],
