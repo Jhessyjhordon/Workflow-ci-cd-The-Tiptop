@@ -73,7 +73,7 @@ pipeline {
             steps {
                 script {
                     // Lisez les métadonnées une fois au début
-                    metadata = readYaml(file: '${env.folderName}/project-metadata.yaml')
+                    metadata = readYaml(file: "${env.folderName}/project-metadata.yaml")
                 }
             }
         }
