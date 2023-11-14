@@ -73,7 +73,7 @@ pipeline {
             steps {
                 script {
                     // Lisez les métadonnées une fois au début
-                    metadata = readYaml(file: 'angular/project-metadata.yaml')
+                    metadata = readYaml(file: '${env.folderName}/project-metadata.yaml')
                 }
             }
         }
@@ -88,7 +88,7 @@ pipeline {
                             break
                         case 'NodeJS':                            
                             echo "Install Angular"
-                            dir("${WORKSPACE}/angular") {
+                            dir("${WORKSPACE}/${env.folderName}") {
                                 sh 'npm install'
                             }
                             break
@@ -116,7 +116,7 @@ pipeline {
                             break
                         case 'NodeJS':                            
                             echo "Build Angular"
-                            dir("${WORKSPACE}/angular") {
+                            dir("${WORKSPACE}/${env.folderName}") {
                                 sh 'npm run build'
                             }
                             break
@@ -134,10 +134,10 @@ pipeline {
             }
         }
 
-        stage('Determine Chrome Path') {
+        stage('Determine Chrome Path - For Kama tests') {
             steps {
                 script {
-                    dir("${WORKSPACE}/angular") {
+                    dir("${WORKSPACE}/${env.folderName}") {
                         CHROME_BIN = sh(script: 'node getChromePath.js', returnStdout: true).trim()
                         echo "Detected Chrome path: ${CHROME_BIN}"
                     }
@@ -151,7 +151,7 @@ pipeline {
                     switch (metadata.language) {
                         case 'NodeJS':
                             echo "Run Angular Unit Tests"
-                            dir("${WORKSPACE}/angular") {
+                            dir("${WORKSPACE}/${env.folderName}") {
                                 withEnv(["CHROME_BIN=${CHROME_BIN}"]) {
                                     // Imprimer le répertoire actuel
                                     sh 'pwd'
@@ -181,7 +181,7 @@ pipeline {
                     switch (metadata.language) {
                         case 'NodeJS':
                             echo "Run Angular Integration Tests"
-                            dir("${WORKSPACE}/angular") {
+                            dir("${WORKSPACE}/${env.folderName}") {
                                 withEnv(["CHROME_BIN=${CHROME_BIN}"]) {
                                     sh 'npm run test:integration' // Pour lancer les tests d'intégrations
                                 }
@@ -207,7 +207,7 @@ pipeline {
                     switch (metadata.language) {
                         case 'NodeJS':                            
                             echo "Analyse SonarQube pour Angular TEST"
-                            dir("${WORKSPACE}/angular") {
+                            dir("${WORKSPACE}/${env.folderName}") {
                                 withCredentials([string(credentialsId: 'angular-sonar', variable: 'SONAR_TOKEN')]) {
                                     // Afficher la valeur de WORKSPACE
                                     echo "WORKSPACE est : ${WORKSPACE}"
@@ -244,7 +244,7 @@ pipeline {
                     def buildNumber = env.BUILD_NUMBER
                     // Créer une image Docker pour l'application Angular
                     def angularImageName = "angular:${buildNumber}"
-                    dir("${WORKSPACE}/angular") {
+                    dir("${WORKSPACE}/${env.folderName}") {
                         sh "docker build -t ${angularImageName} ."
                     }
                 }
