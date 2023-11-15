@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
 import { AuthResponse } from 'src/app/models/auth-response';
 import { jwtDecode } from "jwt-decode";
+import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
   email? : string;
@@ -19,18 +20,20 @@ export class AuthService {
   private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private apiUrl = 'http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr';
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
     // Vérifiez si un token est déjà présent lors de l'initialisation du service
     this.isAuthenticated.next(this.getToken() !== null);
   }
 
   setToken(token: string) {
-    localStorage.setItem('token', token); // enregistrez le jeton dans localStorage
+    //localStorage.setItem('token', token); // enregistrez le jeton dans localStorage
+    this.cookieService.set('token', token); // enregistrez le jeton dans localStorage
     this.isAuthenticated.next(true); // Émet un signal que l'utilisateur est maintenant authentifié
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    // return localStorage.getItem('token');
+    return this.cookieService.get('token');
   }
 
   isLoggedIn() {
@@ -39,17 +42,21 @@ export class AuthService {
 
   // Appelé lors de la connexion pour stocker le rôle
   setRoleUser(userRole: string) {
-    localStorage.setItem('userRole', userRole); // Stocke le rôle dans le localStorage
+    //localStorage.setItem('userRole', userRole); // Stocke le rôle dans le localStorage
+    this.cookieService.set('userRole', userRole); // Stocke le rôle dans le localStorage
   }
 
   // Méthode pour récupérer le rôle de l'utilisateur
   getRoleUser(): string | null {
-    return localStorage.getItem('userRole'); // Récupère le rôle depuis le localStorage
+    //return localStorage.getItem('userRole'); // Récupère le rôle depuis le localStorage
+    return this.cookieService.get('userRole'); // Récupère le rôle depuis le localStorage
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userRole');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('userRole');
+    this.cookieService.delete('token');
+    this.cookieService.delete('userRole');
     this.isAuthenticated.next(false); // Émet un signal que l'utilisateur n'est plus authentifié
     this.router.navigate(['home']);
   }
