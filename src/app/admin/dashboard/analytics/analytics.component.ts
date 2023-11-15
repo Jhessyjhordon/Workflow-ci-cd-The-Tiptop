@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Chart } from 'chart.js/auto';
@@ -35,9 +35,6 @@ export class AnalyticsComponent implements OnInit {
   totalTickets: number = 0; // On stocke en affichant en nombre, tous les tickets reçu
   usedTickets: number = 0;
 
-  // Affichage pour le nombre total de tickets
-  ticketUsed: number = 243;
-
   // Déclaration anneeActuelle en number
   anneeActuelle: number;
 
@@ -48,6 +45,10 @@ export class AnalyticsComponent implements OnInit {
   chartPie: any = [];
 
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
+
+  // Ici, #canvasElement et #canvasPieElement sont des références locales qui peuvent être utilisées dans le fichier TypeScript pour accéder aux éléments du DOM.
+  @ViewChild('canvasElement') canvas: ElementRef | null = null;
+  @ViewChild('canvasPieElement') canvasPie: ElementRef | null = null;
 
   constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService) {
     this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
@@ -65,54 +66,59 @@ export class AnalyticsComponent implements OnInit {
       console.log("ok");
       this.isLoggedAsAdmin = true;
     } else console.log("not admin");
+    this.loadInitialData();
+  }
 
-
-    this.chart = new Chart('canvas', {
-      type: 'bar',
-      data: {
-        labels: ['10 - 20', '21 - 30', '31 - 40', '41 - 50', '51 - 60', '61 - 70', '71 - 80'],
-        datasets: [
-          {
-            label: '# of person age',
-            data: [], //Initialisation du tableau avec des données vides
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
+  ngAfterViewInit() {
+    // Vérifiez que les éléments canvas et canvasPie sont présents
+    if (this.canvas && this.canvas.nativeElement && this.canvasPie && this.canvasPie.nativeElement) {
+      // Initialisation des graphiques ici
+      this.chart = new Chart('canvas', {
+        type: 'bar',
+        data: {
+          labels: ['10 - 20', '21 - 30', '31 - 40', '41 - 50', '51 - 60', '61 - 70', '71 - 80'],
+          datasets: [
+            {
+              label: '# of person age',
+              data: [], //Initialisation du tableau avec des données vides
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
           },
         },
-      },
-    });
-
-    this.chartPie = new Chart('canvasPie', {
-      type: 'pie', // Type de graphique en camembert
-      data: {
-        labels: ['Tickets attribués', 'Tickets restants'], // Labels pour le camembert
-        datasets: [{
-          label: 'Ticket Distribution', // Étiquette pour le jeu de données
-          data: [0, 0], // Données pour le camembert
-          backgroundColor: [ // Couleurs de fond pour chaque segment
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 99, 132, 0.2)'
-          ],
-          borderColor: [ // Couleurs de bordure pour chaque segment
-            'rgba(54, 162, 235, 1)',
-            'rgba(255,99,132,1)'
-          ],
-          borderWidth: 1 // Largeur de la bordure des segments
-        }]
-      },
-      options: {
-        responsive: true, // Le graphique s'adapte à la taille du conteneur
-        maintainAspectRatio: false, // Empêche le graphique de respecter le rapport d'aspect de canvas
-        // D'autres options peuvent être ajoutées ici si nécessaire
-      }
-    });
-    this.loadInitialData();
+      });
+  
+      this.chartPie = new Chart('canvasPie', {
+        type: 'pie', // Type de graphique en camembert
+        data: {
+          labels: ['Tickets attribués', 'Tickets restants'], // Labels pour le camembert
+          datasets: [{
+            label: 'Ticket Distribution', // Étiquette pour le jeu de données
+            data: [0, 0], // Données pour le camembert
+            backgroundColor: [ // Couleurs de fond pour chaque segment
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [ // Couleurs de bordure pour chaque segment
+              'rgba(54, 162, 235, 1)',
+              'rgba(255,99,132,1)'
+            ],
+            borderWidth: 1 // Largeur de la bordure des segments
+          }]
+        },
+        options: {
+          responsive: true, // Le graphique s'adapte à la taille du conteneur
+          maintainAspectRatio: false, // Empêche le graphique de respecter le rapport d'aspect de canvas
+          // D'autres options peuvent être ajoutées ici si nécessaire
+        }
+      });
+    }
   }
 
   loadInitialData() {
