@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
 
@@ -21,7 +22,7 @@ export class UserService {
   // private userData!: UserCustomer;
   private endpointUrl = 'http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr/user'; // Endpoint de l'API 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getUserById(id: number): Observable<UserCustomer> {
     const url = `${this.endpointUrl}/${id}`; // Utilisez l'ID fourni pour construire l'URL.
@@ -39,7 +40,8 @@ export class UserService {
 
   // Méthode pour récupérer l'ID de l'utilisateur à partir du token.
   getUserIdFromToken(): number | null {
-    const token = localStorage.getItem('token'); // Récupérez le token depuis le localStorage.
+    // const token = localStorage.getItem('token'); // Récupérez le token depuis le localStorage.
+    const token = this.cookieService.get('token'); // Récupérez le token depuis le localStorage.
     if (token) {
       try {
         const tokenDecoded: any = jwtDecode(token); // Décoder le token.
