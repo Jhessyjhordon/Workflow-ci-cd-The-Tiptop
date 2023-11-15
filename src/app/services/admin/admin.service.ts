@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { UserAdmin } from 'src/app/models/user-admin.model';
 import { AllTickets } from 'src/app/models/ticket.model';
+import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   private endpointUrl = 'http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getUsersWithRoleClient(): Observable<UserAdmin[]> {
     // HttpClient assume par défaut que la réponse est un JSON, donc pas besoin de .json()
@@ -19,7 +21,8 @@ export class AdminService {
   }
 
   deleteUserById(id: number) {
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
+    const token = this.cookieService.get('token');
     const url = `${this.endpointUrl}/user/${id}`;
 
     // Objet d'options avec le header Authorization
