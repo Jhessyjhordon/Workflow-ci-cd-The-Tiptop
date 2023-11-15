@@ -22,7 +22,11 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
     // Vérifiez si un token est déjà présent lors de l'initialisation du service
-    this.isAuthenticated.next(this.getToken() !== null);
+    const token = this.getToken();
+    //console.log('Token actuel dans le constructeur:', token);
+    const isAuthenticatedValue = token !== null;
+    //console.log('Valeur de isAuthenticated.next:', isAuthenticatedValue);
+    this.isAuthenticated.next(isAuthenticatedValue);
   }
 
   setToken(token: string) {
@@ -32,8 +36,9 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    // return localStorage.getItem('token');
-    return this.cookieService.get('token');
+    const token = this.cookieService.get('token');
+    //console.log('Valeur du token récupéré:', token);
+    return token ? token : null; // Renvoie null si le token est une chaîne vide ou undefined
   }
 
   isLoggedIn() {
@@ -62,6 +67,7 @@ export class AuthService {
   }
 
   login({ email, password }: any): Observable<any> {
+    console.log('login: Attempting to log in with', email);
     const credentials = { email, password };
     console.log("user try to log with user name : ", credentials.email, " and password : ", credentials.password);
 
