@@ -5,22 +5,26 @@ WORKDIR /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build:ssr  # Assurez-vous avoir une commande de build pour SSR
+RUN npm run build:ssr  # Construire pour SSR
 
-# Étape 2: Configurer le serveur Node.js pour SSR
-FROM node:latest as server
+# Étape 2: Préparer les fichiers pour le serveur Node.js et Nginx
+FROM node:latest as prepare
 
-WORKDIR /app
-COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/the-tiptop-front/server /app
-# Exposer un port pour le SSR (par exemple, 4000)
-EXPOSE 4000
-CMD ["node", "main.js"]
+# Copier les fichiers nécessaires depuis le builder
+COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/the-tiptop-front/server /app/server
+COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/the-tiptop-front/browser /app/browser
 
-# Étape 3: Configurer le serveur Nginx pour les fichiers statiques et comme reverse proxy
-FROM nginx:alpine as nginx
+# Étape 3: Configurer l'Image Finale avec Nginx et le Serveur Node.js
+FROM nginx:alpine
 
-COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/the-tiptop-front/browser /usr/share/nginx/html
+# Copier les fichiers du serveur Node.js et du client Angular
+COPY --from=prepare /app/server /app/server
+COPY --from=prepare /app/browser /usr/share/nginx/html
+
+# Copier la configuration Nginx et le script de démarrage
 COPY nginx.conf /etc/nginx/nginx.conf
-# Exposer le port 80 pour Nginx
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+EXPOSE 80 4000
+CMD ["/start.sh"]
