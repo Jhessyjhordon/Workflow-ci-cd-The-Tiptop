@@ -16,7 +16,7 @@ FROM node:latest as prepare
 # COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/the-tiptop-front/server /app/server
 COPY --from=builder /var/jenkins_home/workspace/t-multibranches-pipeline_preprod/preprod-angular/dist/the-tiptop-front/server /app/server
 # COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev/angular/dist/the-tiptop-front/browser /app/browser
-COPY --from=builder /var/jenkins_home/workspace/t-multibranches-pipeline_preprod/preprod-angular/dist/the-tiptop-front/server /app/browser
+COPY --from=builder /var/jenkins_home/workspace/t-multibranches-pipeline_preprod/preprod-angular/dist/the-tiptop-front/browser /app/browser
 
 # Étape 3: Configurer l'Image Finale avec Nginx et le Serveur Node.js
 FROM nginx:alpine
