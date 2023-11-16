@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { AllTickets } from 'src/app/models/ticket.model';
+import { AllTickets } from 'src/app/models/all-ticket.model';
 import { AdminService } from 'src/app/services/admin/admin.service';
 
 @Component({

@@ -171,7 +171,7 @@
         }
     }
 
-    button {
+    button.logedForPlay {
         width: 144px;
         height: 76px;
         border-radius: 0 5.5rem 5.5rem 0;
@@ -179,6 +179,23 @@
         color: black;
         padding: 10px 20px;
         cursor: pointer;
+
+        @media (max-width: 767px) {
+            & {
+                width: 30%;
+                height: 66px;
+            }
+        }
+    }
+    button.offlinePlay {
+        width: 80%;
+        height: 76px;
+        border-radius: 5.5rem;
+        background-color: rgba(213, 186, 134, 1);
+        color: black;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 32px;
 
         @media (max-width: 767px) {
             & {

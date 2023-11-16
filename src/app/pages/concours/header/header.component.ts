@@ -1,15 +1,21 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
+import { TicketVerifyService } from 'src/app/services/ticketVerify/ticket-verify.service';
+import { Ticket } from 'src/app/models/ticket.model';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit {
+  verifyTicketForm!: FormGroup;
+  formSubmitted: boolean = false;
+  submissionResult: { success: boolean; message: string } | null = null;
   activeSlideIndex = 0; // Index du slide actif
 
   slides = [
@@ -36,44 +42,50 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     // Ajoutez d'autres objets pour chaque slide ici
   ];
 
-  constructor() { }
+  constructor(private ticketVerify: TicketVerifyService, private fb: FormBuilder) {
+    this.verifyTicketForm = this.buildCommonForm();
+  }
 
   ngOnInit(): void {
     // Votre code d'initialisation ici (peut être vide si vous n'en avez pas besoin)
   }
 
-  ngAfterViewInit(): void {
-    // const myCarousel = document.querySelector('#myCarousel') as HTMLElement;
-    // const carousel = new bootstrap.Carousel(myCarousel, { interval: 500, wrap: true });
-    // const slides = document.querySelectorAll('.carousel .carousel-item');
-    // console.log(slides);
+  buildCommonForm(): FormGroup {
+    // Définir les regex pour la validation
+    const numTicketRegex = /^(1000|[1-9]\d{3})$/u;
 
+    const verifyTicketFormBuilder = this.fb.group({
+      numTicket: ['', [Validators.required, Validators.pattern(numTicketRegex)]]
+    });
 
-    // slides.forEach((el) => {
-    //   const minPerSlide = slides.length;
-    //   let next = el.nextElementSibling as HTMLElement;
-
-    //   for (let i = 1; i < minPerSlide; i++) {
-    //     if (!next) {
-    //       next = slides[0] as HTMLElement;
-    //     }
-
-    //     const cloneChild = next.cloneNode(true) as HTMLElement;
-    //     el.appendChild(cloneChild.children[0]);
-    //     next = next.nextElementSibling as HTMLElement;
-    //   }
-    // });
+    return verifyTicketFormBuilder;
   }
 
-  // setActiveSlide(index: number) {
-  //   this.activeSlideIndex = index;
-  // }
+  getTicketById() {
+    this.formSubmitted = true;
 
-  // getPreviousIndex() {
-  //   return (this.activeSlideIndex - 1 + this.slides.length) % this.slides.length;
-  // }
+    if (this.verifyTicketForm.valid) {
+      this.formSubmitted = false;
+      // const numTicket = this.verifyTicketForm.value as number;
+      // Accéder directement à la propriété du formulaire et convertir en nombre.
+      // L'opérateur + est utilisé pour effectuer la conversion en nombre.
+      const numTicket = +this.verifyTicketForm.get('numTicket')!.value;
 
-  // getNextIndex() {
-  //   return (this.activeSlideIndex + 1) % this.slides.length;
-  // }
+      console.log(numTicket);
+
+
+      this.ticketVerify.verifyTicket(numTicket).subscribe(
+        (response: Ticket) => {
+          console.log(response);
+        },
+        error => {
+          console.error('Error ticket :', error);
+        }
+      )
+    }
+  }
+
+
+
+
 }

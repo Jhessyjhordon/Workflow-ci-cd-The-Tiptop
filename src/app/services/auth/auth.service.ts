@@ -7,6 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
+  id? : string;
   email? : string;
   role? : string;
   iat? : number;
@@ -51,6 +52,11 @@ export class AuthService {
     this.cookieService.set('userRole', userRole); // Stocke le rôle dans le localStorage
   }
 
+  // Appelé lors de la connexion pour stocker l'id du user
+  setIdUser(userId: string) {
+    localStorage.setItem('userId', userId); // Stocke le rôle dans le localStorage
+  }
+
   // Méthode pour récupérer le rôle de l'utilisateur
   getRoleUser(): string | null {
     //return localStorage.getItem('userRole'); // Récupère le rôle depuis le localStorage
@@ -77,7 +83,9 @@ export class AuthService {
           this.setToken(response.jwt);
           const tokenDecoded = jwtDecode<JwtPayload>(response.jwt);
           const roleUser = tokenDecoded.role as string;
+          const roleId = tokenDecoded.id as string;
           this.setRoleUser(roleUser);
+          this.setIdUser(roleId);
   
           // Au lieu de naviguer ici, retournez un nouvel Observable qui décide où naviguer.
           return of(roleUser); // Ici, 'of' est utilisé pour transformer la valeur en Observable.

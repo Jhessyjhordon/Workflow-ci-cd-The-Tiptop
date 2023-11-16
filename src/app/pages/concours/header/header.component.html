@@ -25,12 +25,52 @@
     <div class="carousel-caption carousel-caption-overlay p-2 p-md-3 p-xl-5 rounded-5 d-md-block">
         <div class="centered-square p-0 p-xxl-5">
             <h5>First slide label</h5>
-            <p class="truncate-text">Some Lorem ipsum dolor sit amet consectetur. Sit egestas accumsan scelerisque quis amet pellentesque. Amet lacus consectetur in iaculis id bibendum hendrerit augue elementum. Mi aliquet gravida pulvinar in nec. Sit in purus nisl fermentum facilisis. Neque leo nunc aliquet nunc at.representative placeholder content for the first slide.</p>
+            <p class="truncate-text">Some Lorem ipsum dolor sit amet consectetur. Sit egestas accumsan scelerisque quis
+                amet pellentesque. Amet lacus consectetur in iaculis id bibendum hendrerit augue elementum. Mi aliquet
+                gravida pulvinar in nec. Sit in purus nisl fermentum facilisis. Neque leo nunc aliquet nunc
+                at.representative placeholder content for the first slide.</p>
 
             <div>
-                <input class="border-0" type="text" placeholder="Your Name">
-                <button class="border-0 p-0">Jouer</button>
+                <button class="border-0 p-0 offlinePlay">Jouer</button>
             </div>
+
+            <form [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
+                <div class="row p-4">
+                    <div class="col px-md-5">
+                        <div *ngIf="submissionResult"
+                            class="m-0 alert {{submissionResult.success? 'alert-success' : 'alert-danger' }}">
+                            {{ submissionResult.message }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-md-1 g-4 p-md-4">
+
+                    <div class="col px-md-5">
+                        <!-- Afficher les erreurs pour le champ 'E-mail' -->
+                        <div *ngIf="verifyTicketForm.get('numTicket')?.invalid && verifyTicketForm.get('numTicket')?.touched"
+                            class="text-danger">
+                            <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['required']" class="text-start">
+                                Le numero de ticket est requis.
+                            </div>
+                            <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['pattern']" class="text-start">
+                                Le numero de ticket doit être des chiffres.
+                            </div>
+                        </div>
+                        <!-- <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-5" placeholder="Mail" id="floatingInputMail"
+                                formControlName="numTicket" />
+                            <label for="floatingInputMail">Mail</label>
+                        </div> -->
+                        <div>
+                            <input class="border-0" type="text" formControlName="numTicket" placeholder="Your Name">
+                            <button class="border-0 p-0 logedForPlay" type="submit">Jouer</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+
         </div>
     </div>
     <div class="carousel-inner">
@@ -108,11 +148,13 @@
         </div>
     </div>
 
-    <button class="carousel-control-prev d-none d-md-block" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <button class="carousel-control-prev d-none d-md-block" type="button" data-bs-target="#carouselExample"
+        data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next d-none d-md-block" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <button class="carousel-control-next d-none d-md-block" type="button" data-bs-target="#carouselExample"
+        data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>

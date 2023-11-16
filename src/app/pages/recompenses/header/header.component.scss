@@ -81,24 +81,24 @@
 .centered-square {
     // width: 100%;
     // height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-evenly;
 
     p.truncate-text {
         // for truncated text
-        -webkit-line-clamp: 5;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        text-align: justify;
-        overflow: auto;
+        // -webkit-line-clamp: 5;
+        // display: -webkit-box;
+        // text-overflow: ellipsis;
+        // -webkit-box-orient: vertical;
+        // text-align: justify;
+        // overflow: auto;
 
-        @media (min-width: 1200px) {
-            & {
-                overflow: initial;
-            }
-        }
+        // @media (min-width: 1200px) {
+        //     & {
+        //         overflow: initial;
+        //     }
+        // }
 
     }
 }
