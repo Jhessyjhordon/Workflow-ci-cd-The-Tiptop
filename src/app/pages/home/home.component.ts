@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,12 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  title= 'Accueil | Thé Tiptop | Jeu concours';
+
+  constructor(private titleService : Title){
+    this.titleService.setTitle(this.title);
+  }
+
   images: string[] = [
     '/assets/images/home/logo-1-thetiptop.png',
     '/assets/images/home/logo-2-thetiptop.png',
