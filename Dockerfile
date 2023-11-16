@@ -20,9 +20,14 @@ FROM nginx:alpine
 # Installer Node.js
 RUN apk add --no-cache nodejs
 
-# Copier les fichiers du serveur Node.js et du client Angular
+# Copier les fichiers du serveur Node.js
 COPY --from=prepare /app/server /app/server
+
+# Copier les fichiers statiques pour Nginx
 COPY --from=prepare /app/browser /usr/share/nginx/html
+
+# Copier également les fichiers statiques pour le serveur Node.js selon le chemin attendu
+COPY --from=prepare /app/browser /dist/the-tiptop-front/browser
 
 # Copier la configuration Nginx et le script de démarrage
 COPY nginx.conf /etc/nginx/nginx.conf
