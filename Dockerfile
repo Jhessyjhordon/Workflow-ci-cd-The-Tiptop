@@ -17,6 +17,9 @@ COPY --from=builder /var/jenkins_home/workspace/front-multibranches-pipeline_dev
 # Étape 3: Configurer l'Image Finale avec Nginx et le Serveur Node.js
 FROM nginx:alpine
 
+# Installer Node.js
+RUN apk add --no-cache nodejs
+
 # Copier les fichiers du serveur Node.js et du client Angular
 COPY --from=prepare /app/server /app/server
 COPY --from=prepare /app/browser /usr/share/nginx/html
