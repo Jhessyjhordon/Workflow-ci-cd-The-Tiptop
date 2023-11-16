@@ -6,7 +6,8 @@ WORKDIR /var/jenkins_home/workspace/t-multibranches-pipeline_preprod/preprod-ang
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build:ssr  # Construire pour SSR
+# Construire pour SSR
+RUN npm run build:ssr  
 
 # Étape 2: Préparer les fichiers pour le serveur Node.js et Nginx
 FROM node:latest as prepare
