@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +13,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit  {
+  title= "S'inscrire | Thé Tiptop | Jeu concours";
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
 
@@ -21,8 +23,21 @@ export class SignupComponent implements OnInit  {
 
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
-  constructor(private auth: AuthService, private router: Router, private fb: FormBuilder) {
+  constructor(private auth: AuthService, private router: Router, private fb: FormBuilder, private titleService : Title, private metaService: Meta) {
     this.loginForm = this.buildCommonForm();
+    this.titleService.setTitle(this.title);
+    this.addTag();
+  }
+
+
+  // Définition des différentes balises pour le SEO
+  addTag() {
+    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.addTag({ name: 'description', content: "S'inscrire à Thé Tiptop, site de jeu concours de thé pour les 10 ans et l'ouverture de la boutique à Nice" }); // Meta description de la page
+    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.addTag({ name: 'robots', content: 'index,follow' }); // Permet au robot d'indexer la page
+    this.metaService.addTag({ name: 'keywords', content: 'inscription jeu Nice' }); //Add keyword
+    this.metaService.addTag({ property: 'og:title', content: "S'inscrire | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
   }
 
   ngOnInit() {
