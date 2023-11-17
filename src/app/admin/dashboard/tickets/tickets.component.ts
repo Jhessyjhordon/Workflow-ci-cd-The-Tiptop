@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tickets',
@@ -19,6 +20,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
   styleUrls: ['./tickets.component.scss']
 })
 export class TicketsComponent implements OnInit {
+  title= 'Tickets - Dashboard | Thé Tiptop | Jeu concours';
 
   page = 1;
   pageSize = 10;
@@ -49,11 +51,21 @@ export class TicketsComponent implements OnInit {
 
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
-  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService) {
+  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService, private titleService : Title, private metaService: Meta) {
+    this.titleService.setTitle(this.title);
+    this.addTag();
+    
     this.tickets = []; // Initialiser avec un tableau vide ou les données par défaut.
     this.filteredTicket = [...this.tickets]; // Initialiser filteredUsers avec une copie de users.
     // this.anneeActuelle = this.currentDateService.getAnneeActuelle();
     // console.log("-->", this.anneeActuelle);
+  }
+
+  // Définition des différentes balises pour le SEO
+  addTag() {
+    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
   }
 
   ngOnInit() { // Initialise au chargement du component

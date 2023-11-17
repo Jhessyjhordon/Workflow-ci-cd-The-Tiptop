@@ -13,6 +13,7 @@ import { AdminService } from 'src/app/services/admin/admin.service';
 import { CurrentDateService } from 'src/app/services/date/current-date.service';
 import { AgeService } from 'src/app/services/ageRanges/age.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-analytics',
@@ -22,6 +23,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
+  title= 'Analytics - Dashboard | Thé Tiptop | Jeu concours';
   page = 1;
   pageSize = 5;
   allUsers: UserAdmin[] = []; // Contient tous les utilisateurs chargés à partir du serveur
@@ -38,8 +40,6 @@ export class AnalyticsComponent implements OnInit {
   // Déclaration anneeActuelle en number
   anneeActuelle: number;
 
-  //Chart exemple
-  title = 'ng-chart';
   chart: any = []; //Type la variable chart en any pour qu'elle accepte n'importe quelles données
   // Définition d'une propriété pour le chart camembert
   chartPie: any = [];
@@ -50,14 +50,23 @@ export class AnalyticsComponent implements OnInit {
   @ViewChild('canvasElement') canvas: ElementRef | null = null;
   @ViewChild('canvasPieElement') canvasPie: ElementRef | null = null;
 
-  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService) {
+  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService, private titleService : Title, private metaService: Meta) {
+    this.titleService.setTitle(this.title);
+    this.addTag();
+    
     this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
     this.filteredUsers = [...this.users]; // Initialiser filteredUsers avec une copie de users.
     this.anneeActuelle = this.currentDateService.getAnneeActuelle();
     console.log("-->", this.anneeActuelle);
   }
 
-
+  // Définition des différentes balises pour le SEO
+  addTag() {
+    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
+  }
+  
 
   ngOnInit() { // Initialise au chargement du component
     console.log(this.auth.getRoleUser());
