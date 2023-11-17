@@ -251,7 +251,7 @@ pipeline {
             }
         }
 
-        stage('Deploy Angular Docker Image') {
+        stage('Deploy Docker Image') {
             steps {
                 script {
                     // Obtenir le numéro de build Jenkins
@@ -261,7 +261,7 @@ pipeline {
                     // Définir le nom du conteneur en fonction de la branche actuelle
                     def containerName = (env.currentBranch == 'dev') ? "angular-dev" :
                                        (env.currentBranch == 'preprod') ? "angular-preprod" :
-                                       (env.currentBranch == 'main') ? "prod-angular" :
+                                       (env.currentBranch == 'main') ? "angular-prod" :
                                        "angular-unknown" // Valeur par défaut ou pour les branches non spécifiées
 
                     echo "Container Name: ${containerName}"
