@@ -5,10 +5,14 @@
     "outDir": "./out-tsc/spec",
     "types": [
       "jasmine"
-    ]
+    ],
+    "target": "esnext",
+    "moduleResolution": "node", //Indiquer à TypeScript d'utiliser la stratégie de résolution de module Node.js.
+    "esModuleInterop": true //Permettre une meilleure interopérabilité entre les modules CommonJS et ES Modules.
   },
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
   ]
 }
+

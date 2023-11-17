@@ -1,17 +1,30 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { authGuard } from './auth.guard';
 
-describe('authGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+describe('AuthGuard', () => {
+  let guard: authGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [authGuard]
+    });
+    guard = TestBed.inject(authGuard);
+    // Initialisez route et state si nécessaire
   });
 
   it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+    expect(guard).toBeTruthy();
+  });
+
+  it('should return true for canActivate', () => {
+    // Supposons que votre canActivate retourne un booléen pour ce test
+    let result: boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree>;
+    result = guard.canActivate();
+    // Vous devriez adapter cette partie en fonction de la logique de votre garde.
+    // Si c'est un Observable ou une Promise, vous devez vous abonner ou résoudre la promesse.
+    expect(result).toBe(true);
   });
 });

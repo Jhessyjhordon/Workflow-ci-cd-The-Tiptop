@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '../guards/auth.guard';
 
 export default [
     { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -16,7 +15,7 @@ export default [
         import('./contact/contact.component').then((c) => c.ContactComponent)
     },
     { 
-        path: 'recompences', canActivate: [authGuard], loadComponent: () =>
-        import('./recompences/recompences.component').then((c) => c.RecompencesComponent)
+        path: 'recompenses', loadComponent: () =>
+        import('./recompenses/recompenses.component').then((c) => c.RecompensesComponent)
     },
 ] as Routes;

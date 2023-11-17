@@ -1,24 +1,85 @@
-<main class="form-signin w-100 m-auto">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h1 class="h3 mb-3 fw-normal">Please Login</h1>
-  
-      <div class="form-floating">
-        <input type="email" formControlName="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+
+
+<section class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+  <div class="container">
+
+    <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
+      <div class="d-flex flex-column align-items-center justify-content-center text-center p-4 rounded-5 main-container">
+
+        <h1 class="text-break">Connexion</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
+          <div class="row p-4">
+            <div class="col px-md-5">
+              <div *ngIf="submissionResult"
+                class="m-0 alert {{submissionResult.success? 'alert-success' : 'alert-danger' }}">
+                {{ submissionResult.message }}
+              </div>
+            </div>
+          </div>
+          <div class="row row-cols-1 row-cols-md-1 g-4 p-md-4">
+
+            <div class="col px-md-5">
+              <!-- Afficher les erreurs pour le champ 'E-mail' -->
+              <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+                <div *ngIf="loginForm.get('email')?.errors?.['required']" class="text-start">
+                  L'e-mail est requis.
+                </div>
+                <div *ngIf="loginForm.get('email')?.errors?.['pattern']" class="text-start">
+                  L'e-mail doit être une adresse e-mail valide (exemple@gmail.com).
+                </div>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control rounded-5" placeholder="Mail" id="floatingInputMail"
+                  formControlName="email" />
+                <label for="floatingInputMail">Mail</label>
+              </div>
+            </div>
+            <div class="col px-md-5">
+              <!-- Afficher les erreurs pour le champ 'password' -->
+              <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+                <div *ngIf="loginForm.get('password')?.errors?.['required']" class="text-start">
+                  Le mot de passe est requis.
+                </div>
+                <div *ngIf="loginForm.get('password')?.errors?.['pattern']" class="text-start">
+                  Le mot de passe doit contenir uniquement des caractères alphabétiques, des chiffres,
+                  des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
+                  avoir une longueur maximale de 50 caractères.
+                </div>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control rounded-5" placeholder="Mot de passe .."
+                  id="floatingInputPsw" formControlName="password" />
+                <label for="floatingInputPsw">Mot de passe</label>
+              </div>
+            </div>
+
+          </div>
+          <div class="row g-4 p-4">
+
+            <div class="col-12 px-md-5 m-0">
+
+              <div class="d-flex flex-row align-items-center justify-content-center mb-3">
+                <input class="form-check-input me-3" type="checkbox"
+                  id="flexCheckDefault2" />
+                <label class="form-check-label text-start  pt-1" for="flexCheckDefault2">
+                  Remember me
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12 d-flex flex-column align-items-center justify-content-center">
+              <div class="">
+                <button type="submit" class="btn btn-green fw-bold custom-bg-shadow py-3 px-4 px-sm-5 rounded-5 "
+                  [disabled]="formSubmitted && loginForm.invalid">
+                  CONNEXION
+                </button>
+              </div>
+              <p class="mt-5 mb-3 text-body-secondary">First acount ? Signup <a [routerLink]="'../signup'">here</a> or back to the <a [routerLink]="'/home'">home page</a> </p>
+            </div>
+          </div>
+        </form>
+
       </div>
-      <div class="form-floating">
-        <input type="password" formControlName="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
-      </div>
-  
-      <div class="form-check text-start my-3">
-        <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Remember me
-        </label>
-      </div>
-      <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
-      <p class="mt-5 mb-3 text-body-secondary">First acount ? Signup <a [routerLink]="'../signup'">here</a> or back to the <a [routerLink]="'/home'">home page</a> </p>
-      <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
-    </form>
-  </main>
+    </div>
+  </div>
+</section>

@@ -1,3 +1,121 @@
-<div class="main-container">
-    <h1>Contact component work</h1>
-</div>
+<section class="d-flex flex-column align-items-center justify-content-center">
+    <div class="container">
+
+        <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
+            <div
+                class="d-flex flex-column align-items-center justify-content-center text-center w-100 p-4 rounded-5 main-container">
+
+                <h1 class="text-break">Contact</h1>
+                <form [formGroup]="contactForm" (ngSubmit)="submitForm()" class="w-100">
+                    <div class="row p-md-4">
+                        <div class="col px-md-5">
+                            <div *ngIf="submissionResult"
+                                class="m-0 alert {{submissionResult.success? 'alert-success' : 'alert-danger' }}">
+                                {{ submissionResult.message }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-2 g-4 p-md-4">
+
+                        <div class="col px-md-5">
+                            <!-- Afficher les erreurs pour le champ 'E-mail' -->
+                            <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+                                class="text-danger">
+                                <div *ngIf="contactForm.get('email')?.errors?.['required']" class="text-start">
+                                    L'e-mail est requis.
+                                </div>
+                                <div *ngIf="contactForm.get('email')?.errors?.['pattern']" class="text-start">
+                                    L'e-mail doit être une adresse e-mail valide (exemple@domaine.com).
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control rounded-5" placeholder="Mail"
+                                    id="floatingInputMail" formControlName="email" />
+                                <label for="floatingInputMail">Mail</label>
+                            </div>
+                        </div>
+                        <div class="col px-md-5">
+                            <!-- Afficher les erreurs pour le champ 'subject' -->
+                            <div *ngIf="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched"
+                                class="text-danger">
+                                <div *ngIf="contactForm.get('subject')?.errors?.['required']" class="text-start">
+                                    Le sujet est requis.
+                                </div>
+                                <div *ngIf="contactForm.get('subject')?.errors?.['pattern']" class="text-start">
+                                    Le sujet doit contenir uniquement des caractères alphabétiques, des chiffres,
+                                    des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
+                                    avoir une longueur maximale de 50 caractères.
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control rounded-5" placeholder="Sujet"
+                                    id="floatingInputSubject" formControlName="subject" />
+                                <label for="floatingInputSubject">Sujet</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row g-4 p-md-4">
+
+                        <div class="col-12 px-md-5 d-flex flex-column justify-content-center">
+                            <!-- Afficher les erreurs pour le champ 'messageUser' -->
+                            <div *ngIf="contactForm.get('messageUser')?.invalid && contactForm.get('messageUser')?.touched"
+                                class="text-danger">
+                                <div *ngIf="contactForm.get('messageUser')?.errors?.['required']" class="text-start">
+                                    Le message est requis.
+                                </div>
+                                <div *ngIf="contactForm.get('messageUser')?.errors?.['pattern']" class="text-start">
+                                    Le message doit contenir uniquement des caractères alphabétiques, des chiffres,
+                                    des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
+                                    avoir une longueur maximale de 1000 caractères.
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea type="text" class="form-control rounded-5"
+                                    placeholder="Écrivez votre message ici..." id="floatingInputInvalid"
+                                    formControlName="messageUser"></textarea>
+                                <label for="floatingInputInvalid">Message...</label>
+                            </div>
+                        </div>
+                        <div class="col-12 px-md-5  m-0">
+                            <!-- Afficher les erreurs pour le champ 'consent' -->
+                            <div *ngIf="formSubmitted && contactForm.get('consent')?.value === false"
+                                class="text-danger">
+                                <div class="text-start">
+                                    Veuillez cocher la case avant d'envoyer votre message.
+                                </div>
+                            </div>
+
+
+                            <div
+                                class="d-flex flex-column flex-sm-row align-items-start justify-content-md-center mb-3">
+                                <input class="form-check-input me-sm-3" type="checkbox" formControlName="consent"
+                                    id="flexCheckDefault2" />
+                                <label class="form-check-label text-start" for="flexCheckDefault2">
+                                    En soumettant ce formulaire, j'accepte
+                                    que les informations saisies soient
+                                    exploitées dans le cadre de la demande
+                                    de contact et de la relation commerciale
+                                    qui peut en découler. Veuillez consulter notre <a
+                                        [routerLink]="'../politique-de-condentialite'"> politique de
+                                        confidentialité.</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 d-flex flex-column align-items-center justify-content-center">
+                            <div class="">
+                                <button type="submit"
+                                    class="btn btn-green fw-bold custom-bg-shadow py-3 px-4 px-sm-5 rounded-5 "
+                                    [disabled]="formSubmitted && contactForm.invalid">
+                                    ENVOYER
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>

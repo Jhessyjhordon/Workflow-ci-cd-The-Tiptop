@@ -1,0 +1,14 @@
+div.empty{
+    height: 100px;
+}
+
+
+// Media queries
+@media (max-width: 767px){
+    div.charts{
+        div.canvas{
+            margin-bottom: 1rem!important;
+        }
+    }
+}
+
