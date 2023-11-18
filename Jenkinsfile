@@ -245,7 +245,7 @@ pipeline {
                     // Créer une image Docker pour l'application Angular
                     def angularImageName = "${env.folderName}:${buildNumber}"
                     dir("${WORKSPACE}/${env.folderName}") {
-                        sh "docker build -t ${angularImageName} ."
+                        sh "docker build -t ${angularImageName} -f Dockerfile.dev ."
                     }
                 }
             }
