@@ -1,0 +1,22 @@
+section.banniere{
+    background-image:
+        url("/assets/images/contact/contact_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    h1.title{
+        color: #fff;
+    }
+}
+
+section.cgu{
+    div.cgu-text{
+        width: 70%;
+        font-size: 1.2rem;
+        text-align: justify;
+        h2{
+            font-size: 2rem;
+        }
+    }
+}
