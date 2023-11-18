@@ -18,4 +18,8 @@ export default [
         path: 'recompenses', loadComponent: () =>
         import('./recompenses/recompenses.component').then((c) => c.RecompensesComponent)
     },
+    { 
+        path: 'politique-de-confidentialite', loadComponent: () =>
+        import('./politique-de-confidentialite/politique-de-confidentialite.component').then((c) => c.PolitiqueDeConfidentialiteComponent)
+    },
 ] as Routes;
