@@ -48,6 +48,12 @@ section.footer {
 
 section.post-footer{
     background: #283327;
+    div.mentions{
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+    }
     // div.mentions{
     //     display: flex;
     //     flex-direction: row;
