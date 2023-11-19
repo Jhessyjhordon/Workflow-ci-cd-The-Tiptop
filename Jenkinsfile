@@ -20,13 +20,21 @@ pipeline {
                     def folderName = (currentBranch == 'main') ? 'prod-angular' :
                                      (currentBranch == 'preprod') ? 'preprod-angular' :
                                      'angular' 
+                    def buildNumber = env.BUILD_NUMBER
+                    def dockerFileBuild = (currentBranch == 'main') ? 'Dockerfile.prod' :
+                                          (currentBranch == 'preprod') ? 'Dockerfile.preprod' :
+                                          'Dockerfile.dev' 
 
                     echo "Current branch: ${currentBranch}"
                     echo "Folder name set to: ${folderName}"
+                    echo "Build number set to : ${buildNumber}"
+                    echo "Utilisation du dockerfile suivant: ${env.dockerFileBuild}"
 
                     // Enregistrer les variables pour utilisation dans les stages suivants
                     env.folderName = folderName
                     env.currentBranch = currentBranch
+                    env.BUILD_NUMBER = buildNumber
+                    env.dockerFileBuild = dockerFileBuild
                 }
             }
         }
@@ -241,11 +249,10 @@ pipeline {
         stage('Create Docker Image') {
             steps {
                 script {
-                    def buildNumber = env.BUILD_NUMBER
                     // Créer une image Docker pour l'application Angular
-                    def angularImageName = "${env.folderName}:${buildNumber}"
+                    def angularImageName = "${env.folderName}: ${env.BUILD_NUMBER}"
                     dir("${WORKSPACE}/${env.folderName}") {
-                        sh "docker build -t ${angularImageName} -f Dockerfile.dev ."
+                        sh "docker build -t ${angularImageName} -f ${env.dockerFileBuild} ."
                     }
                 }
             }
@@ -253,10 +260,7 @@ pipeline {
 
         stage('Deploy Docker Image') {
             steps {
-                script {
-                    // Obtenir le numéro de build Jenkins
-                    def buildNumber = env.BUILD_NUMBER
-        
+                script {        
                     // Nom du conteneur pour l'application Angular
                     // Définir le nom du conteneur en fonction de la branche actuelle
                     def containerName = (env.currentBranch == 'dev') ? "angular-dev" :
