@@ -20,7 +20,11 @@ export class AdminService {
       map(response => response.users) // Assurez-vous que cela renvoie un tableau
     );
   }
-  
+
+  synchronizeMailchimpManually(): Observable<any> {
+    return this.http.get(this.endpointUrl + '/user/email/newsletter?newsletter=1&mode=mailchimp')
+  }
+
   deleteUserById(id: number) {
     // const token = localStorage.getItem('token');
     const token = this.cookieService.get('token');

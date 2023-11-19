@@ -242,4 +242,16 @@ export class AnalyticsComponent implements OnInit {
     );
   }
 
+  //--- Emailing ---//
+  synchronizeData(){
+    this.adminService.synchronizeMailchimpManually().subscribe(
+      () =>{
+        console.log("Synchronisation effectué");
+      },
+      () =>{
+        console.log("Une erreur s'est produite lors de la synchronisation");
+      }
+    );
+  }
+
 }
