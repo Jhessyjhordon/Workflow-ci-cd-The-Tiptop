@@ -28,12 +28,13 @@ pipeline {
                     echo "Current branch: ${currentBranch}"
                     echo "Folder name set to: ${folderName}"
                     echo "Build number set to : ${buildNumber}"
+                    env.dockerFileBuild = dockerFileBuild
+                    echo "Utilisation du dockerfile suivant: ${env.dockerFileBuild}"
 
                     // Enregistrer les variables pour utilisation dans les stages suivants
                     env.folderName = folderName
                     env.currentBranch = currentBranch
-                    env.BUILD_NUMBER = buildNumber
-                    env.dockerFileBuild = dockerFileBuild
+                    env.BUILD_NUMBER = buildNumber                 
                 }
             }
         }
@@ -41,7 +42,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                     
-                // Cloner le référentiel GitLab pour l'application Angular dans le sous-dossier 'angular'
+                // Cloner le référentiel GitLab pour l'application dans le sous-dossier '${folderName}'
                 dir("${WORKSPACE}/") {
                     script {
 
@@ -141,12 +142,18 @@ pipeline {
             }
         }
 
-        stage('Determine Chrome Path - For Kama tests') {
+        stage('Tools for tests') {
             steps {
                 script {
-                    dir("${WORKSPACE}/${env.folderName}") {
-                        CHROME_BIN = sh(script: 'node getChromePath.js', returnStdout: true).trim()
-                        echo "Detected Chrome path: ${CHROME_BIN}"
+                    switch (metadata.language) {
+                        case 'NodeJS':
+                            dir("${WORKSPACE}/${env.folderName}") {
+                            CHROME_BIN = sh(script: 'node getChromePath.js', returnStdout: true).trim()
+                            echo "Detected Chrome path: ${CHROME_BIN}"
+                        }
+                        break
+                    default:
+                        echo "No tools for tests required or language not recognized"
                     }
                 }
             }
@@ -210,36 +217,29 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    switch (metadata.language) {
-                        case 'NodeJS':                            
-                            echo "Analyse SonarQube pour Angular TEST"
-                            dir("${WORKSPACE}/${env.folderName}") {
-                                withCredentials([string(credentialsId: 'angular-sonar', variable: 'SONAR_TOKEN')]) {
-                                    // Afficher la valeur de WORKSPACE
-                                    echo "WORKSPACE est : ${WORKSPACE}"
-                                    
-                                    // Utilisez withSonarQubeEnv avec le nom de votre configuration SonarQube
-                                    withSonarQubeEnv('SonarQube') {
-                                        // Afficher les informations de l'outil SonarQube
-                                        def scannerHome = tool name: 'SonarQube'
-                                        echo "scannerHome est : ${scannerHome}"
-                                        
-                                        // Afficher le chemin d'accès de Sonar
-                                        echo "PATH+SONAR est : ${scannerHome}/bin"
-                                        
-                                        withEnv(["PATH+SONAR=${scannerHome}/bin"]) {
-                                            sh "sonar-scanner \
-                                                -Dsonar.host.url=http://sonarqube.dsp-archiwebo22b-ji-rw-ah.fr/ \
-                                                -Dsonar.login=${SONAR_TOKEN}"
-                                        }
-                                    }
+                script {                          
+                    echo "Analyse SonarQube"
+                    dir("${WORKSPACE}/${env.folderName}") {
+                        withCredentials([string(credentialsId: 'angular-sonar', variable: 'SONAR_TOKEN')]) {
+                            // Afficher la valeur de WORKSPACE
+                            echo "WORKSPACE est : ${WORKSPACE}"
+                            
+                            // Utilisez withSonarQubeEnv avec le nom de votre configuration SonarQube
+                            withSonarQubeEnv('SonarQube') {
+                                // Afficher les informations de l'outil SonarQube
+                                def scannerHome = tool name: 'SonarQube'
+                                echo "scannerHome est : ${scannerHome}"
+                                
+                                // Afficher le chemin d'accès de Sonar
+                                echo "PATH+SONAR est : ${scannerHome}/bin"
+                                
+                                withEnv(["PATH+SONAR=${scannerHome}/bin"]) {
+                                    sh "sonar-scanner \
+                                        -Dsonar.host.url=http://sonarqube.dsp-archiwebo22b-ji-rw-ah.fr/ \
+                                        -Dsonar.login=${SONAR_TOKEN}"
                                 }
                             }
-                            break
-                        // ... autres cas
-                        default:
-                            echo "Aucune analyse SonarQube requise ou langage non reconnu"
+                        }
                     }
                 }
             }
@@ -248,7 +248,7 @@ pipeline {
         stage('Create Docker Image') {
             steps {
                 script {
-                    // Créer une image Docker pour l'application 
+                    // Créer une image Docker pour l'application
                     def angularImageName = "${env.folderName}:${env.BUILD_NUMBER}"
                     dir("${WORKSPACE}/${env.folderName}") {
                         sh "docker build -t ${angularImageName} -f ${env.dockerFileBuild} ."
