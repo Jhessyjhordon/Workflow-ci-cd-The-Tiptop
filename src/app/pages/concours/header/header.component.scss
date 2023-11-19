@@ -56,6 +56,12 @@
 
 .carousel-inner {
     height: 80vh !important;
+
+    @media (max-width: 300px) {
+        & {
+            height: 106vh !important;
+        }
+    }
 }
 
 .carousel-indicators [data-bs-target] {
@@ -93,6 +99,14 @@
 
 .carousel-overlay {
     position: relative;
+
+    img {
+        @media (max-width: 300px) {
+            & {
+                height: 106vh !important;
+            }
+        }
+    }
 }
 
 .carousel-overlay::before {
@@ -125,7 +139,7 @@
     border-radius: 5px;
     /* Coins arrondis */
     width: 50%;
-    height: 50%;
+    height: fit-content;
     /* Largeur du carré au milieu */
     z-index: 2;
 
@@ -133,7 +147,7 @@
         & {
             transform: translate(-50%, -55%);
             width: 86%;
-            height: 80%;
+            // height: 80%;
         }
     }
 
@@ -141,7 +155,7 @@
         & {
             transform: translate(-50%, -65%);
             width: 70%;
-            height: 60%;
+            // height: 60%;
         }
     }
 
@@ -155,12 +169,12 @@
         height: 76px;
         border-radius: 5.5rem 0 0 5.5rem;
         background-color: rgba(62, 81, 64, 1);
-        color: white;
+        color: rgb(189, 189, 189);
         padding: 10px 10px 10px 20px;
         margin-bottom: 10px;
 
         &::placeholder {
-            color: rgb(153, 153, 153);
+            color: rgb(238, 238, 238);
         }
 
         @media (max-width: 767px) {
@@ -171,7 +185,7 @@
         }
     }
 
-    button {
+    button.logedForPlay {
         width: 144px;
         height: 76px;
         border-radius: 0 5.5rem 5.5rem 0;
@@ -187,32 +201,61 @@
             }
         }
     }
-}
+    button.offlinePlay {
+        width: 60%;
+        height: 76px;
+        border-radius: 5.5rem;
+        background-color: rgba(213, 186, 134, 1);
+        color: black;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 32px;
 
-.centered-square {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    
-    p.truncate-text {
-        // for truncated text
-        // -webkit-line-clamp: 10;
-        // display: -webkit-box;
-        // text-overflow: ellipsis;
-        // -webkit-box-orient: vertical;
-        text-align: justify;
-        overflow: auto;
-
-        @media (min-width: 1200px) {
+        @media (max-width: 767px) {
             & {
-                overflow: initial;
+                width: 100%;
+                height: 66px;
             }
         }
-
     }
 }
+
+/* Ajoutez ceci dans votre fichier de style */
+.toast {
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+    margin-top: 80px;
+  }
+  
+  .show {
+    opacity: 1;
+  }
+  
+
+// .centered-square {
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-evenly;
+    
+//     p.truncate-text {
+//         // for truncated text
+//         // -webkit-line-clamp: 10;
+//         // display: -webkit-box;
+//         // text-overflow: ellipsis;
+//         // -webkit-box-orient: vertical;
+//         text-align: justify;
+//         overflow: auto;
+
+//         @media (min-width: 1200px) {
+//             & {
+//                 overflow: initial;
+//             }
+//         }
+
+//     }
+// }
 
 
 
