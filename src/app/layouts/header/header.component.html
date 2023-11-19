@@ -35,7 +35,8 @@
       </ul>
 
       <div *ngIf="!isLoggedIn" class="d-lg-flex col-lg-3 justify-content-lg-end">
-        <button [routerLink]="'./auth/login'" class="btn btn-primary">Login</button>
+        <button [routerLink]="'./auth/signup'" class="btn btn-outline-primary me-2">INSCRIPTION</button>
+        <button [routerLink]="'./auth/login'" class="btn btn-primary">CONNEXION</button>
       </div>
 
       <div *ngIf="isLoggedIn" class="d-lg-flex col-lg-3 justify-content-end ">
