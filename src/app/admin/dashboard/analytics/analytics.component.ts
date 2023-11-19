@@ -135,14 +135,6 @@ export class AnalyticsComponent implements OnInit {
 
   loadInitialData() {
 
-    /*this.adminService.getUsersWithEmailing().subscribe(
-      (email: emailing[]) => {
-        this.email = email; // Stock les emails de newsletter
-        this.changeDetectorRef.detectChanges(); // Détection manuelle des changements
-        console.log("Newsletter ====>", this.email)
-      }
-    );*/
-
     this.adminService.getUsersWithRoleClient().subscribe(
       (users: UserAdmin[]) => {
         this.allUsers = users; // Stockez les données du serveur dans allUsers

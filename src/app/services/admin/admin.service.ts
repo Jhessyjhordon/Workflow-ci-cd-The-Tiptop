@@ -20,13 +20,7 @@ export class AdminService {
       map(response => response.users) // Assurez-vous que cela renvoie un tableau
     );
   }
-
-  /*getUsersWithEmailing(): Observable<emailing[]> {
-    return this.http.get<{ email: emailing[] }>(this.endpointUrl + '/user/email/newsletter?newsletter=1').pipe(
-      map(response => response.email) 
-    );
-  }*/
-
+  
   deleteUserById(id: number) {
     // const token = localStorage.getItem('token');
     const token = this.cookieService.get('token');
