@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ContactService } from 'src/app/services/contact/contact.service';
 import { RouterModule } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-contact',
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
+  title= 'Contactez-nous | Thé Tiptop | Jeu concours';
   contactForm!: FormGroup;
   formSubmitted: boolean = false;
 
@@ -19,14 +21,28 @@ export class ContactComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private titleService : Title, private metaService: Meta
   ) {
     this.contactForm = this.buildCommonForm();
+    this.titleService.setTitle(this.title);
+    this.addTag();
   }
 
   ngOnInit() {
 
   }
+
+  // Définition des différentes balises pour le SEO
+  addTag() {
+    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.addTag({ name: 'description', content: "Contactez-nous, pour avoir plus d'informations sur notre jeu concours" }); // Meta description de la page
+    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.addTag({ name: 'robots', content: 'index,follow' }); // Permet au robot d'indexer la page
+    this.metaService.addTag({ name: 'keywords', content: 'information thé Nice' }); //Add keyword
+    this.metaService.addTag({ property: 'og:title', content: "Contactez-nous | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
+  }
+
 
   buildCommonForm(): FormGroup {
     // Définir les regex pour la validation

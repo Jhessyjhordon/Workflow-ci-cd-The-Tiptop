@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Chart } from 'chart.js/auto';
@@ -13,6 +13,9 @@ import { AdminService } from 'src/app/services/admin/admin.service';
 import { CurrentDateService } from 'src/app/services/date/current-date.service';
 import { AgeService } from 'src/app/services/ageRanges/age.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Meta, Title } from '@angular/platform-browser';
+import { emailing } from 'src/app/models/emailing.model';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-analytics',
@@ -22,6 +25,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
+  title= 'Analytics - Dashboard | Thé Tiptop | Jeu concours';
   page = 1;
   pageSize = 5;
   allUsers: UserAdmin[] = []; // Contient tous les utilisateurs chargés à partir du serveur
@@ -30,33 +34,42 @@ export class AnalyticsComponent implements OnInit {
   totalItems: number = 0;
   collectionSize: number = 0;
   filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
+  email: emailing[] = [];
 
   allTickets: AllTickets[] = []; // Contient tous les tickets chargés à partir du serveur
   totalTickets: number = 0; // On stocke en affichant en nombre, tous les tickets reçu
   usedTickets: number = 0;
 
-  // Affichage pour le nombre total de tickets
-  ticketUsed: number = 243;
-
   // Déclaration anneeActuelle en number
   anneeActuelle: number;
 
-  //Chart exemple
-  title = 'ng-chart';
   chart: any = []; //Type la variable chart en any pour qu'elle accepte n'importe quelles données
   // Définition d'une propriété pour le chart camembert
   chartPie: any = [];
 
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
-  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService) {
+  // Ici, #canvasElement et #canvasPieElement sont des références locales qui peuvent être utilisées dans le fichier TypeScript pour accéder aux éléments du DOM.
+  @ViewChild('canvasElement') canvas: ElementRef | null = null;
+  @ViewChild('canvasPieElement') canvasPie: ElementRef | null = null;
+
+  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService, private titleService : Title, private metaService: Meta, private changeDetectorRef: ChangeDetectorRef) {
+    this.titleService.setTitle(this.title);
+    this.addTag();
+    
     this.users = []; // Initialiser avec un tableau vide ou les données par défaut.
     this.filteredUsers = [...this.users]; // Initialiser filteredUsers avec une copie de users.
     this.anneeActuelle = this.currentDateService.getAnneeActuelle();
     console.log("-->", this.anneeActuelle);
   }
 
-
+  // Définition des différentes balises pour le SEO
+  addTag() {
+    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
+  }
+  
 
   ngOnInit() { // Initialise au chargement du component
     console.log(this.auth.getRoleUser());
@@ -65,57 +78,71 @@ export class AnalyticsComponent implements OnInit {
       console.log("ok");
       this.isLoggedAsAdmin = true;
     } else console.log("not admin");
-
-
-    this.chart = new Chart('canvas', {
-      type: 'bar',
-      data: {
-        labels: ['10 - 20', '21 - 30', '31 - 40', '41 - 50', '51 - 60', '61 - 70', '71 - 80'],
-        datasets: [
-          {
-            label: '# of person age',
-            data: [], //Initialisation du tableau avec des données vides
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-
-    this.chartPie = new Chart('canvasPie', {
-      type: 'pie', // Type de graphique en camembert
-      data: {
-        labels: ['Tickets attribués', 'Tickets restants'], // Labels pour le camembert
-        datasets: [{
-          label: 'Ticket Distribution', // Étiquette pour le jeu de données
-          data: [0, 0], // Données pour le camembert
-          backgroundColor: [ // Couleurs de fond pour chaque segment
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 99, 132, 0.2)'
-          ],
-          borderColor: [ // Couleurs de bordure pour chaque segment
-            'rgba(54, 162, 235, 1)',
-            'rgba(255,99,132,1)'
-          ],
-          borderWidth: 1 // Largeur de la bordure des segments
-        }]
-      },
-      options: {
-        responsive: true, // Le graphique s'adapte à la taille du conteneur
-        maintainAspectRatio: false, // Empêche le graphique de respecter le rapport d'aspect de canvas
-        // D'autres options peuvent être ajoutées ici si nécessaire
-      }
-    });
     this.loadInitialData();
   }
 
+  ngAfterViewInit() {
+    // Vérifiez que les éléments canvas et canvasPie sont présents
+    if (this.canvas && this.canvas.nativeElement && this.canvasPie && this.canvasPie.nativeElement) {
+      // Initialisation des graphiques ici
+      this.chart = new Chart('canvas', {
+        type: 'bar',
+        data: {
+          labels: ['10 - 20', '21 - 30', '31 - 40', '41 - 50', '51 - 60', '61 - 70', '71 - 80'],
+          datasets: [
+            {
+              label: '# of person age',
+              data: [], //Initialisation du tableau avec des données vides
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+  
+      this.chartPie = new Chart('canvasPie', {
+        type: 'pie', // Type de graphique en camembert
+        data: {
+          labels: ['Tickets attribués', 'Tickets restants'], // Labels pour le camembert
+          datasets: [{
+            label: 'Ticket Distribution', // Étiquette pour le jeu de données
+            data: [0, 0], // Données pour le camembert
+            backgroundColor: [ // Couleurs de fond pour chaque segment
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [ // Couleurs de bordure pour chaque segment
+              'rgba(54, 162, 235, 1)',
+              'rgba(255,99,132,1)'
+            ],
+            borderWidth: 1 // Largeur de la bordure des segments
+          }]
+        },
+        options: {
+          responsive: true, // Le graphique s'adapte à la taille du conteneur
+          maintainAspectRatio: false, // Empêche le graphique de respecter le rapport d'aspect de canvas
+          // D'autres options peuvent être ajoutées ici si nécessaire
+        }
+      });
+    }
+  }
+
   loadInitialData() {
+
+    /*this.adminService.getUsersWithEmailing().subscribe(
+      (email: emailing[]) => {
+        this.email = email; // Stock les emails de newsletter
+        this.changeDetectorRef.detectChanges(); // Détection manuelle des changements
+        console.log("Newsletter ====>", this.email)
+      }
+    );*/
+
     this.adminService.getUsersWithRoleClient().subscribe(
       (users: UserAdmin[]) => {
         this.allUsers = users; // Stockez les données du serveur dans allUsers
