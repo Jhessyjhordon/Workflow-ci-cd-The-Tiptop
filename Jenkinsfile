@@ -28,7 +28,6 @@ pipeline {
                     echo "Current branch: ${currentBranch}"
                     echo "Folder name set to: ${folderName}"
                     echo "Build number set to : ${buildNumber}"
-                    echo "Utilisation du dockerfile suivant: ${env.dockerFileBuild}"
 
                     // Enregistrer les variables pour utilisation dans les stages suivants
                     env.folderName = folderName
@@ -249,8 +248,8 @@ pipeline {
         stage('Create Docker Image') {
             steps {
                 script {
-                    // Créer une image Docker pour l'application Angular
-                    def angularImageName = "${env.folderName}: ${env.BUILD_NUMBER}"
+                    // Créer une image Docker pour l'application 
+                    def angularImageName = "${env.folderName}:${env.BUILD_NUMBER}"
                     dir("${WORKSPACE}/${env.folderName}") {
                         sh "docker build -t ${angularImageName} -f ${env.dockerFileBuild} ."
                     }
