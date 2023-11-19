@@ -1,51 +1,42 @@
-<!-- <section class="d-flex flex-column align-items-center justify-content-center min-vh-100">
-    <div class="container">
-
-        <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
-            <div
-                class="d-flex flex-column align-items-center justify-content-center text-center w-100 p-4 rounded-5 main-container">
-
-                <h1>header works!</h1>
+<div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div *ngIf="isToastVisible" class="toast align-items-center show position-fixed top-0 start-50 translate-middle-x "
+        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : 'red'}" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body text-center" [ngStyle]="{'color': submissionResult?.success ? 'black' : 'white'}" [innerHTML]="submissionResult!.message">
+                {{ submissionResult!.message }}
             </div>
+            <button type="button" class="btn-close me-2 m-auto" (click)="isToastVisible = false"
+                aria-label="Close"></button>
         </div>
     </div>
-</section> -->
 
-<div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-indicators">
+        <!-- Les petits bouton rond d'indicateur du slide, elle doivent être égales aux nombre d'images dans le slide pour éviter un vilain bug -->
         <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true"
             aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
         <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <!-- <button *ngFor="let slide of slides; let i = index" type="button" data-bs-target="#carouselExample"
-            (data-bs-slide-to)="{ i }" [class.active]="i === activeSlideIndex" (aria-label)="'Slide '+ { i }"
-            (aria-current)="activeSlideIndex === i ? true : false"></button> -->
     </div>
-    <div class="carousel-caption carousel-caption-overlay p-2 p-md-3 p-xl-5 rounded-5 d-md-block">
-        <div class="centered-square p-0 p-xxl-5">
+    <div class="carousel-caption carousel-caption-overlay  rounded-5 d-md-block">
+        <div class="centered-square p-0  h-100">
+
             <h5>First slide label</h5>
             <p class="truncate-text">Some Lorem ipsum dolor sit amet consectetur. Sit egestas accumsan scelerisque quis
                 amet pellentesque. Amet lacus consectetur in iaculis id bibendum hendrerit augue elementum. Mi aliquet
                 gravida pulvinar in nec. Sit in purus nisl fermentum facilisis. Neque leo nunc aliquet nunc
                 at.representative placeholder content for the first slide.</p>
 
-            <div>
-                <button class="border-0 p-0 offlinePlay">Jouer</button>
+            <div *ngIf="!isLoggedIn">
+                <button class="border-0 p-0 offlinePlay" [routerLink]="'/auth/login'">Jouer</button>
             </div>
 
-            <form [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
-                <div class="row p-4">
-                    <div class="col px-md-5">
-                        <div *ngIf="submissionResult"
-                            class="m-0 alert {{submissionResult.success? 'alert-success' : 'alert-danger' }}">
-                            {{ submissionResult.message }}
-                        </div>
-                    </div>
-                </div>
-                <div class="row row-cols-1 row-cols-md-1 g-4 p-md-4">
+            <form *ngIf="isLoggedIn" [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
 
-                    <div class="col px-md-5">
+                <div class="row row-cols-1 row-cols-md-1 g-4 pt-md-4">
+
+                    <div class="col px-auto">
                         <!-- Afficher les erreurs pour le champ 'E-mail' -->
                         <div *ngIf="verifyTicketForm.get('numTicket')?.invalid && verifyTicketForm.get('numTicket')?.touched"
                             class="text-danger">
@@ -56,11 +47,6 @@
                                 Le numero de ticket doit être des chiffres.
                             </div>
                         </div>
-                        <!-- <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-5" placeholder="Mail" id="floatingInputMail"
-                                formControlName="numTicket" />
-                            <label for="floatingInputMail">Mail</label>
-                        </div> -->
                         <div>
                             <input class="border-0" type="text" formControlName="numTicket" placeholder="Your Name">
                             <button class="border-0 p-0 logedForPlay" type="submit">Jouer</button>
@@ -75,75 +61,25 @@
     </div>
     <div class="carousel-inner">
 
-        <!-- <div class="row g-0 carousel-item active"> -->
-        <!-- <div *ngFor="let slide of slides; let i = index" class="row g-0 carousel-item"
-            [class.active]="i === activeSlideIndex">
-            <div class="col-12 border carousel-overlay">
-                <img src="{{ slide.imageSrc }}" class="d-block w-100" alt="...">
-                <div class="carousel-caption carousel-caption-overlay  d-md-block">
-                    <div class="centered-square">
-                        <h5>{{ slide.label }}</h5>
-                        <p>{{ slide.content }}</p>
-                        <input type="text" placeholder="Your Name">
-                        <button>Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="carousel-item active" data-bs-interval="6000">
             <div class="carousel-overlay">
                 <img src="/assets/images/concours/header/cafe0.png" class="d-block w-100 min-vh-100" alt="...">
-                <!-- <div class="carousel-caption carousel-caption-overlay p-2 p-md-3 p-xl-5 rounded-5 d-md-block">
-                    <div class="centered-square p-0 p-xxl-5">
-                        <h5>First slide label</h5>
-                        <p class="truncate-text">Some Lorem ipsum dolor sit amet consectetur. Sit egestas accumsan scelerisque quis amet pellentesque. Amet lacus consectetur in iaculis id bibendum hendrerit augue elementum. Mi aliquet gravida pulvinar in nec. Sit in purus nisl fermentum facilisis. Neque leo nunc aliquet nunc at.representative placeholder content for the first slide.</p>
-
-                        <input class="border-0" type="text" placeholder="Your Name">
-                        <button class="border-0 p-0">Jouer</button>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div class="carousel-item" data-bs-interval="6000">
             <div class="carousel-overlay">
                 <img src="/assets/images/concours/header/cafe1.png" class="d-block w-100 min-vh-100" alt="...">
-                <!-- <div class="carousel-caption carousel-caption-overlay p-2 p-md-5 rounded-5 d-md-block">
-                    <div class="centered-square">
-                        <h5>Second slide label</h5>
-                        <p class="truncate-text">Lorem ipsum dolor sit amet consectetur. Sit egestas accumsan scelerisque quis amet pellentesque. Amet lacus consectetur in iaculis id bibendum hendrerit augue elementum. Mi aliquet gravida pulvinar in nec. Sit in purus nisl fermentum facilisis. Neque leo nunc aliquet nunc at.Some representative placeholder content for the second slide.</p>
 
-                        <input class="border-0" type="text" placeholder="Your Name">
-                        <button class="border-0 p-0">Jouer</button>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div class="carousel-item" data-bs-interval="6000">
             <div class="carousel-overlay">
                 <img src="/assets/images/concours/header/cafe2.png" class="d-block w-100 min-vh-100" alt="...">
-                <!-- <div class="carousel-caption carousel-caption-overlay p-2 p-md-5 rounded-5 d-md-block">
-                    <div class="centered-square">
-                        <h5>Third slide label</h5>
-                        <p class="truncate-text">Lorem ipsum dolor sit amet consectetur. Sit egestas accumsan scelerisque quis amet pellentesque. Amet lacus consectetur in iaculis id bibendum hendrerit augue elementum. Mi aliquet gravida pulvinar in nec. Sit in purus nisl fermentum facilisis. Neque leo nunc aliquet nunc at.Some representative placeholder content for the third slide.</p>
-
-                        <input class="border-0" type="text" placeholder="Your Name">
-                        <button class="border-0 p-0">Jouer</button>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div class="carousel-item" data-bs-interval="6000">
             <div class="carousel-overlay">
                 <img src="/assets/images/concours/header/cafe3.png" class="d-block w-100 min-vh-100" alt="...">
-                <!-- <div class="carousel-caption carousel-caption-overlay p-2 p-md-5 rounded-5 d-md-block">
-                    <div class="centered-square">
-                        <h5>Second slide label</h5>
-                        <p class="truncate-text">Lorem ipsum dolor sit amet consectetur. Sit egestas accumsan scelerisque quis amet pellentesque. Amet lacus consectetur in iaculis id bibendum hendrerit augue elementum. Mi aliquet gravida pulvinar in nec. Sit in purus nisl fermentum facilisis. Neque leo nunc aliquet nunc at.Some representative placeholder content for the second slide.</p>
-
-                        <input class="border-0" type="text" placeholder="Your Name">
-                        <button class="border-0 p-0">Jouer</button>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -158,46 +94,4 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
-    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
-        (click)="setActiveSlide(activeSlideIndex === 0 ? slides.length - 1 : activeSlideIndex - 1)">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
-        (click)="setActiveSlide(activeSlideIndex === slides.length - 1 ? 0 : activeSlideIndex + 1)">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button> -->
 </div>
-
-
-<!-- <div id="carouselExampleIndicators" class="carousel slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="/assets/images/auth/auth_register.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="/assets/images/concours/header/cafe1.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="/assets/images/concours/header/cafe2.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-        <img src="/assets/images/concours/header/cafe1.png" class="d-block w-100" alt="...">
-      </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div> -->

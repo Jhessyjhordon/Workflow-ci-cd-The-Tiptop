@@ -14,10 +14,7 @@ export class TicketVerifyService {
   constructor(private http: HttpClient) { }
 
   verifyTicket(numTicket: number): Observable<any> {
-
-    console.log(numTicket);
-    
-
+    console.log(numTicket); 
     return this.http.post(this.endpointUrl + '/ticket/verify/', { numTicket })
       .pipe(
         catchError((error) => {
@@ -29,5 +26,10 @@ export class TicketVerifyService {
           return throwError(() => new Error('Une erreur est survenue lors de l\'inscription : ' + error.message));
         })
       );
+  }
+
+  patchTicketUserId(id: number, data: object): Observable<any> {
+    const url = `${this.endpointUrl}/ticket/${id}`;
+    return this.http.patch(url, data);
   }
 }
