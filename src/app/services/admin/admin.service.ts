@@ -21,11 +21,9 @@ export class AdminService {
     );
   }
 
-  /*getUsersWithEmailing(): Observable<emailing[]> {
-    return this.http.get<{ email: emailing[] }>(this.endpointUrl + '/user/email/newsletter?newsletter=1').pipe(
-      map(response => response.email) 
-    );
-  }*/
+  synchronizeMailchimpManually(): Observable<any> {
+    return this.http.get(this.endpointUrl + '/user/email/newsletter?newsletter=1&mode=mailchimp')
+  }
 
   deleteUserById(id: number) {
     // const token = localStorage.getItem('token');
