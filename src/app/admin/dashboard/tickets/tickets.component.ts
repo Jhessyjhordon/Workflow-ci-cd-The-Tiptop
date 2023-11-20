@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe, NgFor } from '@angular/common';
-import { AllTickets } from 'src/app/models/ticket.model';
+import { AllTickets } from 'src/app/models/all-ticket.model';
 import { UserAdmin } from 'src/app/models/user-admin.model';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { AgeService } from 'src/app/services/ageRanges/age.service';

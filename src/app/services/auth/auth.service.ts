@@ -7,9 +7,10 @@ import { jwtDecode } from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
-  email? : string;
-  role? : string;
-  iat? : number;
+  id?: string;
+  email?: string;
+  role?: string;
+  iat?: number;
 }
 
 @Injectable({
@@ -30,14 +31,12 @@ export class AuthService {
   }
 
   setToken(token: string) {
-    //localStorage.setItem('token', token); // enregistrez le jeton dans localStorage
-    this.cookieService.set('token', token); // enregistrez le jeton dans localStorage
+    this.cookieService.set('token', token); // enregistrez le jeton dans cookieService
     this.isAuthenticated.next(true); // Émet un signal que l'utilisateur est maintenant authentifié
   }
 
   getToken(): string | null {
     const token = this.cookieService.get('token');
-    //console.log('Valeur du token récupéré:', token);
     return token ? token : null; // Renvoie null si le token est une chaîne vide ou undefined
   }
 
@@ -45,23 +44,30 @@ export class AuthService {
     return this.isAuthenticated.asObservable();
   }
 
-  // Appelé lors de la connexion pour stocker le rôle
+  // Appelé lors de la connexion pour stocker le rôle dans depuis les cookies
   setRoleUser(userRole: string) {
-    //localStorage.setItem('userRole', userRole); // Stocke le rôle dans le localStorage
-    this.cookieService.set('userRole', userRole); // Stocke le rôle dans le localStorage
+    this.cookieService.set('userRole', userRole); // Stocke le rôle dans le cookieService
   }
 
-  // Méthode pour récupérer le rôle de l'utilisateur
+  // Méthode pour récupérer le rôle de l'utilisateur connecté depuis les cookies
   getRoleUser(): string | null {
-    //return localStorage.getItem('userRole'); // Récupère le rôle depuis le localStorage
-    return this.cookieService.get('userRole'); // Récupère le rôle depuis le localStorage
+    return this.cookieService.get('userRole'); 
+  }
+
+  // Appelé lors de la connexion pour stocker l'id du user dans les cookies
+  setIdUser(userId: string) {
+    this.cookieService.set('userId', userId); 
+  }
+
+  // Méthode pour récupérer l'id de l'utilisateur connecté dans les cookies
+  getIdUser(): string | null {
+    return this.cookieService.get('userId'); 
   }
 
   logout() {
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('userRole');
     this.cookieService.delete('token');
     this.cookieService.delete('userRole');
+    this.cookieService.delete('userId');
     this.isAuthenticated.next(false); // Émet un signal que l'utilisateur n'est plus authentifié
     this.router.navigate(['home']);
   }
@@ -71,14 +77,16 @@ export class AuthService {
     const credentials = { email, password };
     console.log("user try to log with user name : ", credentials.email, " and password : ", credentials.password);
 
-    return this.http.post<AuthResponse>(this.apiUrl  + '/user/login', credentials).pipe(
+    return this.http.post<AuthResponse>(this.apiUrl + '/user/login', credentials).pipe(
       switchMap((response) => {
         if (!response.error) {
-          this.setToken(response.jwt);
           const tokenDecoded = jwtDecode<JwtPayload>(response.jwt);
           const roleUser = tokenDecoded.role as string;
+          const roleId = tokenDecoded.id as string;
+          this.setToken(response.jwt);
           this.setRoleUser(roleUser);
-  
+          this.setIdUser(roleId);
+
           // Au lieu de naviguer ici, retournez un nouvel Observable qui décide où naviguer.
           return of(roleUser); // Ici, 'of' est utilisé pour transformer la valeur en Observable.
         } else {
@@ -88,10 +96,10 @@ export class AuthService {
       map(roleUser => {
         if (roleUser === 'admin') {
           this.router.navigate(['/admin/dashboard']);
-        } else if (roleUser === 'employee')  {
+        } else if (roleUser === 'employee') {
           // Gérez les autres cas de rôle ici.
         } else if (roleUser === 'customer') {
-          this.router.navigate(['/recompenses']);
+          this.router.navigate(['/concours']);
         } else {
 
         }
@@ -117,12 +125,12 @@ export class AuthService {
   }
 
   //Methode pour l'inscription
-  signup({ firstname, lastname, phone, email, password, address, birthDate, role }: any): Observable<any> {
+  signup({ firstname, lastname, phone, email, password, address, birthDate, newsletter , role }: any): Observable<any> {
     // Valeurs en dur pour birthDate, address et role
     // const birthDate = '01/01/2002';
     // const address = '2 Allée Lorentz Champs-sur-Marne';
     // const role ='customer';
-    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " password : ", password, " address : ", address, " birthDate : ", birthDate, " and role : ", role);
+    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " password : ", password, " address : ", address, " birthDate : ", birthDate, "etat newsletter : ", newsletter , " and role : ", role);
     return this.http.post(this.apiUrl + '/user', {
       firstname,
       lastname,
@@ -131,6 +139,7 @@ export class AuthService {
       phone,
       email,
       password,
+      newsletter,
       role
     }).pipe(
       catchError((error) => {

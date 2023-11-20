@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { UserAdmin } from 'src/app/models/user-admin.model';
-import { AllTickets } from 'src/app/models/ticket.model';
+import { AllTickets } from 'src/app/models/all-ticket.model';
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
 import { emailing } from 'src/app/models/emailing.model';
 
