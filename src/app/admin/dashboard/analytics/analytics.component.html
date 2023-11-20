@@ -1,12 +1,24 @@
 <div class="empty"></div>
-<a class="btn btn-primary mb-2" href="http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr/user/email/newsletter?newsletter=1&mode=csv" download="user_emails.csv">Télécharger les Emails</a>
-<a class="btn btn-primary mb-2" (click)="synchronizeData()">Synchroniser avec Mailchimp</a>
 <div class="charts row mx-auto" *ngIf="isLoggedAsAdmin">
     <div class="canvas col-md-5 border border-primary shadow-lg p-4 mx-auto bg-body rounded">
         <canvas id="canvas" #canvasElement>{{chart}}</canvas>
     </div>
     <div class="canvas col-md-5 border border-primary shadow-lg p-4 mx-auto bg-body rounded">
         <canvas id="canvasPie" #canvasPieElement>{{chartPie}}</canvas>
+    </div>
+</div>
+
+<div class="container table-responsive py-5">
+    <h2>Emailing</h2>
+    <div class="d-flex w-100">
+            <a *ngIf="isLoggedAsAdmin" class="btn btn-primary mb-2 mx-2 w-50" href="http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr/user/email/newsletter?newsletter=1&mode=csv" download="user_emails.csv">Télécharger les Emails</a>
+
+            <a *ngIf="isLoggedAsAdmin" class="btn btn-primary mb-2 mx-2 w-50" (click)="synchronizeData()">Synchroniser avec Mailchimp</a>
+    </div>
+    <div *ngIf="synchronizationResult" class="col px-md-5">
+        <div class="m-0 alert" [class.alert-success]="synchronizationResult.success" [class.alert-danger]="!synchronizationResult.success">
+            {{ synchronizationResult.message }}
+        </div>
     </div>
 </div>
 
