@@ -14,7 +14,8 @@ export default [
             { path: 'user', component: UserComponent },
             { path: 'analytics', component: AnalyticsComponent },
             { path: 'tickets', component: TicketsComponent },
-            { path: 'detail-ticket/:id', component: DetailTicketComponent },
+            { path: 'detail-ticket/:id', component: DetailTicketComponent }
+
             // autres routes enfants
         ]
     },

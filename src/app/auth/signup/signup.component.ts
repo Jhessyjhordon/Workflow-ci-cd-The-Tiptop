@@ -77,7 +77,8 @@ export class SignupComponent implements OnInit  {
       confirmPassword: ['', [Validators.required, Validators.pattern(passwordsRegex)]],
       address: ['', [Validators.required, Validators.pattern(addressRegex)]],
       birthDate: ['', [Validators.required]],
-      role: ['customer', [Validators.required, Validators.pattern(rolesRegex)]]
+      role: ['customer', [Validators.required, Validators.pattern(rolesRegex)]],
+      newsletter: [0] 
     }, {
       validator: this.mustMatch('password', 'confirmPassword') // On gère ici la comparaison de pass et confirm password pour qu'ils soient à l'identique
     });

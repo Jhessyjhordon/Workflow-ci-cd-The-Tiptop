@@ -3,7 +3,7 @@
 
     <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
       <div
-        class="d-flex flex-column align-items-center justify-content-center text-center w-100 p-4 rounded-5 main-container">
+        class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
 
         <h1 class="text-break">Inscription</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
@@ -15,7 +15,7 @@
               </div>
             </div>
           </div>
-          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4 p-md-4">
+          <div class="row row-cols-1  g-4 p-md-4">
             <!-- Nom -->
             <div class="col px-md-5">
               <!-- Afficher les erreurs pour le champ 'Name' -->
@@ -132,7 +132,8 @@
                   Le mot de passe est requis.
                 </div>
                 <div *ngIf="loginForm.get('password')?.errors?.['pattern']" class="text-start">
-                  Le mot de passe doit contenir au moins 8 caractères, dont une lettre majuscule, une lettre minuscule et un chiffre.
+                  Le mot de passe doit contenir au moins 8 caractères, dont une lettre majuscule, une lettre minuscule
+                  et un chiffre.
                 </div>
               </div>
               <div class="form-floating mb-3">
@@ -161,14 +162,24 @@
               <div class="form-floating mb-3">
                 <input type="password" class="form-control rounded-5" placeholder="Confirmer le mot de passe .."
                   id="floatingInputConfirmPsw" formControlName="confirmPassword" />
-                <label for="floatingInputConfirmPsw" class="w-100">Confirmer le  mot de passe</label>
+                <label for="floatingInputConfirmPsw" class="w-100">Confirmer le mot de passe</label>
+              </div>
+            </div>
+            <!-- Newsletter -->
+            <div class="col px-md-5">
+              <!-- La case à cocher pour la newsletter -->
+              <div class="form-check mb-3 d-flex align-items-center">
+                <input class="form-check-input me-3" type="checkbox" id="floatingInputAcceptNewsletter"
+                  formControlName="newsletter" value="1">
+                <label class="form-check-label" for="floatingInputAcceptNewsletter">
+                  En cochant cette case, je consens à ce que mes données soient utilisées à fins des commerciales dans le cadre de campagne d'emailing.
+                </label>
               </div>
             </div>
             <!-- Role -->
-            <div class="col px-md-5"  *ngIf="isLoggedAsAdmin">
+            <div class="col px-md-5" *ngIf="isLoggedAsAdmin">
               <!-- Afficher les erreurs pour le champ 'role' -->
-              <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched"
-                class="text-danger">
+              <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched" class="text-danger">
                 <div *ngIf="loginForm.get('role')?.errors?.['required']" class="text-start">
                   Le role est requise.
                 </div>

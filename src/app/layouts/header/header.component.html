@@ -18,7 +18,7 @@
     </button>
 
     <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-      <a [routerLink]="'/home'" class="navbar-brand col-lg-3 me-0">Centered nav</a>
+      <a [routerLink]="'/home'" class="navbar-brand col-lg-3 me-0"><img src="/assets/images/footer/thetiptop-footer.png"/></a>
       <ul class="navbar-nav col-lg-6 justify-content-lg-center">
         <li class="nav-item">
           <a [routerLink]="'/home'" routerLinkActive="custom-active" class="nav-link" aria-current="page">Home</a>
@@ -35,7 +35,8 @@
       </ul>
 
       <div *ngIf="!isLoggedIn" class="d-lg-flex col-lg-3 justify-content-lg-end">
-        <button [routerLink]="'./auth/login'" class="btn btn-primary">Login</button>
+        <button [routerLink]="'./auth/signup'" class="btn btn-outline-primary me-2">INSCRIPTION</button>
+        <button [routerLink]="'./auth/login'" class="btn btn-primary">CONNEXION</button>
       </div>
 
       <div *ngIf="isLoggedIn" class="d-lg-flex col-lg-3 justify-content-end ">

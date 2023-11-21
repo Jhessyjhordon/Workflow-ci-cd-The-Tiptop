@@ -51,7 +51,8 @@ describe('SignupComponent', () => {
       confirmPassword: 'Password-123',
       address: '2 Allée Lorentz Champs-sur-Marne',
       birthDate: '2002-01-01',
-      role: 'customer'
+      role: 'customer',
+      newsletter: '0'
     });
     // Espionner la méthode 'signup' du service d'authentification
     spyOn(authService, 'signup').and.callThrough();
@@ -68,7 +69,8 @@ describe('SignupComponent', () => {
       confirmPassword: 'Password-123',
       birthDate:  '2002-01-01',
       address: '2 Allée Lorentz Champs-sur-Marne',
-      role: 'customer'
+      role: 'customer',
+      newsletter: '0'
     });
   });
 });

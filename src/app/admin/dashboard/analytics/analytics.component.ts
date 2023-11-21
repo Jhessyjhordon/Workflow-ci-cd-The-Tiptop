@@ -7,13 +7,15 @@ import { DecimalPipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserAdmin } from 'src/app/models/user-admin.model';
-import { AllTickets } from 'src/app/models/ticket.model';
+import { AllTickets } from 'src/app/models/all-ticket.model';
 // Appel du service admin & currentDateService et AgeService
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { CurrentDateService } from 'src/app/services/date/current-date.service';
 import { AgeService } from 'src/app/services/ageRanges/age.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
+import { emailing } from 'src/app/models/emailing.model';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-analytics',
@@ -32,6 +34,7 @@ export class AnalyticsComponent implements OnInit {
   totalItems: number = 0;
   collectionSize: number = 0;
   filterText: string = ''; // Permet de stocker la valeur saisie dans le filter sur le html
+  email: emailing[] = [];
 
   allTickets: AllTickets[] = []; // Contient tous les tickets chargés à partir du serveur
   totalTickets: number = 0; // On stocke en affichant en nombre, tous les tickets reçu
@@ -46,11 +49,13 @@ export class AnalyticsComponent implements OnInit {
 
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
+  synchronizationResult: { success: boolean; message: string } | null = null; // Ajout propriété pour stocker le résultat de la synchronisation mailchimp
+
   // Ici, #canvasElement et #canvasPieElement sont des références locales qui peuvent être utilisées dans le fichier TypeScript pour accéder aux éléments du DOM.
   @ViewChild('canvasElement') canvas: ElementRef | null = null;
   @ViewChild('canvasPieElement') canvasPie: ElementRef | null = null;
 
-  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService, private titleService : Title, private metaService: Meta) {
+  constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService, private titleService : Title, private metaService: Meta, private changeDetectorRef: ChangeDetectorRef) {
     this.titleService.setTitle(this.title);
     this.addTag();
     
@@ -131,6 +136,7 @@ export class AnalyticsComponent implements OnInit {
   }
 
   loadInitialData() {
+
     this.adminService.getUsersWithRoleClient().subscribe(
       (users: UserAdmin[]) => {
         this.allUsers = users; // Stockez les données du serveur dans allUsers
@@ -234,6 +240,24 @@ export class AnalyticsComponent implements OnInit {
       (error) => {
         console.error('Error deleting user:', error);
         // Ajoutez ici une logique supplémentaire si nécessaire, par exemple, afficher un message d'erreur à l'utilisateur
+      }
+    );
+  }
+
+  //--- Emailing ---//
+  synchronizeData(){
+    this.adminService.synchronizeMailchimpManually().subscribe(
+      () =>{
+        this.synchronizationResult = {
+          success: true,
+          message: "Synchronisation effectuée",
+        };
+      },
+      () =>{
+        this.synchronizationResult = {
+          success: false,
+          message: "Une erreur s'est produite lors de la synchronisation",
+        };
       }
     );
   }

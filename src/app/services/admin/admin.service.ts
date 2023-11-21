@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { UserAdmin } from 'src/app/models/user-admin.model';
-import { AllTickets } from 'src/app/models/ticket.model';
+import { AllTickets } from 'src/app/models/all-ticket.model';
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
+import { emailing } from 'src/app/models/emailing.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,13 @@ export class AdminService {
 
   getUsersWithRoleClient(): Observable<UserAdmin[]> {
     // HttpClient assume par défaut que la réponse est un JSON, donc pas besoin de .json()
-    return this.http.get<{ users: UserAdmin[] }>(this.endpointUrl + '/user/role/client').pipe(
+    return this.http.get<{ users: UserAdmin[] }>(this.endpointUrl + '/user/role/customer').pipe(
       map(response => response.users) // Assurez-vous que cela renvoie un tableau
     );
+  }
+
+  synchronizeMailchimpManually(): Observable<any> {
+    return this.http.get(this.endpointUrl + '/user/email/newsletter?newsletter=1&mode=mailchimp')
   }
 
   deleteUserById(id: number) {
