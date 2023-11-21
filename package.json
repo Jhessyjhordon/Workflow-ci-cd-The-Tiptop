@@ -11,8 +11,8 @@
     "test:integration": "ng test --no-watch --no-progress --include='**/*.integration.spec.ts' --browsers=ChromeHeadless --karma-config=karma.conf.js",
     "dev:ssr": "ng run the-tiptop-front:serve-ssr",
     "serve:ssr": "node dist/the-tiptop-front/server/main.js",
-    "build:ssr": "ng build && ng run the-tiptop-front:server",
-    "prerender": "ng run the-tiptop-front:prerender"
+    "build:ssr": "ng build --prod && ng run the-tiptop-front:server:production",
+    "prerender": "ng run the-tiptop-front:prerender:production"
   },
   "private": true,
   "dependencies": {
