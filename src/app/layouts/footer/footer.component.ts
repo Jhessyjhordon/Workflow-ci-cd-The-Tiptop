@@ -10,5 +10,21 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
+  ngOnInit(){
+    this.loadAxeptioScript();
+  }
 
+  loadAxeptioScript(){
+     // Définir les paramètres Axeptio
+    (window as any).axeptioSettings = {
+      clientId: "655e146f508b50f44623bccc",
+      cookiesVersion: "projet dsp5 - archi o22b-fr",
+    };
+
+    // Créer et ajouter le script Axeptio au DOM
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = "//static.axept.io/sdk.js";
+    document.body.appendChild(script); // Vous pouvez aussi utiliser document.head si nécessaire
+  }
 }
