@@ -20,7 +20,7 @@ export class UserService {
   userData$: Observable<UserCustomer | null> = this.userDataSubject.asObservable();
 
   // private userData!: UserCustomer;
-  private endpointUrl = 'http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr/user'; // Endpoint de l'API 
+  private endpointUrl = 'https://api.dev.dsp-archiwebo22b-ji-rw-ah.fr/user'; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
