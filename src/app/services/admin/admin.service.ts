@@ -10,7 +10,7 @@ import { emailing } from 'src/app/models/emailing.model';
   providedIn: 'root'
 })
 export class AdminService {
-  private endpointUrl = 'https://api.preprod.dsp-archiwebo22b-ji-rw-ah.fr/'; // Endpoint de l'API 
+  private endpointUrl = 'https://api.preprod.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
