@@ -19,7 +19,7 @@ interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les 
 export class AuthService {
 
   private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private apiUrl = 'https://api.preprod.dsp-archiwebo22b-ji-rw-ah.fr/';
+  private apiUrl = 'https://api.preprod.dsp-archiwebo22b-ji-rw-ah.fr';
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
     // Vérifiez si un token est déjà présent lors de l'initialisation du service
