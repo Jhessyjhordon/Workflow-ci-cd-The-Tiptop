@@ -69,7 +69,7 @@ describe('Integration Test: Signup and Login', () => {
         birthDate: '2002-01-01',
         address: '2 Allée Lorentz Champs-sur-Marne',
         role: 'customer',
-        newsletter: 0
+        newsletter: '0'
       });
       // On envoi le formulaire
       signupComponent.onSubmit();
