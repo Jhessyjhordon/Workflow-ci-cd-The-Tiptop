@@ -1,5 +1,5 @@
 # Étape 1: Construire l'application Angular pour SSR et Browser
-FROM node:latest AS builder
+FROM node:18.18.2-alpine3.18 AS builder
 
 WORKDIR /var/jenkins_home/workspace/ront-multibranches-pipeline_main/prod-angular
 
@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build:ssr  
 
 # Étape 2: Préparer les fichiers pour le serveur Node.js et Nginx
-FROM node:latest as prepare
+FROM node:18.18.2-alpine3.18 as prepare
 
 # Copier les fichiers nécessaires depuis le builder
 COPY --from=builder /var/jenkins_home/workspace/ront-multibranches-pipeline_main/prod-angular/dist/the-tiptop-front/server /app/server

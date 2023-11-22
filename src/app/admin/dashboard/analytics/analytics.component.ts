@@ -49,6 +49,8 @@ export class AnalyticsComponent implements OnInit {
 
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
+  synchronizationResult: { success: boolean; message: string } | null = null; // Ajout propriété pour stocker le résultat de la synchronisation mailchimp
+
   // Ici, #canvasElement et #canvasPieElement sont des références locales qui peuvent être utilisées dans le fichier TypeScript pour accéder aux éléments du DOM.
   @ViewChild('canvasElement') canvas: ElementRef | null = null;
   @ViewChild('canvasPieElement') canvasPie: ElementRef | null = null;
@@ -134,14 +136,6 @@ export class AnalyticsComponent implements OnInit {
   }
 
   loadInitialData() {
-
-    /*this.adminService.getUsersWithEmailing().subscribe(
-      (email: emailing[]) => {
-        this.email = email; // Stock les emails de newsletter
-        this.changeDetectorRef.detectChanges(); // Détection manuelle des changements
-        console.log("Newsletter ====>", this.email)
-      }
-    );*/
 
     this.adminService.getUsersWithRoleClient().subscribe(
       (users: UserAdmin[]) => {
@@ -246,6 +240,24 @@ export class AnalyticsComponent implements OnInit {
       (error) => {
         console.error('Error deleting user:', error);
         // Ajoutez ici une logique supplémentaire si nécessaire, par exemple, afficher un message d'erreur à l'utilisateur
+      }
+    );
+  }
+
+  //--- Emailing ---//
+  synchronizeData(){
+    this.adminService.synchronizeMailchimpManually().subscribe(
+      () =>{
+        this.synchronizationResult = {
+          success: true,
+          message: "Synchronisation effectuée",
+        };
+      },
+      () =>{
+        this.synchronizationResult = {
+          success: false,
+          message: "Une erreur s'est produite lors de la synchronisation",
+        };
       }
     );
   }

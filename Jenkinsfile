@@ -229,14 +229,21 @@ pipeline {
                                 // Afficher les informations de l'outil SonarQube
                                 def scannerHome = tool name: 'SonarQube'
                                 echo "scannerHome est : ${scannerHome}"
-                                
+                                                        
                                 // Afficher le chemin d'accès de Sonar
                                 echo "PATH+SONAR est : ${scannerHome}/bin"
                                 
+                               // Configurer l'environnement pour sonar-scanner
                                 withEnv(["PATH+SONAR=${scannerHome}/bin"]) {
-                                    sh "sonar-scanner \
-                                        -Dsonar.host.url=https://sonarqube.dsp-archiwebo22b-ji-rw-ah.fr/ \
-                                        -Dsonar.login=${SONAR_TOKEN}"
+                                    // Utiliser withCredentials pour sécuriser le SONAR_TOKEN
+                                    withCredentials([string(credentialsId: 'angular-sonar', variable: 'SONAR_TOKEN')]) {
+                                        // Exécuter sonar-scanner avec le SONAR_TOKEN
+                                        sh '''
+                                            sonar-scanner \
+                                            -Dsonar.host.url=https://sonarqube.dsp-archiwebo22b-ji-rw-ah.fr/ \
+                                            -Dsonar.login=$SONAR_TOKEN
+                                        '''
+                                    }
                                 }
                             }
                         }
