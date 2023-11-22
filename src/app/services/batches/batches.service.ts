@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class BatchesService {
 
-  private endpointUrl = 'http://api.dev.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
+  private endpointUrl = 'https://api.preprod.dsp-archiwebo22b-ji-rw-ah.fr/'; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
