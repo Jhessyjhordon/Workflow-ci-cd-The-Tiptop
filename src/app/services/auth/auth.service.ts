@@ -153,4 +153,8 @@ export class AuthService {
       })
     );
   }
+
+  redirectToGoogleAuth(): void {
+    window.location.href = this.apiUrl + '/user/auth/google';
+  }
 }
