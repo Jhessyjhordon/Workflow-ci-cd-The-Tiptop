@@ -55,6 +55,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -151,19 +157,13 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.preprod.ts",
+                  "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "media"
             },
             "development": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.dev.ts"
-                }
-              ],
               "buildOptimizer": false,
               "optimization": false,
               "sourceMap": true,
@@ -173,7 +173,7 @@
             "preprod": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.dev.ts",
+                  "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.preprod.ts"
                 }
               ]
