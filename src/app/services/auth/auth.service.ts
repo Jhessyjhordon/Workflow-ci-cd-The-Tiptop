@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError
 import { AuthResponse } from 'src/app/models/auth-response';
 import { jwtDecode } from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
   id?: string;
