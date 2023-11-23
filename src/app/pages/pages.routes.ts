@@ -27,10 +27,6 @@ export default [
         import('./mentions-legales/mentions-legales.component').then((c) => c.MentionsLegalesComponent)
     },
     {
-        path: 'conditions-generales-de-vente', loadComponent: () =>
-        import('./cgv/cgv.component').then((c) => c.CgvComponent)
-    },
-    {
         path: 'conditions-generales-utilisation', loadComponent: () =>
         import('./cgu/cgu.component').then((c) => c.CguComponent)
     }
