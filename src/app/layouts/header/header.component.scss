@@ -21,6 +21,26 @@
 //     }
 // }
 
+div.top-bar{
+    p{
+        background: #212529;
+        color: #fff;
+        padding: 5px;
+    }
+}
+
+nav.navbar{
+    margin-top: -15px;
+    // Media queries
+    @media (max-width: 767px) {
+
+        // For screens smaller than 768px
+        a.logo {
+            display: none;
+        }
+
+    }
+}
 
 .custom-active {
     background-color: #ff0000;
