@@ -9,7 +9,7 @@ import { AllTickets } from 'src/app/models/all-ticket.model';
 })
 export class TicketVerifyService {
 
-  private endpointUrl = 'https://api.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
+  private endpointUrl = 'https://api-dev.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
 
   constructor(private http: HttpClient) { }
 
