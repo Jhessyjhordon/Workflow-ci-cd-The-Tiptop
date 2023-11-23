@@ -4,7 +4,8 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { UserAdmin } from 'src/app/models/user-admin.model';
 import { AllTickets } from 'src/app/models/all-ticket.model';
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
-import { environment } from 'src/environments/environment.dev';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

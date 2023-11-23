@@ -1,6 +1,5 @@
-// src/environments/environment.ts
+// environment.ts
 export const environment = {
     production: false,
-    endpointUrl: 'llocalhost:4000'
+    endpointUrl: 'https://api-dev.dsp-archiwebo22b-ji-rw-ah.fr'
   };
-  

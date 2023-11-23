@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
