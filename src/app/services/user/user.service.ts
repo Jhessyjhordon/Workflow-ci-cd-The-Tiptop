@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class UserService {
   userData$: Observable<UserCustomer | null> = this.userDataSubject.asObservable();
 
   // private userData!: UserCustomer;
-  private endpointUrl = 'https://api-dev.dsp-archiwebo22b-ji-rw-ah.fr/user'; // Endpoint de l'API 
+  private endpointUrl = environment.endpointUrl; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 

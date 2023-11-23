@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BatchesService {
 
-  private endpointUrl = 'https://api-dev.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
+  private endpointUrl = environment.endpointUrl; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

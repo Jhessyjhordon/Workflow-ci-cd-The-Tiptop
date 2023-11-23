@@ -50,6 +50,7 @@ export class AnalyticsComponent implements OnInit {
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
   synchronizationResult: { success: boolean; message: string } | null = null; // Ajout propriété pour stocker le résultat de la synchronisation mailchimp
+  getDataCsvResult : { success: boolean; message: string } | null = null; // Ajout propriété pour stocker le résultat de la synchronisation mailchimp
 
   // Ici, #canvasElement et #canvasPieElement sont des références locales qui peuvent être utilisées dans le fichier TypeScript pour accéder aux éléments du DOM.
   @ViewChild('canvasElement') canvas: ElementRef | null = null;
@@ -257,6 +258,23 @@ export class AnalyticsComponent implements OnInit {
         this.synchronizationResult = {
           success: false,
           message: "Une erreur s'est produite lors de la synchronisation",
+        };
+      }
+    );
+  }
+
+  getDataCsv(){
+    this.adminService.getDataCsv().subscribe(
+      () =>{
+        this.getDataCsvResult ={
+          success: true,
+          message: "Synchronisation effectuée",
+        };
+      },
+      () =>{
+        this.getDataCsvResult ={
+          success: false,
+          message: "Erreur s'est produite lors du téléchargement",
         };
       }
     );

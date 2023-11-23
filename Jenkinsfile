@@ -125,7 +125,15 @@ pipeline {
                         case 'NodeJS':                            
                             echo "Build Angular"
                             dir("${WORKSPACE}/${env.folderName}") {
-                                sh 'npm run build'
+                                // Utilisez la branche pour déterminer le script de build approprié
+                                if (env.currentBranch == 'main') {
+                                    sh 'npm run build:ssr:prod'
+                                } else if (env.currentBranch == 'preprod') {
+                                    sh 'npm run build:ssr:preprod'
+                                } else {
+                                    // Pour les branches de développement ou autres
+                                    sh 'npm run build:ssr:dev'
+                                }
                             }
                             break
                         case 'Python':
@@ -134,7 +142,6 @@ pipeline {
                         case 'Ruby':
                             echo "Build Ruby"
                             break
-                        // ... autres cas pour d'autres langages ou frameworks
                         default:
                             echo "Aucune étape de compilation requise ou langage non reconnu"
                     }

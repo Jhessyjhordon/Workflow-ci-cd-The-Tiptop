@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError
 import { AuthResponse } from 'src/app/models/auth-response';
 import { jwtDecode } from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
+import { environment } from 'src/environments/environment.dev';
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
   id?: string;
@@ -19,7 +20,7 @@ interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les 
 export class AuthService {
 
   private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private apiUrl = 'https://api-dev.dsp-archiwebo22b-ji-rw-ah.fr';
+  private apiUrl = environment.endpointUrl;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
     // Vérifiez si un token est déjà présent lors de l'initialisation du service
