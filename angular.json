@@ -151,7 +151,7 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
+                  "replace": "src/environments/environment.preprod.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
@@ -173,7 +173,7 @@
             "preprod": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
+                  "replace": "src/environments/environment.dev.ts",
                   "with": "src/environments/environment.preprod.ts"
                 }
               ]
