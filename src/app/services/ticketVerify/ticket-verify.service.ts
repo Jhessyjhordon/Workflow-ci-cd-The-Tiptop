@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { UserAdmin } from 'src/app/models/user-admin.model';
-import { AllTickets } from 'src/app/models/all-ticket.model';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketVerifyService {
 
-  private endpointUrl = 'https://api-dev.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
+  private endpointUrl = environment.endpointUrl; // Endpoint de l'API 
 
   constructor(private http: HttpClient) { }
 
