@@ -21,16 +21,21 @@
 //     }
 // }
 
-div.top-bar{
-    p{
+div.top-bar {
+    p {
         background: #212529;
         color: #fff;
         padding: 5px;
     }
 }
 
-nav.navbar{
+nav.navbar {
     margin-top: -15px;
+
+    a.logo>img {
+        width: 4em;
+    }
+
     // Media queries
     @media (max-width: 767px) {
 
@@ -43,7 +48,7 @@ nav.navbar{
 }
 
 .custom-active {
-    background-color: #ff0000;
+    background-color: #3E5140;
     /* Changer la couleur de fond */
     color: #ffffff;
     /* Changer la couleur du texte */
@@ -53,8 +58,26 @@ nav.navbar{
     transition: all 1s;
 }
 
+.custom-active.home-link {
+    background-color: #3E5140;
+    color: #ffffff;
+    font-weight: bold;
+    transition: all 1s;
+}
+
+
 .logout {
     cursor: pointer;
+}
+
+.btn-outline-primary {
+    color: #3E5140;
+    border-color: #3E5140;
+}
+
+.btn-primary {
+    background-color: #3E5140;
+    border-color: #3E5140;
 }
 
 // .dropdown-menu-end {

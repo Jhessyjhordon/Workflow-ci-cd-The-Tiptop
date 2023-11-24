@@ -11,61 +11,79 @@
 </div> -->
 
 <div class="top-bar text-center">
-  <p>Dans le cadre de la formation, MBA2 Architecte Digtal au sein de Digital School of Paris, il s'agit d'un projet étudiant fictif pour lequel aucun réel achat ou aucune réservation ne pourrait être effectué</p>
+  <p>Dans le cadre de la formation, MBA2 Architecte Digtal au sein de Digital School of Paris, il s'agit d'un projet
+    étudiant fictif pour lequel aucun réel achat ou aucune réservation ne pourrait être effectué</p>
 </div>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary rounded" aria-label="Thirteenth navbar example">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
+<nav class="navbar navbar-expand-lg bg-body-tertiary rounded p-0" aria-label="Thirteenth navbar example">
+  <div class="container-fluid px-0 mx-0">
+    <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
       aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-      <a [routerLink]="'/home'" class="logo navbar-brand col-lg-3 me-0"><img src="/assets/images/footer/thetiptop-footer.png"/></a>
-      <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+    <div class="collapse navbar-collapse d-lg-flex py-2 py-lg-0" id="navbarsExample11">
+      <a [routerLink]="''" class="logo navbar-brand col-lg-3 me-0"><img
+          src="/assets/images/footer/thetiptop-footer.png" /></a>
+      <ul class="navbar-nav col-lg-6 justify-content-lg-evenly">
         <li class="nav-item">
-          <a [routerLink]="'/home'" routerLinkActive="custom-active" class="nav-link" aria-current="page">Home</a>
+          <a [routerLink]="''" routerLinkActive="custom-active" [routerLinkActiveOptions]="{exact: true}" class="nav-link my-2 px-2"
+            aria-current="page">Accueil</a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="'/concours'" routerLinkActive="custom-active" class="nav-link">Concours</a>
+          <a [routerLink]="'/concours'" routerLinkActive="custom-active" class="nav-link my-2 px-2">Concours</a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="'/recompenses'" routerLinkActive="custom-active" class="nav-link">Récompenses</a>
+          <a [routerLink]="'/recompenses'" routerLinkActive="custom-active" class="nav-link my-2 px-2">Récompenses</a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="'/contact'" routerLinkActive="custom-active" class="nav-link">Contact</a>
+          <a [routerLink]="'/contact'" routerLinkActive="custom-active" class="nav-link my-2 px-2">Contact</a>
         </li>
       </ul>
 
-      <div *ngIf="!isLoggedIn" class="d-lg-flex col-lg-3 justify-content-lg-end">
+      <div *ngIf="!isLoggedIn" class="d-lg-flex col-lg-3 justify-content-lg-end px-2">
         <button [routerLink]="'./auth/signup'" class="btn btn-outline-primary me-2">INSCRIPTION</button>
         <button [routerLink]="'./auth/login'" class="btn btn-primary">CONNEXION</button>
       </div>
 
-      <div *ngIf="isLoggedIn" class="d-lg-flex col-lg-3 justify-content-end ">
-        <div class="flex-shrink-0 dropdown">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small shadow dropdown-menu-end ">
-            <!-- ici on s'assure que "userData" contient des données avant de tenter d'accéder à ses propriétés  -->
-            <li *ngIf="userData"><p class="dropdown-item m-0">{{userData.firstname}} {{userData.lastname}}</p></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li *ngIf="isLoggedAsAdmin"><a class="dropdown-item" [routerLink]="'/admin/dashboard'">Dashboard admin</a></li>
-            <li *ngIf="isLoggedAsEmploye"><a class="dropdown-item" [routerLink]="'/admin/dashboard'">Dashboard employé</a></li>
-            <!-- <li><a class="dropdown-item" [routerLink]="'/user/profile-detail'">profile-detail</a></li> -->
-            <li><a class="dropdown-item" [routerLink]="'/user/profile'">Profile</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item logout" (click)="logout()">Logout</a></li>
-          </ul>
-        </div>
+      <div *ngIf="isLoggedIn" class="d-lg-flex col-lg-3 justify-content-end px-2">
+
+        <ul class="navbar-nav justify-content-lg-evenly ms-auto me-3">
+          <li class="nav-item">
+            <div class="dropdown text-end w-100">
+              <div
+                class="d-block link-dark text-decoration-none dropdown-toggle d-flex flex-row justify-content-start align-items-center w-100"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="52" height="52" class="rounded-circle">
+              </div>
+              <ul class="dropdown-menu text-small shadow dropdown-menu-end ">
+                <!-- ici on s'assure que "userData" contient des données avant de tenter d'accéder à ses propriétés  -->
+                <li *ngIf="userData">
+                  <p class="dropdown-item m-0">{{userData.firstname}} {{userData.lastname}}</p>
+                </li>
+                <li *ngIf="isLoggedAsAdmin">
+                  <a class="dropdown-item" [routerLink]="'/admin/dashboard'">Dashboard
+                    admin</a>
+                </li>
+                <li *ngIf="isLoggedAsEmploye">
+                  <a class="dropdown-item" [routerLink]="'/admin/dashboard'">Dashboard
+                    employé</a>
+                </li>
+                <li *ngIf="userData || isLoggedAsAdmin || isLoggedAsEmploye">
+                  <hr class="dropdown-divider">
+                </li>
+                <!-- <li><a class="dropdown-item" [routerLink]="'/user/profile-detail'">profile-detail</a></li> -->
+                <li><a class="dropdown-item" [routerLink]="'/user/profile'">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item logout" (click)="logout()">Déconnexion</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
       </div>
+
     </div>
   </div>
 </nav>
