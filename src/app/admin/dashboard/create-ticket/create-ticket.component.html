@@ -1,40 +1,45 @@
+<button type="button" class="btn btn-primary mb-2" [routerLink]="'/admin/dashboard/tickets'">
+    <i class="fa-solid fa-arrow-left"></i>
+</button>
 <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-8">
-        <form (submit)="onSubmit()">
-          <!-- numTicket sera généré automatiquement côté backend -->
-  
-          <div class="mb-3">
-            <label for="montantTicket" class="form-label">Montant du Ticket</label>
-            <input type="number" class="form-control" id="montantTicket" [(ngModel)]="ticket.montantTicket" name="montantTicket" required>
-          </div>
-  
-          <!-- dateAchat sera récupéré côté backend -->
-          <!-- gainAttribue sera à 0 par défaut côté backend -->
-  
-          <div class="mb-3">
-            <label for="userId" class="form-label">Utilisateur</label>
-            <select class="form-select" id="userId" [(ngModel)]="ticket.userId" name="userId" required>
-              <option *ngFor="let user of users" [value]="user.id">
-                {{ user.firstname }} {{ user.lastname }}
-              </option>
-            </select>
-          </div>
-  
-          <div class="mb-3">
-            <label for="batchId" class="form-label">Lot</label>
-            <select class="form-select" id="batchId" [(ngModel)]="ticket.batchId" name="batchId" required>
-              <option *ngFor="let batch of batches" [value]="batch.id">
-                {{ batch.type_lot }}
-              </option>
-            </select>
-          </div>
-  
-          <!-- statusGain sera géré côté backend -->
-  
-          <button type="submit" class="btn btn-primary">Créer Ticket</button>
-        </form>
-      </div>
+        <div class="col-md-8">
+            <form [formGroup]="ticketForm" (submit)="onSubmit()" >
+                <!-- montantTicket sera généré automatiquement côté backend -->
+
+                <div class="mb-3">
+                    <label for="montantTicket" class="form-label">Montant du Ticket</label>
+                    <input type="number" class="form-control" id="montantTicket" formControlName="montantTicket" required min="0" step="0.01">
+                    <div *ngIf="ticketForm.get('montantTicket')?.hasError('min') && ticketForm.get('montantTicket')?.touched">
+                      Le montant doit être supérieur ou égal à 0.
+                    </div>
+                  </div>
+
+                <!-- dateAchat sera récupéré côté backend -->
+                <!-- gainAttribue sera à 0 par défaut côté backend -->
+
+                <div class="mb-3">
+                    <label for="userId" class="form-label">Utilisateur</label>
+                    <select class="form-select" id="userId" formControlName="userId" required>
+                        <option *ngFor="let user of users" [value]="user.id">
+                            {{ user.firstname }} {{ user.lastname }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="batchId" class="form-label">Lot</label>
+                    <select class="form-select" id="batchId" formControlName="batchId" required>
+                        <option *ngFor="let batch of batches" [value]="batch.id">
+                            {{ batch.type_lot }}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- statusGain sera géré côté backend -->
+
+                <button type="submit" class="btn btn-primary">Créer Ticket</button>
+            </form>
+        </div>
     </div>
-  </div>
-  
+</div>
