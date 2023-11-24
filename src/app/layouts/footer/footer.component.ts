@@ -18,7 +18,7 @@ export class FooterComponent {
      // Définir les paramètres Axeptio
     (window as any).axeptioSettings = {
       clientId: "655e146f508b50f44623bccc",
-      cookiesVersion: "projet dsp5 - archi o22b-fr",
+      cookiesVersion: "projet dsp5 - archi o22b-fr-3",
     };
 
     // Créer et ajouter le script Axeptio au DOM
