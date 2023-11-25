@@ -1,11 +1,11 @@
 <section class="footer">
     <footer class="mt-4">
         <div class="flex-container">
-            <p>Home</p>
-            <p>Concours</p>
-            <img alt="logo-thetiptop-footer" class="img-fluid img-20" src="/assets/images/footer/thetiptop-footer.png"/>
-            <p>Récompenses</p>
-            <p>Contact</p>
+            <p [routerLink]="''" class="footerLink">Home</p>
+            <p [routerLink]="'/concours'" class="footerLink">Concours</p>
+            <img [routerLink]="''" alt="logo-thetiptop-footer" class="img-fluid img-20 footerLink" src="/assets/images/footer/thetiptop-footer.png"/>
+            <p [routerLink]="'/recompenses'" class="footerLink">Récompenses</p>
+            <p [routerLink]="'/contact'" class="footerLink">Contact</p>
         </div>
     </footer>
 </section>

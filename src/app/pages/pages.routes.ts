@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
 
 export default [
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
     { 
-        path: 'home', loadComponent: () =>
+        path: '', loadComponent: () =>
         import('./home/home.component').then((c) => c.HomeComponent)
     },
     { 

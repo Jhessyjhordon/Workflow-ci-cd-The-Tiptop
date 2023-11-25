@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { jwtDecode } from 'jwt-decode';
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   isLoggedAsEmploye: boolean = false;
   userData!: UserCustomer | null;
 
-  constructor(private auth: AuthService, private userService: UserService) { }
+  constructor(private auth: AuthService, private userService: UserService, private router: Router,) { }
 
   ngOnInit(): void {
     this.auth.isLoggedIn().subscribe((loggedIn) => {
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     } else if (this.auth.getRoleUser() === "employee") {
       this.isLoggedAsEmploye = true;
     }
-    
+
     // this.getUserData();
 
     // Récupérez les données de l'utilisateur en utilisant le service
@@ -42,6 +42,13 @@ export class HeaderComponent implements OnInit {
       } else {
         // Si les données ne sont pas déjà stockées, appelez votre méthode pour les obtenir
         this.fetchUserData();
+      }
+    });
+
+    // Permet de remonté tout en haut de la page quand on clique sur un lien du menu
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scroll(0, 0); // Positionnement instantané en haut de la page
       }
     });
 

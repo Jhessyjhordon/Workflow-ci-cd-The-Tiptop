@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
 import { environment } from 'src/environments/environment';
+import { UserCustomerShortcut } from 'src/app/models/user-customer-shortcut.model';
 
 @Injectable({
   providedIn: 'root'
@@ -92,7 +93,20 @@ export class UserService {
         // Vous pouvez également lancer une nouvelle erreur personnalisée ici si nécessaire.
         return throwError(error);
       })
-    );;
+    );
+  }
+
+  getShortcutCustomerDetails(): Observable<UserCustomerShortcut[]> {
+    const url = `${this.endpointUrl}/shortcut/customers/datails`;
+
+    return this.http.get<UserCustomerShortcut[]>(url).pipe(
+      catchError((error: any) => {
+        // Gérez les erreurs ici (par exemple, affichez-les dans la console).
+        console.error('Erreur lors de la récuperation des details des utilisateurs :', error);
+        // Vous pouvez également lancer une nouvelle erreur personnalisée ici si nécessaire.
+        return throwError(error);
+      })
+    );
   }
 
 }
