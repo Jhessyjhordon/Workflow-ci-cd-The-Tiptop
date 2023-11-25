@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
 import { AuthResponse } from 'src/app/models/auth-response';
 import { jwtDecode } from "jwt-decode";
-import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
+import { CookieService, SameSite } from 'ngx-cookie-service'; // Importez CookieService
 import { environment } from 'src/environments/environment';
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
@@ -21,6 +21,13 @@ export class AuthService {
 
   private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private apiUrl = environment.endpointUrl;
+  // On ajout les options cookies pour sécuriser notre utilisation des cookies
+  private cookieOptions = {
+    expires: 1, // Fais que le cookie expire au bout de 1 jour
+    secure: true, // Assurez-vous que le cookie est envoyé uniquement sur HTTPS
+    httpOnly: true, // Rend le cookie inaccessible au JavaScript côté client
+    sameSite: 'Strict' as const  // Limite l'envoi du cookie aux requêtes same-site
+  };
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
     // Vérifiez si un token est déjà présent lors de l'initialisation du service
@@ -31,8 +38,10 @@ export class AuthService {
     this.isAuthenticated.next(isAuthenticatedValue);
   }
 
+
+
   setToken(token: string) {
-    this.cookieService.set('token', token); // enregistrez le jeton dans cookieService
+    this.cookieService.set('token', token, this.cookieOptions); // enregistrez le jeton dans cookieService
     this.isAuthenticated.next(true); // Émet un signal que l'utilisateur est maintenant authentifié
   }
 
@@ -47,7 +56,7 @@ export class AuthService {
 
   // Appelé lors de la connexion pour stocker le rôle dans depuis les cookies
   setRoleUser(userRole: string) {
-    this.cookieService.set('userRole', userRole); // Stocke le rôle dans le cookieService
+    this.cookieService.set('userRole', userRole, this.cookieOptions); // Stocke le rôle dans le cookieService
   }
 
   // Méthode pour récupérer le rôle de l'utilisateur connecté depuis les cookies
@@ -57,7 +66,7 @@ export class AuthService {
 
   // Appelé lors de la connexion pour stocker l'id du user dans les cookies
   setIdUser(userId: string) {
-    this.cookieService.set('userId', userId); 
+    this.cookieService.set('userId', userId, this.cookieOptions); 
   }
 
   // Méthode pour récupérer l'id de l'utilisateur connecté dans les cookies
