@@ -16,19 +16,26 @@
 </div>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary rounded p-0" aria-label="Thirteenth navbar example">
-  <div class="container-fluid px-0 mx-0">
-    <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
-      aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <div class="container-fluid px-0 mx-0  d-flex flex-row justify-content-end">
+    <div class=" d-flex flex-row justify-content-between align-items-center w-100 d-block d-lg-none">
+      <a [routerLink]="''" class="logo-phone navbar-brand col-lg-3 me-0 ps-2">
+        <img src="/assets/images/footer/thetiptop-footer.png" />
+      </a>
+
+      <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
+        aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
 
     <div class="collapse navbar-collapse d-lg-flex py-2 py-lg-0" id="navbarsExample11">
-      <a [routerLink]="''" class="logo navbar-brand col-lg-3 me-0"><img
-          src="/assets/images/footer/thetiptop-footer.png" /></a>
+      <a [routerLink]="''" class="logo-desktop navbar-brand col-lg-3 me-0 ps-2 d-none d-lg-block">
+        <img src="/assets/images/footer/thetiptop-footer.png" />
+      </a>
       <ul class="navbar-nav col-lg-6 justify-content-lg-evenly">
         <li class="nav-item">
-          <a [routerLink]="''" routerLinkActive="custom-active" [routerLinkActiveOptions]="{exact: true}" class="nav-link my-2 px-2"
-            aria-current="page">Accueil</a>
+          <a [routerLink]="''" routerLinkActive="custom-active" [routerLinkActiveOptions]="{exact: true}"
+            class="nav-link my-2 px-2" aria-current="page">Accueil</a>
         </li>
         <li class="nav-item">
           <a [routerLink]="'/concours'" routerLinkActive="custom-active" class="nav-link my-2 px-2">Concours</a>
@@ -41,9 +48,9 @@
         </li>
       </ul>
 
-      <div *ngIf="!isLoggedIn" class="d-lg-flex col-lg-3 justify-content-lg-end px-2">
-        <button [routerLink]="'./auth/signup'" class="btn btn-outline-primary me-2">INSCRIPTION</button>
-        <button [routerLink]="'./auth/login'" class="btn btn-primary">CONNEXION</button>
+      <div *ngIf="!isLoggedIn" class="col-lg-3 d-sm-flex justify-content-sm-between justify-content-lg-end px-2">
+        <button [routerLink]="'./auth/signup'" class="btn btn-outline-primary me-2 my-2">INSCRIPTION</button>
+        <button [routerLink]="'./auth/login'" class="btn btn-primary my-2">CONNEXION</button>
       </div>
 
       <div *ngIf="isLoggedIn" class="d-lg-flex col-lg-3 justify-content-end px-2">

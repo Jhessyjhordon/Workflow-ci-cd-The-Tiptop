@@ -32,19 +32,22 @@ div.top-bar {
 nav.navbar {
     margin-top: -15px;
 
-    a.logo>img {
+    a.logo-desktop>img {
         width: 4em;
+    }
+    a.logo-phone>img {
+        width: 3em;
     }
 
     // Media queries
-    @media (max-width: 767px) {
+    // @media (max-width: 767px) {
 
-        // For screens smaller than 768px
-        a.logo {
-            display: none;
-        }
+    //     // For screens smaller than 768px
+    //     a.logo-desktop {
+    //         display: none;
+    //     }
 
-    }
+    // }
 }
 
 .custom-active {
@@ -72,6 +75,11 @@ nav.navbar {
 
 .btn-outline-primary {
     color: #3E5140;
+    border-color: #3E5140;
+}
+.btn-outline-primary:hover {
+    color: #3E5140;
+    background-color: #f3e8c8;
     border-color: #3E5140;
 }
 
