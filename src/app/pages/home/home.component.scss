@@ -19,7 +19,7 @@ section.banniere {
     .main-text {
         flex: 0.2 0 auto !important;
 
-        @media (max-width: 290px) {
+        @media (max-width: 400px) {
 
             // For screens smaller than 768px
             & {
