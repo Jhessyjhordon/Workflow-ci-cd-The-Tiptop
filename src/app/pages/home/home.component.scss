@@ -16,6 +16,22 @@ section.banniere {
     background-size: cover;
     background-position: center;
 
+    .main-text {
+        flex: 0.2 0 auto !important;
+
+        @media (max-width: 290px) {
+
+            // For screens smaller than 768px
+            & {
+                flex: 0 0 auto !important;
+                padding-top: 20%;
+                padding-bottom: 20%;
+                background-color: #f3e8c8 ;
+            }
+
+        }
+    }
+
     h1 {
         font-size: 6.5rem;
         text-shadow: 12px 7px 10px #000;
