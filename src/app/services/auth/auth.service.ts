@@ -70,7 +70,7 @@ export class AuthService {
     this.cookieService.delete('userRole');
     this.cookieService.delete('userId');
     this.isAuthenticated.next(false); // Émet un signal que l'utilisateur n'est plus authentifié
-    this.router.navigate(['home']);
+    this.router.navigate(['']);
   }
 
   login({ email, password }: any): Observable<any> {

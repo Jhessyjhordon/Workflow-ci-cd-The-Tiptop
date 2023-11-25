@@ -1,6 +1,12 @@
-p{
+p {
     color: #fff;
 }
+
+p.footerLink, img.footerLink {
+    
+    cursor: pointer;
+}
+
 
 section.footer {
     footer {
