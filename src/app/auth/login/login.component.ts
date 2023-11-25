@@ -102,4 +102,9 @@ export class LoginComponent implements OnInit {
       )
     }
   }
+
+  onCustomSignup() {
+    // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
+    this.auth.redirectToGoogleAuth();
+  }
 }
