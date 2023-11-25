@@ -5,6 +5,7 @@ import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
 import { authGuard } from '../guards/auth.guard';
 import { TicketsComponent } from './dashboard/tickets/tickets.component';
 import { DetailTicketComponent } from './dashboard/detail-ticket/detail-ticket.component';
+import { CreateTicketComponent } from './dashboard/create-ticket/create-ticket.component';
 
 export default [
     { 
@@ -14,7 +15,8 @@ export default [
             { path: 'user', component: UserComponent },
             { path: 'analytics', component: AnalyticsComponent },
             { path: 'tickets', component: TicketsComponent },
-            { path: 'detail-ticket/:id', component: DetailTicketComponent }
+            { path: 'detail-ticket/:id', component: DetailTicketComponent },
+            { path: 'create-ticket', component: CreateTicketComponent }
 
             // autres routes enfants
         ]
