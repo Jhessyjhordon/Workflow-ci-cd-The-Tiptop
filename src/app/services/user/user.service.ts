@@ -109,4 +109,8 @@ export class UserService {
     );
   }
 
+  deleteAccount(){
+    const url = `${this.endpointUrl}/delete/account/${this.getUserIdFromToken()}`;
+  }
+
 }
