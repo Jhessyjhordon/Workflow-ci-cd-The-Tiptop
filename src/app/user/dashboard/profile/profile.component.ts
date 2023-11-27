@@ -67,4 +67,8 @@ export class ProfileComponent implements OnInit {
       this.closeToast();
     }, 5000);
   }
+
+  supprimerCompte(){
+    this.userService.deleteAccount();
+  }
 }
