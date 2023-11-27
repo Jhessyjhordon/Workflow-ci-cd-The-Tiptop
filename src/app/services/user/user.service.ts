@@ -111,6 +111,14 @@ export class UserService {
 
   deleteAccount(){
     const url = `${this.endpointUrl}/delete/account/${this.getUserIdFromToken()}`;
+    this.http.delete(url).pipe(
+      catchError((error: any) => {
+        // Gérez les erreurs ici (par exemple, affichez-les dans la console).
+        console.error('Erreur lors de la récuperation des details des utilisateurs :', error);
+        // Vous pouvez également lancer une nouvelle erreur personnalisée ici si nécessaire.
+        return throwError(error);
+      })
+    )
   }
 
 }
