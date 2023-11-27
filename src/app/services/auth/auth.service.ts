@@ -164,6 +164,33 @@ export class AuthService {
   }
 
   redirectToGoogleAuth(): void {
-    window.location.href = this.apiUrl + '/user/auth/google';
+    // window.location.href = this.apiUrl + '/user/auth/google';
+
+    this.http.get<AuthResponse>(this.apiUrl + '/user/auth/google').pipe(
+      switchMap((response) => {
+        if (!response.error) {
+          const tokenDecoded = jwtDecode<JwtPayload>(response.jwt);
+          const roleUser = tokenDecoded.role as string;
+          const roleId = tokenDecoded.id as string;
+          this.setToken(response.jwt);
+          this.setRoleUser(roleUser);
+          this.setIdUser(roleId);
+
+          // Au lieu de naviguer ici, retournez un nouvel Observable qui décide où naviguer.
+          return of(roleUser); // Ici, 'of' est utilisé pour transformer la valeur en Observable.
+        } else {
+          return throwError(() => new Error(response.message[0]));
+        }
+      }),
+      map(roleUser => {
+        this.router.navigate(['/concours']);
+
+        return roleUser;
+      }),
+      catchError((error) => {
+        throw error;
+      })
+      
+    )
   }
 }
