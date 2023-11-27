@@ -23,4 +23,8 @@ export class ProfileComponent implements OnInit {
       this.userData = user;      
     });
   }
+
+  supprimerCompte(){
+    this.userService.deleteAccount();
+  }
 }
