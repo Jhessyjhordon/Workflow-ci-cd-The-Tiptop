@@ -111,16 +111,15 @@ export class UserService {
     );
   }
 
-  deleteAccount(){
+  deleteAccount() {
     const url = `${this.endpointUrl}/delete/account/${this.getUserIdFromToken()}`;
-    this.http.delete(url).pipe(
-      catchError((error: any) => {
-        // Gérez les erreurs ici (par exemple, affichez-les dans la console).
-        console.error('Erreur lors de la récuperation des details des utilisateurs :', error);
-        // Vous pouvez également lancer une nouvelle erreur personnalisée ici si nécessaire.
-        return throwError(error);
-      })
-    )
+    return this.http.delete(url).pipe(
+      switchMap(async () => this.auth.logout()), // Déconnecter l'utilisateur après la suppression du compte
+      tap(() => {
+        // Actions à effectuer en cas de succès, par exemple afficher un message de succès
+        console.log('Compte supprimé avec succès');
+      }),
+    );
   }
 
 }
