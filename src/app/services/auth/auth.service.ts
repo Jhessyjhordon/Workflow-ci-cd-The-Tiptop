@@ -204,7 +204,7 @@ export class AuthService {
   // }
 
   redirectToGoogleAuth(): Observable<string> {
-    return this.http.get<AuthResponse>(this.apiUrl + '/user/auth/google').pipe(
+    return this.http.get<AuthResponse>(this.apiUrl + '/user/auth/google/callback').pipe(
       switchMap((response) => {
         if (!response.error) {
           const tokenDecoded = jwtDecode<JwtPayload>(response.jwt);
