@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
@@ -19,7 +20,7 @@ export class ProfileComponent implements OnInit {
   
   userData!: UserCustomer | null;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private toastr: ToastrService) { }
 
   // 
   ngOnInit() {
@@ -68,7 +69,18 @@ export class ProfileComponent implements OnInit {
     }, 5000);
   }
 
-  supprimerCompte(){
-    this.userService.deleteAccount();
+  supprimerCompte() {
+    this.userService.deleteAccount().subscribe(
+      () => {
+        // Gérer le succès ici (par exemple, afficher un toast)
+        this.toastr.success('Compte supprimé avec succès', 'Succès');
+        // Rediriger ou effectuer d'autres actions nécessaires
+      },
+      (error) => {
+        // Gérer les erreurs ici (par exemple, afficher un toast d'erreur)
+        this.toastr.error('Erreur lors de la suppression du compte', 'Erreur');
+        console.error(error);
+      }
+    );
   }
 }
