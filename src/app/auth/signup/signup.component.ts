@@ -153,7 +153,7 @@ export class SignupComponent implements OnInit  {
     };
   }
 
-  onCustomSignup() {
+  /*onCustomSignup() {
     // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
     this.auth.redirectToGoogleAuth().subscribe(
       () => {
@@ -165,5 +165,10 @@ export class SignupComponent implements OnInit  {
         console.error(error);
       }
     );
+  }*/
+
+  onCustomSignup() {
+    // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
+    this.auth.redirectToGoogleAuth();
   }
 }
