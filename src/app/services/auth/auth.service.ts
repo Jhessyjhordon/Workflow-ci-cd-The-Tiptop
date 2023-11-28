@@ -203,7 +203,29 @@ export class AuthService {
   //   );
   // }
 
-  redirectToGoogleAuth(): Observable<string> {
+  // redirectToGoogleAuth(): Observable<string> {
+  //   return this.http.get<AuthResponse>(this.apiUrl + '/user/auth/google/callback').pipe(
+  //     switchMap((response) => {
+  //       if (!response.error) {
+  //         const tokenDecoded = jwtDecode<JwtPayload>(response.jwt);
+  //         const roleUser = tokenDecoded.role as string;
+  //         const roleId = tokenDecoded.id as string;
+  //         this.setToken(response.jwt);
+  //         this.setRoleUser(roleUser);
+  //         this.setIdUser(roleId);
+  
+  //         return of(roleUser);
+  //       } else {
+  //         return throwError(() => new Error(response.message[0]));
+  //       }
+  //     }),
+  //     catchError((error) => {
+  //       throw error;
+  //     })
+  //   );
+  // }
+
+  /*redirectToGoogleAuth(): Observable<string> {
     return this.http.get<AuthResponse>(this.apiUrl + '/user/auth/google/callback').pipe(
       switchMap((response) => {
         if (!response.error) {
@@ -223,6 +245,10 @@ export class AuthService {
         throw error;
       })
     );
+  }*/
+
+  redirectToGoogleAuth(): void {
+    window.location.href = this.apiUrl + '/user/auth/google';
   }
   
 }
