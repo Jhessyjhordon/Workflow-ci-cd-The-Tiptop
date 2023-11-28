@@ -112,14 +112,21 @@ export class UserService {
   }
 
   deleteAccount() {
-    const url = `${this.endpointUrl}/delete/account/${this.getUserIdFromToken()}`;
+    const url = `${this.endpointUrl}/user/delete/account/${this.getUserIdFromToken()}`;
     return this.http.delete(url).pipe(
-      switchMap(async () => this.auth.logout()), // Déconnecter l'utilisateur après la suppression du compte
+      
+      switchMap(async () => this.deconnexionAfterSevenSecond()), // Déconnecter l'utilisateur après la suppression du compte
       tap(() => {
         // Actions à effectuer en cas de succès, par exemple afficher un message de succès
         console.log('Compte supprimé avec succès');
       }),
     );
+  }
+
+  deconnexionAfterSevenSecond(){
+    setTimeout(()=>{
+      this.auth.logout()
+    }, 7000)
   }
 
 }
