@@ -185,4 +185,5 @@ export class SignupComponent implements OnInit  {
     // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
     this.auth.redirectToGoogleAuth();
   }
+
 }
