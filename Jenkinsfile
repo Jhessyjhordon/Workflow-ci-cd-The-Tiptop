@@ -115,7 +115,7 @@ pipeline {
                 }
             }
         }
-        stage('Compilation') {
+        /*stage('Compilation') {
             steps {
                 script {
                     switch (metadata.language) {
@@ -147,7 +147,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('Tools for tests') {
             steps {

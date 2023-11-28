@@ -1,21 +1,24 @@
-import { ApplicationConfig, importProvidersFrom, inject } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, inject, isDevMode } from '@angular/core';
 import { RouterModule, provideRouter, withDebugTracing } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
 import { provideClientHydration } from '@angular/platform-browser';
+import { provideServiceWorker } from '@angular/service-worker';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [ provideRouter(routes/*, withDebugTracing()*/),
-    provideAnimations(),{ // On provide HTTP_INTERCEPTORS et on lui dit d'utiliser la class AuthInterceptor
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
+  providers: [provideRouter(routes /*, withDebugTracing()*/),
+    provideAnimations(), {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
     },
-    importProvidersFrom([RouterModule.forRoot(routes), BrowserAnimationsModule, HttpClientModule]), //On importe routes, Browser et HttpClientModule qui sont nécessaire
+    importProvidersFrom([RouterModule.forRoot(routes), BrowserAnimationsModule, HttpClientModule]),
     provideHttpClient(),
-    provideClientHydration(),
-  ],
+    provideClientHydration(), provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    })],
 };

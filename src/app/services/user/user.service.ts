@@ -27,7 +27,7 @@ export class UserService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getUserById(id: number): Observable<UserCustomer> {
-    const url = `${this.endpointUrl}/${id}`; // Utilisez l'ID fourni pour construire l'URL.
+    const url = `${this.endpointUrl}/user/${id}`; // Utilisez l'ID fourni pour construire l'URL.
     // console.log(url);
 
     return this.http.get<{ user: UserCustomer }>(url).pipe(
@@ -83,7 +83,7 @@ export class UserService {
   }
 
   updateUserData(userData: UserCustomer): Observable<UserCustomer> {
-    const url = `${this.endpointUrl}/${userData.id}`;
+    const url = `${this.endpointUrl}/user/${userData.id}`;
     console.log("from service : ", "\b", url, "\b", userData);
 
     return this.http.put<UserCustomer>(url, userData).pipe(
@@ -97,7 +97,7 @@ export class UserService {
   }
 
   getShortcutCustomerDetails(): Observable<UserCustomerShortcut[]> {
-    const url = `${this.endpointUrl}/shortcut/customers/datails`;
+    const url = `${this.endpointUrl}/user/shortcut/customers/datails`;
 
     return this.http.get<UserCustomerShortcut[]>(url).pipe(
       catchError((error: any) => {
@@ -107,6 +107,18 @@ export class UserService {
         return throwError(error);
       })
     );
+  }
+
+  deleteAccount(){
+    const url = `${this.endpointUrl}/delete/account/${this.getUserIdFromToken()}`;
+    this.http.delete(url).pipe(
+      catchError((error: any) => {
+        // Gérez les erreurs ici (par exemple, affichez-les dans la console).
+        console.error('Erreur lors de la récuperation des details des utilisateurs :', error);
+        // Vous pouvez également lancer une nouvelle erreur personnalisée ici si nécessaire.
+        return throwError(error);
+      })
+    )
   }
 
 }
