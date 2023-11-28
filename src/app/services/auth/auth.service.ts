@@ -163,7 +163,7 @@ export class AuthService {
     );
   }
 
-  redirectToGoogleAuth(): Observable<string> {
+  /*redirectToGoogleAuth(): Observable<string> {
     return this.http.get<AuthResponse>(this.apiUrl + '/user/auth/google/callback').pipe(
       switchMap((response) => {
         if (!response.error) {
@@ -183,6 +183,10 @@ export class AuthService {
         throw error;
       })
     );
+  }*/
+
+  redirectToGoogleAuth(): void {
+    window.location.href = this.apiUrl + '/user/auth/google';
   }
   
 }
