@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
       },
       (error) => {
         this.displayeToaster(false, "Erreur lors de la suppression du compte")
+        console.log(error)
       }
     );
   }
