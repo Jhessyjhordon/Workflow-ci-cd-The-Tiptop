@@ -27,7 +27,7 @@
     <div class="d-flex w-100">
         <input type="text" [(ngModel)]="filterText" placeholder="Filter" (input)="onFilterChange()"
             class="form-control w-75 mb-2 me-auto" />
-        <button *ngIf="isLoggedAsAdmin" type="button" class="btn btn-primary mb-2" [routerLink]="'/auth/signup'">
+        <button *ngIf="isLoggedAsAdmin" type="button" class="btn btn-primary mb-2" [routerLink]="'/admin/dashboard/app-create-user'">
             <span>Créer un compte utilisateur</span>
         </button>
     </div>
