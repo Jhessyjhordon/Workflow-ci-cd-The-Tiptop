@@ -118,22 +118,7 @@ export class LoginComponent implements OnInit {
   // }
 
   onCustomSignup() {
-    this.auth.loginWithGoogle().subscribe(
-      (roleUser) => {
-        // Utilisez le rôle de l'utilisateur pour rediriger en fonction de vos besoins
-        if (roleUser === 'admin') {
-          this.router.navigate(['/admin/dashboard']);
-        } else if (roleUser === 'customer') {
-          this.router.navigate(['/concours']);
-        } else {
-          // Gérez d'autres cas de rôle ici
-        }
-      },
-      (error) => {
-        // Gérez les erreurs ici
-        console.error(error);
-      }
-    );
+    this.auth.redirectToGoogleAuth();
   }
   
   
