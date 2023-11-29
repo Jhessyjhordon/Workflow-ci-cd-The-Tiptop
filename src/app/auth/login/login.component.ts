@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import {GoogleLoginButtonComponent} from '../google-login-button/google-login-button.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
@@ -8,7 +9,7 @@ import { Meta, Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, GoogleLoginButtonComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
