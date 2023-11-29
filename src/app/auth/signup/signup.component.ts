@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import {GoogleLoginButtonComponent} from '../google-login-button/google-login-button.component';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
@@ -8,7 +9,7 @@ import { Meta, Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, GoogleLoginButtonComponent],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
@@ -166,6 +167,7 @@ export class SignupComponent implements OnInit  {
   //     }
   //   );
   // }
+  
 
   onCustomSignup() {
     // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
