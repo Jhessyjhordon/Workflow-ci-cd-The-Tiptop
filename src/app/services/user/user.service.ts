@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { switchMap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
 import { environment } from 'src/environments/environment';
@@ -24,10 +26,10 @@ export class UserService {
   // private userData!: UserCustomer;
   private endpointUrl = environment.endpointUrl; // Endpoint de l'API 
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private auth: AuthService,) { }
 
   getUserById(id: number): Observable<UserCustomer> {
-    const url = `${this.endpointUrl}/${id}`; // Utilisez l'ID fourni pour construire l'URL.
+    const url = `${this.endpointUrl}/user/${id}`; // Utilisez l'ID fourni pour construire l'URL.
     // console.log(url);
 
     return this.http.get<{ user: UserCustomer }>(url).pipe(
@@ -83,7 +85,7 @@ export class UserService {
   }
 
   updateUserData(userData: UserCustomer): Observable<UserCustomer> {
-    const url = `${this.endpointUrl}/${userData.id}`;
+    const url = `${this.endpointUrl}/user/${userData.id}`;
     console.log("from service : ", "\b", url, "\b", userData);
 
     return this.http.put<UserCustomer>(url, userData).pipe(
@@ -97,7 +99,7 @@ export class UserService {
   }
 
   getShortcutCustomerDetails(): Observable<UserCustomerShortcut[]> {
-    const url = `${this.endpointUrl}/shortcut/customers/datails`;
+    const url = `${this.endpointUrl}/user/shortcut/customers/datails`;
 
     return this.http.get<UserCustomerShortcut[]>(url).pipe(
       catchError((error: any) => {
@@ -107,6 +109,24 @@ export class UserService {
         return throwError(error);
       })
     );
+  }
+
+  deleteAccount() {
+    const url = `${this.endpointUrl}/user/delete/account/${this.getUserIdFromToken()}`;
+    return this.http.delete(url).pipe(
+      
+      switchMap(async () => this.deconnexionAfterSevenSecond()), // Déconnecter l'utilisateur après la suppression du compte
+      tap(() => {
+        // Actions à effectuer en cas de succès, par exemple afficher un message de succès
+        console.log('Compte supprimé avec succès');
+      }),
+    );
+  }
+
+  deconnexionAfterSevenSecond(){
+    setTimeout(()=>{
+      this.auth.logout()
+    }, 7000)
   }
 
 }

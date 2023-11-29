@@ -153,8 +153,51 @@ export class SignupComponent implements OnInit  {
     };
   }
 
-  onCustomSignup() {
+  // onCustomSignup() {
+  //   // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
+  //   this.auth.redirectToGoogleAuth().subscribe(
+  //     () => {
+  //       // Redirigez vers le tableau de bord du client après une authentification réussie
+  //       this.router.navigate(['/concours']);
+  //     },
+  //     (error) => {
+  //       // Gérez les erreurs ici
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+
+  // onCustomSignup() {
+  //   // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
+  //   this.auth.redirectToGoogleAuth().subscribe(
+  //     () => {
+  //       // Redirigez vers le tableau de bord du client après une authentification réussie
+  //       this.router.navigate(['/concours']);
+  //     },
+  //     (error) => {
+  //       // Gérez les erreurs ici
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+
+  // onCustomSignup() {
+  //   // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
+  //   this.auth.redirectToGoogleAuth().subscribe(
+  //     () => {
+  //       // Redirigez vers le tableau de bord du client après une authentification réussie
+  //       this.router.navigate(['/concours']);
+  //     },
+  //     (error) => {
+  //       // Gérez les erreurs ici
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+
+  /*onCustomSignup() {
     // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
     this.auth.redirectToGoogleAuth();
   }
+
 }

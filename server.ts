@@ -21,6 +21,15 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
+  // Serve the PWA manifest and the Angular service worker
+  server.get('/manifest.webmanifest', (req, res) => {
+    res.sendFile(join(distFolder, 'manifest.webmanifest'));
+  });
+
+  server.get('/ngsw-worker.js', (req, res) => {
+    res.sendFile(join(distFolder, 'ngsw-worker.js'));
+  });
+
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
