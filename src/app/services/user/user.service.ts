@@ -126,7 +126,7 @@ export class UserService {
   deconnexionAfterSevenSecond(){
     setTimeout(()=>{
       this.auth.logout()
-    }, 7000)
+    }, 3000)
   }
 
 }

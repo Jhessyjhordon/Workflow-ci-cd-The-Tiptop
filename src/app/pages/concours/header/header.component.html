@@ -1,6 +1,6 @@
 <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div *ngIf="isToastVisible" class="toast align-items-center show position-fixed top-0 start-50 translate-middle-x "
-        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : 'red'}" role="alert"
+        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : '#821313'}" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body text-center" [ngStyle]="{'color': submissionResult?.success ? 'black' : 'white'}" [innerHTML]="submissionResult!.message">
@@ -22,7 +22,7 @@
     <div class="carousel-caption carousel-caption-overlay  rounded-5 d-md-block">
         <div class="centered-square p-0  h-100">
 
-            <h5>Participez au jeu concours</h5>
+            <h1>Participez au jeu concours</h1>
             <p class="truncate-text">A l'occasion de l'ouverture de notre 10eme boutique à Nice. Nous organisons un jeu concours par tirage au sort pour promouvoir nos produits</p>
 
             <div *ngIf="!isLoggedIn">
