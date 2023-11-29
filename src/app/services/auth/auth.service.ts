@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
 import { AuthResponse } from 'src/app/models/auth-response';
 import { jwtDecode } from "jwt-decode";
@@ -29,7 +29,7 @@ export class AuthService {
     sameSite: 'Strict' as const  // Limite l'envoi du cookie aux requêtes same-site
   };
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private route: ActivatedRoute) {
     // Vérifiez si un token est déjà présent lors de l'initialisation du service
     const token = this.getToken();
     //console.log('Token actuel dans le constructeur:', token);
@@ -48,6 +48,24 @@ export class AuthService {
   getToken(): string | null {
     const token = this.cookieService.get('token');
     return token ? token : null; // Renvoie null si le token est une chaîne vide ou undefined
+  }
+
+    handleAuthentication(): void {
+    this.route.queryParams.subscribe(params => {
+      const jwt = params['jwt'];
+      if (jwt) {
+        // Stockez le JWT de manière appropriée
+        
+        const tokenDecoded = jwtDecode<JwtPayload>(jwt);
+          const roleUser = tokenDecoded.role as string;
+          const roleId = tokenDecoded.id as string;
+          this.setToken(jwt);
+          this.setRoleUser(roleUser);
+          this.setIdUser(roleId);
+        // Redirigez l'utilisateur vers une page protégée ou la page d'accueil
+        this.router.navigate(['/concours']);
+      }
+    });
   }
 
   isLoggedIn() {
@@ -188,5 +206,7 @@ export class AuthService {
   redirectToGoogleAuth(): void {
     window.location.href = this.apiUrl + '/user/auth/google';
   }
+
+
   
 }

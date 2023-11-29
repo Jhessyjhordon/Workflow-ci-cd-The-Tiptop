@@ -118,8 +118,9 @@ export class LoginComponent implements OnInit {
   // }
 
   onCustomSignup() {
-    // Redirige l'utilisateur vers Google pour l'authentification
     this.auth.redirectToGoogleAuth();
   }
-
+  
+  
+  
 }

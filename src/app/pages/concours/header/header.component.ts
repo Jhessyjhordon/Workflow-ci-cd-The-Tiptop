@@ -62,6 +62,7 @@ export class HeaderComponent implements OnInit {
     this.auth.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
     });
+    this.auth.handleAuthentication();
 
   }
 
