@@ -1,6 +1,6 @@
 <div class="container px-2 p-xl-5">
     <div *ngIf="isToastVisible" class="toast align-items-center show position-fixed top-0 start-50 translate-middle-x "
-        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : 'red'}" role="alert"
+        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : '#821313'}" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body text-center" [ngStyle]="{'color': submissionResult?.success ? 'black' : 'white'}" [innerHTML]="submissionResult!.message">
