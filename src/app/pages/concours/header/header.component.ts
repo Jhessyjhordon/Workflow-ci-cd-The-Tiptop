@@ -118,7 +118,7 @@ export class HeaderComponent implements OnInit {
           console.log(response);
           if (response.message[0] === "Détail du ticket trouvé") {
             const idTicket = response.data.ticket.id;
-            const idBatch = response.data.ticket.batch.id;
+            // const idBatch = response.data.ticket.batch.id;
 
             // Réinitialiser l'état de soumission pour vider l'input
             this.formSubmitted = false;
@@ -130,9 +130,9 @@ export class HeaderComponent implements OnInit {
             };
 
             // Appel aux méthodes pour mettre à jour le ticket et la batch
-            this.updateTicketUserId(idTicket);
+            this.updateTicketById(idTicket);
             // this.getBatchByTicketBatchId(idBatch);
-            this.updateBatchIdByTicketBatchId(idBatch);
+            // this.updateBatchIdByTicketBatchId(idBatch);
 
             // Affichage du toast après les mises à jour réussies
             this.showToast();
@@ -164,13 +164,15 @@ export class HeaderComponent implements OnInit {
     return userId;
   }
 
-  // mise a jour du ticket avec l'id de l'utilisateur connecté
-  private updateTicketUserId(idTicket: number): void {
+  // mise a jour du ticket avec l'id du ticket connecté
+  private updateTicketById(idTicket: number): void {
 
     const userId = this.getUserId(); // Recupère l'id de l'utilisateur connecté
+    const state = "checked";
+    const status_gain = "demanded";
 
     if (userId) {
-      this.ticketVerify.patchTicketUserId(idTicket, { user_id: userId }).subscribe(
+      this.ticketVerify.patchTicket(idTicket, { user_id: userId, state: state, statusGain: status_gain }).subscribe(
         (response: any) => {
           console.log(`Mise à jour du champ user_id pour le ticket ${idTicket}`, response);
         },
@@ -182,22 +184,22 @@ export class HeaderComponent implements OnInit {
   }
 
   // Mise a jour du lot en fonction de la clé étrangère batch_id
-  private updateBatchIdByTicketBatchId(batch_id: number): void {
+  // private updateBatchIdByTicketBatchId(batch_id: number): void {
 
-    const userId = this.getUserId();
-    const state = "checked";
+  //   const userId = this.getUserId();
+  //   const state = "checked";
 
-    if (batch_id) {
-      this.batchService.patchBatchById(batch_id, { user_id: userId, state: state }).subscribe(
-        (response: any) => {
-          console.log(`Mise à jour des champ user_id et state pour le lot ${batch_id}`, response);
-        },
-        error => {
-          console.error(`Erreur lors de la mise à jour de la table du lot pour le lot ${batch_id}`, error);
-        }
-      );
-    }
-  }
+  //   if (batch_id) {
+  //     this.batchService.patchBatchById(batch_id, { user_id: userId, state: state }).subscribe(
+  //       (response: any) => {
+  //         console.log(`Mise à jour des champ user_id et state pour le lot ${batch_id}`, response);
+  //       },
+  //       error => {
+  //         console.error(`Erreur lors de la mise à jour de la table du lot pour le lot ${batch_id}`, error);
+  //       }
+  //     );
+  //   }
+  // }
 
   // Recupérer le lot en fonction de la clé étrangère batch_id dans la table ticket
   // getBatchByTicketBatchId(batch_id: number) {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { BatchesService } from 'src/app/services/batches/batches.service';
+import { TicketVerifyService } from 'src/app/services/ticketVerify/ticket-verify.service';
+import { AllBatch } from 'src/app/models/all-batch.model';
 
 @Component({
   selector: 'app-mes-gains',
@@ -11,15 +12,15 @@ import { BatchesService } from 'src/app/services/batches/batches.service';
   styleUrls: ['./mes-gains.component.scss']
 })
 export class MesGainsComponent implements OnInit {
-  allBatche: any;
+  batch: any = [];
 
-  constructor(private auth: AuthService, private batchService: BatchesService) { }
+  constructor(private auth: AuthService, private ticketVerifyService: TicketVerifyService) { }
 
   ngOnInit(): void {
     this.getBatch();
 
-    console.log("La route batch/retreive est en maintenance");
-    
+    console.log("La route batch/retreive est en maintenance", this.batch);
+
   }
 
   getUserId(): string | null {
@@ -31,10 +32,12 @@ export class MesGainsComponent implements OnInit {
   // EN MAINTENANCE
   getBatch() {
 
-    this.batchService.getBatchByUserToken().subscribe(
-      (response: any) => {
+    this.ticketVerifyService.getBatchByTicketUserId().subscribe(
+      (response: any[]) => {
         console.log("Lot associé à ce user : \n", response);
-        this.allBatche = response;
+        // Utilisez la méthode map pour extraire uniquement les objets batch
+        this.batch = response.map(item => item.batch);
+        console.log("Lot associé à ce user : \n", this.batch);
       },
       error => {
         console.error(`Le lot de l'utilisateur n\'est pas trouvé`, error);
