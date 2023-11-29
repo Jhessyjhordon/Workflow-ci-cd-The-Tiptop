@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
 
+
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -12,6 +13,9 @@ import { UserCustomer } from 'src/app/models/user-custumer.model';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+
+  public isToastVisible: boolean = false;
+  submissionResult: { success: boolean; message: string } | null = null;
   
   userData!: UserCustomer | null;
 
@@ -22,9 +26,45 @@ export class ProfileComponent implements OnInit {
     this.userService.userData$.subscribe(user => {
       this.userData = user;      
     });
+    this.showToast();
   }
 
-  supprimerCompte(){
-    this.userService.deleteAccount();
+  showToast() {
+    this.isToastVisible = true;
+  }
+
+  closeToast(): void {
+    this.isToastVisible = false;
+  }
+
+  supprimerCompte() {
+    this.userService.deleteAccount().subscribe(
+      () => {
+        // Gérer le succès ici (par exemple, afficher un toast)
+        // this.submissionResult = {
+        //   success: true,
+        //   message: "Compte supprimé avec succès"
+        //   // message: response.message[0],
+        // };
+        alert("Compte supprimé avec succès");
+
+        // Rediriger ou effectuer d'autres actions nécessaires
+      },
+      (error) => {
+        // Gérer les erreurs ici (par exemple, afficher un toast d'erreur)
+        // this.submissionResult = {
+        //   success: false,
+        //   message: "Erreur lors de la suppression du compte"
+        //   // message: response.message[0],
+        // };
+        alert('Erreur lors de la suppression du compte' + error);
+      }
+
+      
+    );
+
+    setTimeout(() => {
+      this.closeToast();
+    }, 5000);
   }
 }
