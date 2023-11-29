@@ -120,7 +120,7 @@ export class SignupComponent implements OnInit  {
             message: result.message,
           };
           this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-          this.router.navigate(['home']) // Redirige vers la home
+          this.router.navigate(['']) // Redirige vers la home
         },
         (err: Error) => {
           console.error("==============>>>>>>>>", err);
