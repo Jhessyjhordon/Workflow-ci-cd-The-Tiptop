@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { jwtDecode } from 'jwt-decode';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -18,8 +19,9 @@ export class HeaderComponent implements OnInit {
   isLoggedAsAdmin: boolean = false;
   isLoggedAsEmploye: boolean = false;
   userData!: UserCustomer | null;
+  token = this.cookieService.get('token');
 
-  constructor(private auth: AuthService, private userService: UserService, private router: Router,) { }
+  constructor(private auth: AuthService, private userService: UserService, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.auth.isLoggedIn().subscribe((loggedIn) => {
@@ -33,17 +35,20 @@ export class HeaderComponent implements OnInit {
     }
 
     // this.getUserData();
+    // N'exécute les méthodes de userService s'il y a un token
+    if (this.token){
+      // Récupérez les données de l'utilisateur en utilisant le service
+      this.userService.userData$.subscribe(user => {
+        const userData = user;
+        if (userData) {
+          this.userData = userData;
+        } else {
+          // Si les données ne sont pas déjà stockées, appelez votre méthode pour les obtenir
+          this.fetchUserData();
+        }
+      });
+    }
 
-    // Récupérez les données de l'utilisateur en utilisant le service
-    this.userService.userData$.subscribe(user => {
-      const userData = user;
-      if (userData) {
-        this.userData = userData;
-      } else {
-        // Si les données ne sont pas déjà stockées, appelez votre méthode pour les obtenir
-        this.fetchUserData();
-      }
-    });
 
     // Permet de remonté tout en haut de la page quand on clique sur un lien du menu
     this.router.events.subscribe((event) => {

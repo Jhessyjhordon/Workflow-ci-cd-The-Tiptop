@@ -29,30 +29,34 @@
                 <button class="border-0 p-0 offlinePlay" [routerLink]="'/auth/login'">Jouer</button>
             </div>
 
-            <form *ngIf="isLoggedIn" [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
-
-                <div class="row row-cols-1 row-cols-md-1 g-4 pt-md-4">
-
+            <ng-container *ngIf="isLoggedIn">
+                <form *ngIf="isVerify" [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
+                  <!-- Le contenu de votre formulaire -->
+                  <div class="row row-cols-1 row-cols-md-1 g-4 pt-md-4">
                     <div class="col px-auto">
-                        <!-- Afficher les erreurs pour le champ 'E-mail' -->
-                        <div *ngIf="verifyTicketForm.get('numTicket')?.invalid && verifyTicketForm.get('numTicket')?.touched"
-                            class="text-danger">
-                            <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['required']" class="text-start">
-                                Le numero de ticket est requis.
-                            </div>
-                            <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['pattern']" class="text-start">
-                                Le numero de ticket doit être des chiffres.
-                            </div>
+                      <!-- Afficher les erreurs pour le champ 'numTicket' -->
+                      <div *ngIf="verifyTicketForm.get('numTicket')?.invalid && verifyTicketForm.get('numTicket')?.touched"
+                           class="text-danger">
+                        <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['required']" class="text-start">
+                          Le numéro de ticket est requis.
                         </div>
-                        <div>
-                            <input class="border-0" type="text" formControlName="numTicket" placeholder="Your Name">
-                            <button class="border-0 p-0 logedForPlay" type="submit">Jouer</button>
+                        <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['pattern']" class="text-start">
+                          Le numéro de ticket doit être des chiffres.
                         </div>
+                      </div>
+                      <div>
+                        <input class="border-0" type="text" formControlName="numTicket" placeholder="Votre nom">
+                        <button class="border-0 p-0 logedForPlay" type="submit">Jouer</button>
+                      </div>
                     </div>
-
+                  </div>
+                </form>
+                
+                <!-- Message si le compte n'est pas vérifié -->
+                <div *ngIf="!isVerify" class="alert alert-warning" role="alert">
+                  Votre compte n'est pas encore vérifié. Vous ne pouvez pas participer au jeu concours avant que votre compte soit vérifié.
                 </div>
-            </form>
-
+            </ng-container>
 
         </div>
     </div>
