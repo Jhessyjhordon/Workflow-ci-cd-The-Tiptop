@@ -36,38 +36,6 @@ export class ProfileComponent implements OnInit {
   closeToast(): void {
     this.isToastVisible = false;
   }
-
-  supprimerCompte() {
-    this.userService.deleteAccount().subscribe(
-      () => {
-        // Gérer le succès ici (par exemple, afficher un toast)
-        // this.submissionResult = {
-        //   success: true,
-        //   message: "Compte supprimé avec succès"
-        //   // message: response.message[0],
-        // };
-        alert("Compte supprimé avec succès");
-
-        // Rediriger ou effectuer d'autres actions nécessaires
-      },
-      (error) => {
-        // Gérer les erreurs ici (par exemple, afficher un toast d'erreur)
-        // this.submissionResult = {
-        //   success: false,
-        //   message: "Erreur lors de la suppression du compte"
-        //   // message: response.message[0],
-        // };
-        alert('Erreur lors de la suppression du compte' + error);
-      }
-
-      
-    );
-
-    setTimeout(() => {
-      this.closeToast();
-    }, 5000);
-  }
-
   supprimerCompte() {
     this.userService.deleteAccount().subscribe(
       () => {
