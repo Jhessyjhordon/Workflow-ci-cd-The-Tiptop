@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import {GoogleLoginButtonComponent} from '../google-login-button/google-login-button.component';
+import {GoogleLoginButtonComponent} from '../../auth/google-login-button/google-login-button.component';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
@@ -87,12 +87,6 @@ export class SignupComponent implements OnInit  {
     return authForm;
   }
 
-  // Méthode pour les champs du formulaire d'inscription s'ils sont invalides
-  // isFieldInvalid(form: FormGroup, field: string): boolean {
-  //   const control = form.get(field);
-  //   return control!.invalid && (control!.touched || control!.dirty) && control!.value === false;
-  // }
-
   // Methode pour afficher  tous les champ requis lors du submis du formulaire pour éviter les oublie
   markFieldsAsTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -153,21 +147,6 @@ export class SignupComponent implements OnInit  {
       }
     };
   }
-
-  // onCustomSignup() {
-  //   // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
-  //   this.auth.redirectToGoogleAuth().subscribe(
-  //     () => {
-  //       // Redirigez vers le tableau de bord du client après une authentification réussie
-  //       this.router.navigate(['/concours']);
-  //     },
-  //     (error) => {
-  //       // Gérez les erreurs ici
-  //       console.error(error);
-  //     }
-  //   );
-  // }
-  
 
   onCustomSignup() {
     // Redirige l'utilisateur vers Google pour l'authentification
