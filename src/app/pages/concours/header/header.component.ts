@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BatchesService } from 'src/app/services/batches/batches.service';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,9 @@ import { RouterModule } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isVerify: boolean = false;
+  token = this.cookieService.get('token');
+  
   verifyTicketForm!: FormGroup;
   formSubmitted: boolean = false;
   submissionResult: { success: boolean; message: string } | null = null;
@@ -51,13 +55,30 @@ export class HeaderComponent implements OnInit {
     // Ajoutez d'autres objets pour chaque slide ici
   ];
 
-  constructor(private ticketVerify: TicketVerifyService, private auth: AuthService, private batchService: BatchesService, private fb: FormBuilder) {
+  constructor(private ticketVerify: TicketVerifyService, private auth: AuthService, private batchService: BatchesService, private fb: FormBuilder, private cookieService: CookieService) {
     this.verifyTicketForm = this.buildCommonForm();
   }
 
   ngOnInit(): void {
     // Votre code d'initialisation ici (peut être vide si vous n'en avez pas besoin)
-    console.log(this.getUserId());
+    
+    if (this.token){
+      console.log("Afficher userdId", this.getUserId());
+      const userId = this.getUserId();
+      if (userId){
+        // Appeler getUserById pour vérifier si le compte est vérifié
+        this.auth.getUserById(userId).subscribe(isVerify => {
+          console.log('Vérification de isVerify:', isVerify);
+          this.isVerify = isVerify; // Convertit 1 en true, 0 en false
+          if (this.isVerify) {
+            console.log("Compte vérifié")
+          } else {
+            console.log("Compte non vérifié")
+          }
+        });
+      }
+    }
+
 
     this.auth.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;

@@ -6,6 +6,7 @@ import { AuthResponse } from 'src/app/models/auth-response';
 import { jwtDecode } from "jwt-decode";
 import { CookieService, SameSite } from 'ngx-cookie-service'; // Importez CookieService
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs';
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
   id?: string;
@@ -66,6 +67,19 @@ export class AuthService {
         this.router.navigate(['/concours']);
       }
     });
+  }
+
+  // Vérifie si l'user est vérifié ou pas
+  getUserById(userId: string): Observable<any> {
+    const url = `${this.apiUrl}/user/${userId}`;
+    return this.http.get<{ user: { isVerify: boolean }}>(url) // On récupère isVerify qui est un objet d'user dans la réponse API
+      .pipe(
+        map(response => response.user.isVerify),
+        catchError(error => {
+          console.error('Une erreur s\'est produite lors de la récupération des données de lutilisateur:', error);
+          return throwError(error);
+        })
+      );
   }
 
   isLoggedIn() {
@@ -139,19 +153,6 @@ export class AuthService {
     );
   }
 
-  // Méthode de redirection basée sur le rôle
-  private redirectUserBasedOnRole(role: string): void {
-    if (role === 'employee') {
-      // Redirection pour les employés
-      console.log('Redirigé vers employee')
-    } else if (role === 'client') {
-      // Redirection pour les clients
-    } else {
-      console.log('Redirigé vers clients')
-      // Redirection par défaut
-    }
-  }
-
   //Methode pour l'inscription
   signup({ firstname, lastname, phone, email, password, address, birthDate, newsletter , role }: any): Observable<any> {
     // Valeurs en dur pour birthDate, address et role
@@ -180,28 +181,6 @@ export class AuthService {
       })
     );
   }
-
-  // redirectToGoogleAuth(): Observable<string> {
-  //   return this.http.get<AuthResponse>(this.apiUrl + '/user/auth/google/callback').pipe(
-  //     switchMap((response) => {
-  //       if (!response.error) {
-  //         const tokenDecoded = jwtDecode<JwtPayload>(response.jwt);
-  //         const roleUser = tokenDecoded.role as string;
-  //         const roleId = tokenDecoded.id as string;
-  //         this.setToken(response.jwt);
-  //         this.setRoleUser(roleUser);
-  //         this.setIdUser(roleId);
-  
-  //         return of(roleUser);
-  //       } else {
-  //         return throwError(() => new Error(response.message[0]));
-  //       }
-  //     }),
-  //     catchError((error) => {
-  //       throw error;
-  //     })
-  //   );
-  // }
 
   redirectToGoogleAuth(): void {
     window.location.href = this.apiUrl + '/user/auth/google';
