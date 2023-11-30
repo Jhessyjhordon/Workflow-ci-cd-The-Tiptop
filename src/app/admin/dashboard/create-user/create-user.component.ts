@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import {GoogleLoginButtonComponent} from '../../auth/google-login-button/google-login-button.component';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
 
+
 @Component({
-  selector: 'app-signup',
+  selector: 'app-create-user',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, GoogleLoginButtonComponent],
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  templateUrl: './create-user.component.html',
+  styleUrls: ['./create-user.component.scss']
 })
-export class SignupComponent implements OnInit  {
+export class CreateUserComponent implements OnInit {
+
   title= "S'inscrire | Thé Tiptop | Jeu concours";
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
@@ -87,6 +88,12 @@ export class SignupComponent implements OnInit  {
     return authForm;
   }
 
+  // Méthode pour les champs du formulaire d'inscription s'ils sont invalides
+  // isFieldInvalid(form: FormGroup, field: string): boolean {
+  //   const control = form.get(field);
+  //   return control!.invalid && (control!.touched || control!.dirty) && control!.value === false;
+  // }
+
   // Methode pour afficher  tous les champ requis lors du submis du formulaire pour éviter les oublie
   markFieldsAsTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -114,7 +121,7 @@ export class SignupComponent implements OnInit  {
             message: result.message,
           };
           this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-          this.router.navigate(['']) // Redirige vers la home
+          this.router.navigate(['home']) // Redirige vers la home
         },
         (err: Error) => {
           console.error("==============>>>>>>>>", err);
@@ -148,9 +155,6 @@ export class SignupComponent implements OnInit  {
     };
   }
 
-  onCustomSignup() {
-    // Redirige l'utilisateur vers Google pour l'authentification
-    this.auth.redirectToGoogleAuth();
-  }
+  
 
 }

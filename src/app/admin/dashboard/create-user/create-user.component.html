@@ -1,0 +1,211 @@
+
+<button type="button" class="btn btn-primary mb-2" [routerLink]="'/admin/dashboard/analytics'">
+    <i class="fa-solid fa-arrow-left"></i>
+</button>
+<section class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+    
+    <div class="container">
+  
+      <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
+        <div
+          class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
+  
+          <h1 class="text-break">Inscription</h1>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
+            <div class="row p-4">
+              <div class="col px-md-5">
+                <div *ngIf="submissionResult"
+                  class="m-0 alert {{submissionResult.success? 'alert-success' : 'alert-danger' }}">
+                  {{ submissionResult.message }}
+                </div>
+              </div>
+            </div>
+            <div class="row row-cols-1  g-4 p-md-4">
+              <!-- Nom -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'Name' -->
+                <div *ngIf="loginForm.get('lastname')?.invalid && loginForm.get('lastname')?.touched" class="text-danger">
+                  <div *ngIf="loginForm.get('lastname')?.errors?.['required']" class="text-start">
+                    Le nom est requis.
+                  </div>
+                  <div *ngIf="loginForm.get('lastname')?.errors?.['pattern']" class="text-start">
+                    Le nom ne doit contenir uniquement des caractères unicode.
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control rounded-5" placeholder="Nom" id="floatingInputLstName"
+                    formControlName="lastname" />
+                  <label for="floatingInputLstName" class="w-100">Nom</label>
+                </div>
+              </div>
+              <!-- Prénom -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'firstname' -->
+                <div *ngIf="loginForm.get('firstname')?.invalid && loginForm.get('firstname')?.touched"
+                  class="text-danger">
+                  <div *ngIf="loginForm.get('firstname')?.errors?.['required']" class="text-start">
+                    Le prénom est requis.
+                  </div>
+                  <div *ngIf="loginForm.get('firstname')?.errors?.['pattern']" class="text-start">
+                    Le prénom ne doit contenir uniquement des caractères unicode.
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control rounded-5" placeholder="Prénom" id="floatingInputFstName"
+                    formControlName="firstname" />
+                  <label for="floatingInputFstName" class="w-100">Prénom</label>
+                </div>
+              </div>
+              <!-- Tel -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'phone' -->
+                <div *ngIf="loginForm.get('phone')?.invalid && loginForm.get('phone')?.touched" class="text-danger">
+                  <div *ngIf="loginForm.get('phone')?.errors?.['required']" class="text-start">
+                    Le numéro de teléphone est requis.
+                  </div>
+                  <div *ngIf="loginForm.get('phone')?.errors?.['pattern']" class="text-start">
+                    Le numéro de teléphone doit contenir uniquement des chiffres et
+                    avoir une longueur de 10 caractères.
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control rounded-5" placeholder="Teléphone" id="floatingInputPhone"
+                    formControlName="phone" />
+                  <label for="floatingInputPhone" class="w-100">Teléphone</label>
+                </div>
+              </div>
+              <!-- Email -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'Email' -->
+                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+                  <div *ngIf="loginForm.get('email')?.errors?.['required']" class="text-start">
+                    L'e-mail est requis.
+                  </div>
+                  <div *ngIf="loginForm.get('email')?.errors?.['pattern']" class="text-start">
+                    L'e-mail doit être une adresse e-mail valide (exemple@gmail.com).
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control rounded-5" placeholder="Mail" id="floatingInputMail"
+                    formControlName="email" />
+                  <label for="floatingInputMail" class="w-100">Mail</label>
+                </div>
+              </div>
+              <!-- Adresse -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'address' -->
+                <div *ngIf="loginForm.get('address')?.invalid && loginForm.get('address')?.touched" class="text-danger">
+                  <div *ngIf="loginForm.get('address')?.errors?.['required']" class="text-start">
+                    L'adresse' est requise.
+                  </div>
+                  <div *ngIf="loginForm.get('address')?.errors?.['pattern']" class="text-start">
+                    L'adresse' doit contenir uniquement des caractères unicode, des chiffres,
+                    des espaces et des caractères spéciaux tels que , - ' et espaces.
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control rounded-5" placeholder="2 rue Jean Paul, 75001 Paris"
+                    id="floatingInputAddress" formControlName="address" />
+                  <label for="floatingInputAddress" class="w-100">Adresse</label>
+                </div>
+              </div>
+              <!-- Date de naissance -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'birthDate' -->
+                <div *ngIf="loginForm.get('birthDate')?.invalid && loginForm.get('birthDate')?.touched"
+                  class="text-danger">
+                  <div *ngIf="loginForm.get('birthDate')?.errors?.['required']" class="text-start">
+                    La date de naissance est requise.
+                  </div>
+                  <!-- <div *ngIf="loginForm.get('birthDate')?.errors?.['pattern']" class="text-start">
+                    La date de naissance doit contenir uniquement des caractères alphabétiques, des chiffres,
+                    des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
+                    avoir une longueur maximale de 50 caractères.
+                  </div> -->
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control rounded-5" id="floatingInputBirthDate"
+                    formControlName="birthDate" />
+                  <label for="floatingInputBirthDate" class="w-100">Date de naissance</label>
+                </div>
+              </div>
+              <!-- Password -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'password' -->
+                <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+                  <div *ngIf="loginForm.get('password')?.errors?.['required']" class="text-start">
+                    Le mot de passe est requis.
+                  </div>
+                  <div *ngIf="loginForm.get('password')?.errors?.['pattern']" class="text-start">
+                    Le mot de passe doit contenir au moins 8 caractères, dont une lettre majuscule, une lettre minuscule
+                    et un chiffre.
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control rounded-5" placeholder="Mot de passe .."
+                    id="floatingInputPsw" formControlName="password" />
+                  <label for="floatingInputPsw" class="w-100">Mot de passe</label>
+                </div>
+              </div>
+              <!-- Confirm password -->
+              <div class="col px-md-5">
+                <!-- Afficher les erreurs pour le champ 'confirmPassword' -->
+                <div *ngIf="loginForm.get('confirmPassword')?.invalid && loginForm.get('confirmPassword')?.touched"
+                  class="text-danger">
+                  <div *ngIf="loginForm.get('confirmPassword')?.errors?.['required']" class="text-start">
+                    La confirmation du mot de passe est requise.
+                  </div>
+                  <div *ngIf="loginForm.get('confirmPassword')?.errors?.['pattern']" class="text-start">
+                    Le mot de passe doit contenir uniquement des caractères alphabétiques, des chiffres,
+                    des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
+                    avoir une longueur maximale de 50 caractères.
+                  </div>
+                  <div *ngIf="loginForm.get('confirmPassword')?.errors?.['mustMatch']" class="text-start">
+                    Les mots de passe ne correspondent pas.
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control rounded-5" placeholder="Confirmer le mot de passe .."
+                    id="floatingInputConfirmPsw" formControlName="confirmPassword" />
+                  <label for="floatingInputConfirmPsw" class="w-100">Confirmer le mot de passe</label>
+                </div>
+              </div>
+              <div class="col px-md-5" >
+                <!-- Afficher les erreurs pour le champ 'role' -->
+                <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched" class="text-danger">
+                  <div *ngIf="loginForm.get('role')?.errors?.['required']" class="text-start">
+                    Le role est requise.
+                  </div>
+                  <div *ngIf="loginForm.get('role')?.errors?.['pattern']" class="text-start">
+                    Les roles autorisées sont : customer et employee.
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <select class="form-select rounded-5" id="floatingInputRole" formControlName="role">
+                    <option value="customer">Customer</option>
+                    <option value="employee">Employee</option>
+                  </select>
+                  <label for="floatingInputRole" class="w-100">Choisir le rôle</label>
+                </div>
+              </div>
+  
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 d-flex justify-content-center">
+  
+              <div class="col d-flex flex-column align-items-center justify-content-center order-2 order-lg-1">
+                <div class="">
+                  <button type="submit" class="btn btn-green fw-bold custom-bg-shadow py-3 px-sm-4 px-sm-5 rounded-5 "
+                    [disabled]="formSubmitted && loginForm.invalid">
+                    VALIDER
+                  </button>
+                </div>
+              </div>
+  
+             
+            </div>
+          </form>
+  
+        </div>
+      </div>
+    </div>
+  </section>
