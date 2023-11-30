@@ -2,8 +2,7 @@
   <div class="container">
 
     <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
-      <div
-        class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
+      <div class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
 
         <h1 class="text-break">Inscription</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
@@ -112,15 +111,13 @@
                 <div *ngIf="loginForm.get('birthDate')?.errors?.['required']" class="text-start">
                   La date de naissance est requise.
                 </div>
-                <!-- <div *ngIf="loginForm.get('birthDate')?.errors?.['pattern']" class="text-start">
-                  La date de naissance doit contenir uniquement des caractères alphabétiques, des chiffres,
-                  des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
-                  avoir une longueur maximale de 50 caractères.
-                </div> -->
+                <div *ngIf="loginForm.get('birthDate')?.errors?.['maxDate']" class="text-start">
+                  La date de naissance est trop récent.
+                </div>
               </div>
               <div class="form-floating mb-3">
                 <input type="date" class="form-control rounded-5" id="floatingInputBirthDate"
-                  formControlName="birthDate" />
+                  formControlName="birthDate" [max]="getMaxDate()" />
                 <label for="floatingInputBirthDate" class="w-100">Date de naissance</label>
               </div>
             </div>
@@ -172,7 +169,8 @@
                 <input class="form-check-input me-3" type="checkbox" id="floatingInputAcceptNewsletter"
                   formControlName="newsletter" value="1">
                 <label class="form-check-label" for="floatingInputAcceptNewsletter">
-                  En cochant cette case, je consens à ce que mes données soient utilisées à fins des commerciales dans le cadre de campagne d'emailing.
+                  En cochant cette case, je consens à ce que mes données soient utilisées à fins des commerciales dans
+                  le cadre de campagne d'emailing.
                 </label>
               </div>
             </div>
@@ -213,15 +211,16 @@
               </div>
             </div>
 
-           
+
           </div>
         </form>
 
         <div class="col px-md-5  order-1 order-lg-2">
           <p class="mt-2 text-body-secondary">
-            <app-google-login-button [buttonText]="'S\'inscriere avec Google'" (customSignup)="onCustomSignup()"></app-google-login-button>
+            <app-google-login-button [buttonText]="'S\'inscriere avec Google'"
+              (customSignup)="onCustomSignup()"></app-google-login-button>
             <!-- <a [routerLink]="'../signup'">S'inscrire avec google</a>  -->
-          
+
           </p>
         </div>
 
