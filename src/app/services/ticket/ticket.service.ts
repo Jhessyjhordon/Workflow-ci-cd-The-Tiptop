@@ -18,7 +18,7 @@ export class TicketService {
 
   createTicket(ticket: any): Observable<any> {
     // Envoyer les données du nouveau ticket au backend
-    const url = `${this.endpointUrl}/tickets`;
+    const url = `${this.endpointUrl}/ticket`;
     return this.http.post<any>(url, ticket).pipe(
       catchError((error) => {
         if (error.status === 409) {
