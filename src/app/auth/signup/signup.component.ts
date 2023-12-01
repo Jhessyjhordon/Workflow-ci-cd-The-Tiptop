@@ -17,6 +17,10 @@ export class SignupComponent implements OnInit {
   title = "S'inscrire | Thé Tiptop | Jeu concours";
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
+  isToastVisible: boolean = false;
+  toastDisplayDuration = 30000; // 30 secondes
+
+  progressWidth: number = 0;
 
   isLoggedIn: boolean = false;
 
@@ -107,25 +111,58 @@ export class SignupComponent implements OnInit {
       console.log("~~~~~~~>", loginData);
 
       // On fait appel à la méthode signup du Service AuthService pour effectuer l'inscription
-      // this.auth.signup(loginData).subscribe(
-      //   (result) => {
-      //     this.submissionResult = {
-      //       success: true,
-      //       message: result.message,
-      //     };
-      //     this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-      //     this.router.navigate(['']) // Redirige vers la home
-      //   },
-      //   (err: Error) => {
-      //     console.error("==============>>>>>>>>", err);
-      //     this.submissionResult = {
-      //       success: false,
-      //       message:
-      //         "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
-      //     };
-      //   }
-      // )
+      this.auth.signup(loginData).subscribe(
+        (result) => {
+          this.submissionResult = {
+            success: true,
+            message: "Inscription réussit ! <b>Un mail de confirmation, vous a été envoyé</b>. Veuillez confirmer votre compte pour pouvoir participer aux jeux concours !",
+          };
+          // Affichage du toast après les mises à jour réussies
+          this.showToast();
+
+          // Planifiez la fermeture du toast après la durée spécifiée
+          setTimeout(() => {
+            this.closeToast();
+            this.router.navigate(['/auth/login']) // Redirige vers la home
+          }, this.toastDisplayDuration);
+          this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
+        },
+        (err: Error) => {
+          console.error("==============>>>>>>>>", err.message);
+          this.submissionResult = {
+            success: false,
+            message: err.message
+          };
+          // Affichage du toast après les mises à jour réussies
+          this.showToast();
+          // Planifiez la fermeture du toast après la durée spécifiée
+          setTimeout(() => {
+            this.closeToast();
+          }, this.toastDisplayDuration);
+        }
+      )
     }
+  }
+
+  // Méthode pour afficher le toast
+  showToast() {
+    this.isToastVisible = true;
+  
+    // Réinitialisez la progression à 0 au début de l'affichage du toast
+    this.progressWidth = 0;
+  
+    // Utilisez un intervalle pour augmenter progressivement la largeur de la barre de progression
+    const interval = setInterval(() => {
+      this.progressWidth += 1;
+  
+      if (this.progressWidth >= 100) {
+        clearInterval(interval); // Arrêtez l'intervalle une fois que la progression atteint 100%
+      }
+    }, this.toastDisplayDuration / 1000); // Divisez par 100 pour obtenir des intervalles plus fréquents
+  }
+
+  closeToast(): void {
+    this.isToastVisible = false;
   }
 
   // Méthode qui permet de vérifier si 2 champs ont la même valeur lors de la saisie
