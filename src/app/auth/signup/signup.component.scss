@@ -25,3 +25,17 @@ section {
   }
 
 }
+
+.toast {
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1000;
+  margin-top: 30px;
+}
+
+.show {
+  opacity: 1;
+}
+
+.progress-bar {
+  transition: width 5s ease-in-out; /* Ajustez la durée de l'animation selon vos besoins */
+}

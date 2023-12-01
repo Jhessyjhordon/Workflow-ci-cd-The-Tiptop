@@ -1,19 +1,36 @@
 <section class="d-flex flex-column align-items-center justify-content-center min-vh-100">
   <div class="container">
 
+    <div *ngIf="isToastVisible" class="toast align-items-center show position-fixed top-0 start-50 translate-middle-x "
+      [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : '#821313'}" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body text-center" [ngStyle]="{'color': submissionResult?.success ? 'black' : 'white'}"
+          [innerHTML]="submissionResult!.message">
+          {{ submissionResult!.message }}
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" (click)="isToastVisible = false"
+          aria-label="Close"></button>
+      </div>
+      <div class="progress" style="height: 10px; width: 100%;">
+        <div class="progress-bar" role="progressbar" [style.width.%]="progressWidth" [style.transition]="toastDisplayDuration / 1000 + 's'"
+          [ngStyle]="{'background-color': submissionResult?.success ? '#4CAF50' : '#f44336'}"></div>
+      </div>
+    </div>
+
     <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
       <div class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
 
         <h1 class="text-break">Inscription</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
-          <div class="row p-4">
+          <!-- <div class="row p-4">
             <div class="col px-md-5">
               <div *ngIf="submissionResult"
                 class="m-0 alert {{submissionResult.success? 'alert-success' : 'alert-danger' }}">
                 {{ submissionResult.message }}
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row row-cols-1  g-4 p-md-4">
             <!-- Nom -->
             <div class="col px-md-5">
@@ -177,7 +194,7 @@
             <!-- Role -->
             <div class="col px-md-5" *ngIf="isLoggedAsAdmin">
               <!-- Afficher les erreurs pour le champ 'role' -->
-              <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched" class="text-danger">
+              <!-- <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched" class="text-danger">
                 <div *ngIf="loginForm.get('role')?.errors?.['required']" class="text-start">
                   Le role est requise.
                 </div>
@@ -191,7 +208,7 @@
                   <option value="employee">Employee</option>
                 </select>
                 <label for="floatingInputRole" class="w-100">Choisir le rôle</label>
-              </div>
+              </div> -->
             </div>
 
           </div>

@@ -172,12 +172,12 @@ export class AuthService {
       role
     }).pipe(
       catchError((error) => {
-        if (error.status === 409) {
-          // Gérez l'erreur spécifique ici, par exemple en informant l'utilisateur
-          alert('Un conflit est survenu : ' + error.error.message);
-        }
+        // if (error.status === 409) {
+        //   // Gérez l'erreur spécifique ici, par exemple en informant l'utilisateur
+        //   alert('Un conflit est survenu : ' + error.error.message);
+        // }
         // Vous pouvez aussi retransmettre l'erreur si vous voulez la gérer ailleurs
-        return throwError(() => new Error('Une erreur est survenue lors de l\'inscription : ' + error.message));
+        return throwError(() => new Error('Une erreur est survenue lors de l\'inscription : ' + error.error.message));
       })
     );
   }
