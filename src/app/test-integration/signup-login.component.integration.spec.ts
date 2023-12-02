@@ -1,5 +1,5 @@
 // integration.spec.ts
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { LoginComponent } from '../auth/login/login.component';
