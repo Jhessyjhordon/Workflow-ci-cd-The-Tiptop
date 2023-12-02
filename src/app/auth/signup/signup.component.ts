@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { GoogleLoginButtonComponent } from '../../auth/google-login-button/google-login-button.component';
@@ -13,13 +13,13 @@ import { Meta, Title } from '@angular/platform-browser';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   title = "S'inscrire | Thé Tiptop | Jeu concours";
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
   isToastVisible: boolean = false;
   toastDisplayDuration = 30000; // 30 secondes
-
+  timeoutId: any; // Déclaration de la propriété timeoutId
   progressWidth: number = 0;
 
   isLoggedIn: boolean = false;
@@ -121,10 +121,21 @@ export class SignupComponent implements OnInit {
           this.showToast();
 
           // Planifiez la fermeture du toast après la durée spécifiée
-          setTimeout(() => {
+          // setTimeout(() => {
+          //   this.closeToast();
+          //   this.router.navigate(['/auth/login']) // Redirige vers la home
+          // }, this.toastDisplayDuration);
+
+          // Planifiez la fermeture du toast après la durée spécifiée
+          const timeoutId = setTimeout(() => {
             this.closeToast();
-            this.router.navigate(['/auth/login']) // Redirige vers la home
+            this.router.navigate(['/auth/login']); // Redirige vers la home
           }, this.toastDisplayDuration);
+
+          // Stockez l'ID du timeout pour pouvoir l'annuler plus tard
+          this.timeoutId = timeoutId;
+
+
           this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
         },
         (err: Error) => {
@@ -147,14 +158,14 @@ export class SignupComponent implements OnInit {
   // Méthode pour afficher le toast
   showToast() {
     this.isToastVisible = true;
-  
+
     // Réinitialisez la progression à 0 au début de l'affichage du toast
     this.progressWidth = 0;
-  
+
     // Utilisez un intervalle pour augmenter progressivement la largeur de la barre de progression
     const interval = setInterval(() => {
       this.progressWidth += 1;
-  
+
       if (this.progressWidth >= 100) {
         clearInterval(interval); // Arrêtez l'intervalle une fois que la progression atteint 100%
       }
@@ -225,5 +236,12 @@ export class SignupComponent implements OnInit {
     };
   }
 
+  // Méthode appelée lors de la destruction du composant
+  ngOnDestroy(): void {
+    // Annulez le planificateur si le composant est détruit avant l'expiration du délai
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
 
 }
