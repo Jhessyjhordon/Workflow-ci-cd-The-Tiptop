@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
   isToastVisible: boolean = false;
-  toastDisplayDuration = 30000; // 30 secondes
+  toastDisplayDuration = 8000; // 8 secondes
   timeoutId: any; // Déclaration de la propriété timeoutId
   progressWidth: number = 0;
 
