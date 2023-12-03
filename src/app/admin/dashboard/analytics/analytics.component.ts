@@ -79,11 +79,19 @@ export class AnalyticsComponent implements OnInit {
     if (this.auth.getRoleUser() === "admin") {
       console.log("ok");
       this.isLoggedAsAdmin = true;
+      this.changeDetectorRef.detectChanges();
+      this.initializeChartsIfAdmin();
     } else console.log("not admin");
-    this.loadInitialData();
   }
 
-  ngAfterViewInit() {
+  initializeChartsIfAdmin() {
+    if (this.isLoggedAsAdmin) {
+      // Les éléments canvas sont maintenant disponibles, initialiser les graphiques
+      this.loadInitialData();
+    }
+  }
+  loadInitialData() {
+
     // Vérifiez que les éléments canvas et canvasPie sont présents
     if (this.canvas && this.canvas.nativeElement && this.canvasPie && this.canvasPie.nativeElement) {
       // Initialisation des graphiques ici
@@ -133,9 +141,6 @@ export class AnalyticsComponent implements OnInit {
         }
       });
     }
-  }
-
-  loadInitialData() {
 
     this.adminService.getUsersWithRoleClient().subscribe(
       (users: UserAdmin[]) => {
@@ -143,6 +148,12 @@ export class AnalyticsComponent implements OnInit {
         this.filteredUsers = [...this.allUsers]; // Initialise filteredUsers avec toutes les données
         this.totalItems = this.allUsers.length; // Initialise le nombre total d'éléments pour la pagination
         const ageCounts = this.ageService.calculateAgeCounts(this.allUsers); // Appel du service age pour calculer l'âge de chaque user
+            // Vérifier que ageCounts est bien défini et a des données valides
+        if (ageCounts && Object.keys(ageCounts).length > 0) {
+          this.updateChartData(ageCounts);
+        } else {
+          console.error('Les données de ageCounts ne sont pas valides:', ageCounts);
+        }
         this.updateChartData(ageCounts);
         this.refreshUsersFilters(); // Initialise les utilisateurs affichés
         //console.log('---->', this.allUsers);
