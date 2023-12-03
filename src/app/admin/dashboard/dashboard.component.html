@@ -7,7 +7,7 @@
 
         <ul class="list-unstyled components">
             <li>
-                <a class="analytics" [routerLink]="'./analytics'">Analytics</a>
+                <a class="analytics" [routerLink]="'./analytics'" *ngIf="isLoggedAsAdmin">Analytics</a>
             </li>
             <li>
                 <a class="analytics" [routerLink]="'./tickets'">Tickets</a>

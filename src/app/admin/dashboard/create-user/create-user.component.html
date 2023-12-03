@@ -10,7 +10,7 @@
         <div
           class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
   
-          <h1 class="text-break">Inscription</h1>
+          <h2 class="text-break">Inscription</h2>
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
             <div class="row p-4">
               <div class="col px-md-5">
@@ -180,7 +180,7 @@
                     Les roles autorisées sont : customer et employee.
                   </div>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3" *ngIf="isLoggedAsAdmin">
                   <select class="form-select rounded-5" id="floatingInputRole" formControlName="role">
                     <option value="customer">Customer</option>
                     <option value="employee">Employee</option>
