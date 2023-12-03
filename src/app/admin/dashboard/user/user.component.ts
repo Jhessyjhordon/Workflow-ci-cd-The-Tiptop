@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,9 @@ import { Meta, Title } from '@angular/platform-browser';
 export class UserComponent {
   title= 'Mon compte | Thé Tiptop | Jeu concours';
 
-  constructor(private titleService : Title, private metaService: Meta) {
+
+
+  constructor(private titleService : Title, private metaService: Meta, private auth: AuthService) {
     this.titleService.setTitle(this.title);
     this.addTag();
   }
@@ -24,4 +27,5 @@ export class UserComponent {
     this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
     this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
   }
+
 }

@@ -115,9 +115,7 @@ export class AuthService {
   }
 
   login({ email, password }: any): Observable<any> {
-    console.log('login: Attempting to log in with', email);
     const credentials = { email, password };
-    console.log("user try to log with user name : ", credentials.email, " and password : ", credentials.password);
 
     return this.http.post<AuthResponse>(this.apiUrl + '/user/login', credentials).pipe(
       switchMap((response) => {
@@ -139,7 +137,7 @@ export class AuthService {
         if (roleUser === 'admin') {
           this.router.navigate(['/admin/dashboard']);
         } else if (roleUser === 'employee') {
-          // Gérez les autres cas de rôle ici.
+          this.router.navigate(['/admin/dashboard']);
         } else if (roleUser === 'customer') {
           this.router.navigate(['/concours']);
         } else {
@@ -155,11 +153,6 @@ export class AuthService {
 
   //Methode pour l'inscription
   signup({ firstname, lastname, phone, email, password, address, birthDate, newsletter , role }: any): Observable<any> {
-    // Valeurs en dur pour birthDate, address et role
-    // const birthDate = '01/01/2002';
-    // const address = '2 Allée Lorentz Champs-sur-Marne';
-    // const role ='customer';
-    console.log("user try to signup with firstname : ", firstname, " lastname : ", lastname, " phone : ", phone, " email : ", email, " password : ", password, " address : ", address, " birthDate : ", birthDate, "etat newsletter : ", newsletter , " and role : ", role);
     return this.http.post(this.apiUrl + '/user', {
       firstname,
       lastname,
@@ -186,6 +179,4 @@ export class AuthService {
     window.location.href = this.apiUrl + '/user/auth/google';
   }
 
-
-  
 }

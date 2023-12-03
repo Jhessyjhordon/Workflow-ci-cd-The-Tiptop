@@ -15,7 +15,7 @@ import { Meta, Title } from '@angular/platform-browser';
 })
 export class CreateUserComponent implements OnInit {
 
-  title= "S'inscrire | Thé Tiptop | Jeu concours";
+  title= "Création de compte | Thé Tiptop | Jeu concours";
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
 
@@ -35,29 +35,17 @@ export class CreateUserComponent implements OnInit {
   // Définition des différentes balises pour le SEO
   addTag() {
     this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
-    this.metaService.addTag({ name: 'description', content: "S'inscrire à Thé Tiptop, site de jeu concours de thé pour les 10 ans et l'ouverture de la boutique à Nice" }); // Meta description de la page
     this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
-    this.metaService.addTag({ name: 'robots', content: 'index,follow' }); // Permet au robot d'indexer la page
-    this.metaService.addTag({ name: 'keywords', content: 'inscription jeu Nice' }); //Add keyword
-    this.metaService.addTag({ property: 'og:title', content: "S'inscrire | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
+    this.metaService.addTag({ name: 'robots', content: 'noindex,nofollow' }); // Permet au robot d'indexer la page
+    this.metaService.addTag({ property: 'og:title', content: "Création de compte | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
   }
 
   ngOnInit() {
-    // console.log(this.auth.getRoleUser());
     // Vérification du role pour passer true à la variable "isLoggedAsAdmin"
     if (this.auth.getRoleUser() === "admin") {
       console.log("ok");
       this.isLoggedAsAdmin = true;
     } else console.log("not admin");
-    // this.auth.isLoggedIn().subscribe((loggedIn) => {
-    //   this.isLoggedIn = loggedIn; // vérifie l'etat de la connexion (true si connecté)
-    //   console.log(loggedIn);
-    // });
-    // // si l'utilisateur est déjà connecté il a pas acces à la route "auth/login" et on le renvoie sur la "home" 
-    // // si non il a l'accès
-    // if (this.isLoggedIn) {
-    //   this.router.navigate(['home'])
-    // }
   }
 
   buildCommonForm(): FormGroup {
@@ -88,12 +76,6 @@ export class CreateUserComponent implements OnInit {
     return authForm;
   }
 
-  // Méthode pour les champs du formulaire d'inscription s'ils sont invalides
-  // isFieldInvalid(form: FormGroup, field: string): boolean {
-  //   const control = form.get(field);
-  //   return control!.invalid && (control!.touched || control!.dirty) && control!.value === false;
-  // }
-
   // Methode pour afficher  tous les champ requis lors du submis du formulaire pour éviter les oublie
   markFieldsAsTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -110,8 +92,6 @@ export class CreateUserComponent implements OnInit {
     if (this.loginForm.valid) { // Si le formulaire d'inscription est valide
       this.formSubmitted = false;
       const loginData = this.loginForm.value; // On créer une constante et on ajoute les valeurs du formulaire d'inscription dedans
-
-      console.log("~~~~~~~>", loginData );
       
       // On fait appel à la méthode signup du Service AuthService pour effectuer l'inscription
       this.auth.signup(loginData).subscribe(
