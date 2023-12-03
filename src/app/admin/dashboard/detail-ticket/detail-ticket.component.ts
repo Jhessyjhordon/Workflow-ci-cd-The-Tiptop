@@ -86,7 +86,7 @@ export class DetailTicketComponent implements OnInit {
   pathTicket() {
     console.log(this.dataTicket.id); // return undefined
     const ticketAttribue = {
-      statusGain: "Attribué",
+      statusGain: "assigned",
       gainAttribue: true
     };
 
