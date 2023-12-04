@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import {GoogleLoginButtonComponent} from '../google-login-button/google-login-button.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
@@ -8,7 +9,7 @@ import { Meta, Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, GoogleLoginButtonComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -40,13 +41,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.auth.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn; // vérifie l'etat de la connexion (true si connecté)
-      console.log(loggedIn);
     });
-    // si l'utilisateur est déjà connecté il a pas acces à la route "auth/login" et on le renvoie sur la "home" 
-    // si non il a l'accès
-    /*if (this.isLoggedIn) {
-      this.router.navigate(['home'])
-    }*/
   }
 
   buildCommonForm(): FormGroup {

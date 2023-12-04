@@ -1,6 +1,6 @@
 <div class="container px-2 p-xl-5">
     <div *ngIf="isToastVisible" class="toast align-items-center show position-fixed top-0 start-50 translate-middle-x "
-        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : 'red'}" role="alert"
+        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : '#821313'}" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body text-center" [ngStyle]="{'color': submissionResult?.success ? 'black' : 'white'}" [innerHTML]="submissionResult!.message">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 g-lg-4 g-xl-5"> -->
-    <h5 class="text-center py-3 py-md-5 text-break">MES INFORMATIONS</h5>
+    <h1 class="text-center py-3 py-md-5 text-break">MES INFORMATIONS</h1>
     <div class="row row-cols-1 row-cols-lg-2  g-3"  *ngIf="userData"> 
 
         <div class="col">
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="px-sm-3 w-100 d-flex flex-column justify-content-center">
-                        <h6>Titulaire du compte</h6>
+                        <h2>Titulaire du compte</h2>
                         <p class="card-text"> {{ userData!.firstname }} {{ userData!.lastname }}</p>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="px-sm-3 w-100 d-flex flex-column justify-content-center">
-                        <h6>Mon adresse postale</h6>
+                        <h2>Mon adresse postale</h2>
                         <p class="card-text">{{ userData!.address }} </p>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="px-sm-3 w-100 d-flex flex-column justify-content-center">
-                        <h6>Mot de passe</h6>
+                        <h2>Mot de passe</h2>
                         <p class="card-text">******</p>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <div class="px-sm-3 w-100 d-flex flex-column justify-content-center">
-                        <h6>Mon adresse email</h6>
+                        <h2>Mon adresse email</h2>
                         <p class="card-text">{{ userData!.email }}</p>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="px-sm-3 w-100 d-flex flex-column justify-content-center">
-                        <h6>Téléphone</h6>
+                        <h2>Téléphone</h2>
                         <p class="card-text">{{ userData!.phone }}</p>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="px-sm-3 w-100 d-flex flex-column justify-content-center">
-                        <h6>Ma date de naissance</h6>
+                        <h2>Ma date de naissance</h2>
                         <p class="card-text">{{ userData!.birthDate  | date: 'dd / MM / yyyy' }}</p>
                     </div>
                 </div>

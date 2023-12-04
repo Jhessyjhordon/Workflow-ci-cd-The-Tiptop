@@ -5,13 +5,12 @@ import { UserAdmin } from 'src/app/models/user-admin.model';
 import { AllTickets } from 'src/app/models/all-ticket.model';
 import { CookieService } from 'ngx-cookie-service'; // Importez CookieService
 
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  private endpointUrl = environment.endpointUrl; // Endpoint de l'API 
+  private endpointUrl = 'https://api.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 

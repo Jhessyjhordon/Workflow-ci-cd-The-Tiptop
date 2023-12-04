@@ -6,6 +6,24 @@ import * as express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import bootstrap from './src/main.server';
+// require('dotenv').config();
+
+// const environment = process.env['ENVIRONMENT']; // 'dev', 'preprod', 'prod'
+// let API_URL;
+
+// switch(environment) {
+//   case 'dev':
+//       API_URL = process.env['API_URL_DEV'];
+//       break;
+//   case 'preprod':
+//       API_URL = process.env['API_URL_PREPROD'];
+//       break;
+//   case 'prod':
+//       API_URL = process.env['API_URL_PROD'];
+//       break;
+//   default:
+//       API_URL = process.env['API_URL_DEV']; // URL par défaut
+// }
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {

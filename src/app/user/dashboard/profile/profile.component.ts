@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
+import { Meta, Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -15,18 +16,31 @@ import { UserCustomer } from 'src/app/models/user-custumer.model';
 export class ProfileComponent implements OnInit {
 
   public isToastVisible: boolean = false;
+  private readonly toastDisplayDuration = 3000;
   submissionResult: { success: boolean; message: string } | null = null;
   
   userData!: UserCustomer | null;
 
-  constructor(private userService: UserService) { }
+  title= 'Mon compte | Thé Tiptop | Jeu concours';
+
+  // Définition des différentes balises pour le SEO
+  addTag() {
+   this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+   this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+   this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
+   this.metaService.addTag({ property: 'og:title', content: "Mon compte | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
+ }
+
+  constructor(private userService: UserService, private titleService : Title, private metaService: Meta) {
+    this.titleService.setTitle(this.title);
+    this.addTag();
+   }
 
   // 
   ngOnInit() {
     this.userService.userData$.subscribe(user => {
       this.userData = user;      
     });
-    this.showToast();
   }
 
   showToast() {
@@ -36,34 +50,29 @@ export class ProfileComponent implements OnInit {
   closeToast(): void {
     this.isToastVisible = false;
   }
+
+  displayeToaster(state:boolean, messageToDisplay:string){
+
+    this.submissionResult = {
+      success: state,
+      message: messageToDisplay
+    };
+    this.showToast();
+    setTimeout(() => {
+        this.closeToast();
+    }, this.toastDisplayDuration);
+
+  }
+
   supprimerCompte() {
     this.userService.deleteAccount().subscribe(
       () => {
-        // Gérer le succès ici (par exemple, afficher un toast)
-        // this.submissionResult = {
-        //   success: true,
-        //   message: "Compte supprimé avec succès"
-        //   // message: response.message[0],
-        // };
-        alert("Compte supprimé avec succès");
-
-        // Rediriger ou effectuer d'autres actions nécessaires
+        this.displayeToaster(true, "Compte supprimé avec succès")
       },
       (error) => {
-        // Gérer les erreurs ici (par exemple, afficher un toast d'erreur)
-        // this.submissionResult = {
-        //   success: false,
-        //   message: "Erreur lors de la suppression du compte"
-        //   // message: response.message[0],
-        // };
-        alert('Erreur lors de la suppression du compte' + error);
+        this.displayeToaster(false, "Erreur lors de la suppression du compte")
+        console.log(error)
       }
-
-      
     );
-
-    setTimeout(() => {
-      this.closeToast();
-    }, 5000);
   }
 }

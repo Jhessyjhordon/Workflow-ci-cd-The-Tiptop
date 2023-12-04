@@ -30,7 +30,7 @@
                 <td>{{ ticket.montantAchat }}</td>
                 <td>{{ ticket.dateAchat }}</td>
                 <td>{{ ticket.gainAttribue }}</td>
-                <td><span [ngClass]="{'badge': true, 'text-bg-secondary': ticket.statusGain === 'Non attribué', 'text-bg-success': ticket.statusGain === 'Attribué'}">Status : {{ticket.statusGain}}</span></td>
+                <td><span [ngClass]="{'badge': true, 'text-bg-secondary': ticket?.statusGain === 'not demanded', 'text-bg-warning': ticket?.statusGain === 'demanded', 'text-bg-success': ticket?.statusGain === 'assigned'}">Status : {{ticket?.statusGain}}</span></td>
                 
                 <td>
                     <button type="button" class="btn btn-primary mb-2" [routerLink]="['../detail-ticket', ticket.numTicket]">
