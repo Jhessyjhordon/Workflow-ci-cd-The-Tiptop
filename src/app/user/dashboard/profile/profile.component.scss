@@ -11,3 +11,15 @@ h5 {
 .updateLink {
     cursor: pointer;
 }
+
+/* Ajoutez ceci dans votre fichier de style */
+.toast {
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+    margin-top: 80px;
+  }
+  
+  .show {
+    opacity: 1;
+  }
+  

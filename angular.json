@@ -57,27 +57,6 @@
             "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "4mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "outputHashing": "all"
-            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -86,40 +65,19 @@
               "sourceMap": true,
               "namedChunks": true
             },
-            "preprod": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.preprod.ts"
-                }
-              ],
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "4mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "outputHashing": "all"
+            "production": {
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": false,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "browserTarget": "the-tiptop-front:build:production"
-            },
-            "development": {
-              "browserTarget": "the-tiptop-front:build:development"
-            }
-          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
@@ -158,15 +116,6 @@
             "inlineStyleLanguage": "scss"
           },
           "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "outputHashing": "media"
-            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -174,29 +123,19 @@
               "extractLicenses": false,
               "vendorChunk": true
             },
-            "preprod": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.preprod.ts"
-                }
-              ]
+            "production": {
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": false,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "the-tiptop-front:build:development",
-              "serverTarget": "the-tiptop-front:server:development"
-            },
-            "production": {
-              "browserTarget": "the-tiptop-front:build:production",
-              "serverTarget": "the-tiptop-front:server:production"
-            }
-          },
           "defaultConfiguration": "development"
         },
         "prerender": {
@@ -206,17 +145,7 @@
               "/"
             ]
           },
-          "configurations": {
-            "production": {
-              "browserTarget": "the-tiptop-front:build:production",
-              "serverTarget": "the-tiptop-front:server:production"
-            },
-            "development": {
-              "browserTarget": "the-tiptop-front:build:development",
-              "serverTarget": "the-tiptop-front:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         }
       }
     }

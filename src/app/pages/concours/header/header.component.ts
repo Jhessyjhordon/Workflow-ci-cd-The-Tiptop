@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BatchesService } from 'src/app/services/batches/batches.service';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,9 @@ import { RouterModule } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isVerify: boolean = false;
+  token = this.cookieService.get('token');
+  
   verifyTicketForm!: FormGroup;
   formSubmitted: boolean = false;
   submissionResult: { success: boolean; message: string } | null = null;
@@ -51,13 +55,30 @@ export class HeaderComponent implements OnInit {
     // Ajoutez d'autres objets pour chaque slide ici
   ];
 
-  constructor(private ticketVerify: TicketVerifyService, private auth: AuthService, private batchService: BatchesService, private fb: FormBuilder) {
+  constructor(private ticketVerify: TicketVerifyService, private auth: AuthService, private batchService: BatchesService, private fb: FormBuilder, private cookieService: CookieService) {
     this.verifyTicketForm = this.buildCommonForm();
   }
 
   ngOnInit(): void {
     // Votre code d'initialisation ici (peut être vide si vous n'en avez pas besoin)
-    console.log(this.getUserId());
+    
+    if (this.token){
+      console.log("Afficher userdId", this.getUserId());
+      const userId = this.getUserId();
+      if (userId){
+        // Appeler getUserById pour vérifier si le compte est vérifié
+        this.auth.getUserById(userId).subscribe(isVerify => {
+          console.log('Vérification de isVerify:', isVerify);
+          this.isVerify = isVerify; // Convertit 1 en true, 0 en false
+          if (this.isVerify) {
+            console.log("Compte vérifié")
+          } else {
+            console.log("Compte non vérifié")
+          }
+        });
+      }
+    }
+
 
     this.auth.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
@@ -97,21 +118,21 @@ export class HeaderComponent implements OnInit {
           console.log(response);
           if (response.message[0] === "Détail du ticket trouvé") {
             const idTicket = response.data.ticket.id;
-            const idBatch = response.data.ticket.batch.id;
+            // const idBatch = response.data.ticket.batch.id;
 
             // Réinitialiser l'état de soumission pour vider l'input
             this.formSubmitted = false;
             // Afficher le toast (petite notification) en cas de success
             this.submissionResult = {
               success: true,
-              message: "Félicitation ! Vous venez de gagné un Infuseur à thé. <br> Veillez vous rendre à la page <b>Récompence</b> pour réclamer votre gain"
+              message: "Félicitation ! Vous venez de gagné un Infuseur à thé. <br> Veillez vous rendre à la page <strong>Récompense</strong> pour réclamer votre gain"
               // message: response.message[0],
             };
 
             // Appel aux méthodes pour mettre à jour le ticket et la batch
-            this.updateTicketUserId(idTicket);
+            this.updateTicketById(idTicket);
             // this.getBatchByTicketBatchId(idBatch);
-            this.updateBatchIdByTicketBatchId(idBatch);
+            // this.updateBatchIdByTicketBatchId(idBatch);
 
             // Affichage du toast après les mises à jour réussies
             this.showToast();
@@ -143,13 +164,15 @@ export class HeaderComponent implements OnInit {
     return userId;
   }
 
-  // mise a jour du ticket avec l'id de l'utilisateur connecté
-  private updateTicketUserId(idTicket: number): void {
+  // mise a jour du ticket avec l'id du ticket connecté
+  private updateTicketById(idTicket: number): void {
 
     const userId = this.getUserId(); // Recupère l'id de l'utilisateur connecté
+    const state = "checked";
+    const status_gain = "demanded";
 
     if (userId) {
-      this.ticketVerify.patchTicketUserId(idTicket, { user_id: userId }).subscribe(
+      this.ticketVerify.patchTicket(idTicket, { user_id: userId, state: state, statusGain: status_gain }).subscribe(
         (response: any) => {
           console.log(`Mise à jour du champ user_id pour le ticket ${idTicket}`, response);
         },
@@ -161,22 +184,22 @@ export class HeaderComponent implements OnInit {
   }
 
   // Mise a jour du lot en fonction de la clé étrangère batch_id
-  private updateBatchIdByTicketBatchId(batch_id: number): void {
+  // private updateBatchIdByTicketBatchId(batch_id: number): void {
 
-    const userId = this.getUserId();
-    const state = "checked";
+  //   const userId = this.getUserId();
+  //   const state = "checked";
 
-    if (batch_id) {
-      this.batchService.patchBatchById(batch_id, { user_id: userId, state: state }).subscribe(
-        (response: any) => {
-          console.log(`Mise à jour des champ user_id et state pour le lot ${batch_id}`, response);
-        },
-        error => {
-          console.error(`Erreur lors de la mise à jour de la table du lot pour le lot ${batch_id}`, error);
-        }
-      );
-    }
-  }
+  //   if (batch_id) {
+  //     this.batchService.patchBatchById(batch_id, { user_id: userId, state: state }).subscribe(
+  //       (response: any) => {
+  //         console.log(`Mise à jour des champ user_id et state pour le lot ${batch_id}`, response);
+  //       },
+  //       error => {
+  //         console.error(`Erreur lors de la mise à jour de la table du lot pour le lot ${batch_id}`, error);
+  //       }
+  //     );
+  //   }
+  // }
 
   // Recupérer le lot en fonction de la clé étrangère batch_id dans la table ticket
   // getBatchByTicketBatchId(batch_id: number) {

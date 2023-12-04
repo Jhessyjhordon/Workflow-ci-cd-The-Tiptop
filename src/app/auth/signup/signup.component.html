@@ -1,20 +1,36 @@
 <section class="d-flex flex-column align-items-center justify-content-center min-vh-100">
   <div class="container">
 
+    <div *ngIf="isToastVisible" class="toast align-items-center show position-fixed top-0 start-50 translate-middle-x "
+      [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : '#821313'}" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body text-center" [ngStyle]="{'color': submissionResult?.success ? 'black' : 'white'}"
+          [innerHTML]="submissionResult!.message">
+          {{ submissionResult!.message }}
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" (click)="isToastVisible = false"
+          aria-label="Close"></button>
+      </div>
+      <div class="progress" style="height: 10px; width: 100%;">
+        <div class="progress-bar" role="progressbar" [style.width.%]="progressWidth" [style.transition]="toastDisplayDuration / 1000 + 's'"
+          [ngStyle]="{'background-color': submissionResult?.success ? '#4CAF50' : '#f44336'}"></div>
+      </div>
+    </div>
+
     <div class="col-md-12 d-flex flex-column align-items-center justify-content-center py-5 ">
-      <div
-        class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
+      <div class="d-flex flex-column align-items-center justify-content-center w-100 p-4 rounded-5 main-container">
 
         <h1 class="text-break">Inscription</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
-          <div class="row p-4">
+          <!-- <div class="row p-4">
             <div class="col px-md-5">
               <div *ngIf="submissionResult"
                 class="m-0 alert {{submissionResult.success? 'alert-success' : 'alert-danger' }}">
                 {{ submissionResult.message }}
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row row-cols-1  g-4 p-md-4">
             <!-- Nom -->
             <div class="col px-md-5">
@@ -112,15 +128,13 @@
                 <div *ngIf="loginForm.get('birthDate')?.errors?.['required']" class="text-start">
                   La date de naissance est requise.
                 </div>
-                <!-- <div *ngIf="loginForm.get('birthDate')?.errors?.['pattern']" class="text-start">
-                  La date de naissance doit contenir uniquement des caractères alphabétiques, des chiffres,
-                  des espaces et des caractères spéciaux tels que , . : ; ? ! / - ' € $ £, et
-                  avoir une longueur maximale de 50 caractères.
-                </div> -->
+                <div *ngIf="loginForm.get('birthDate')?.errors?.['maxDate']" class="text-start">
+                  La date de naissance est trop récent.
+                </div>
               </div>
               <div class="form-floating mb-3">
                 <input type="date" class="form-control rounded-5" id="floatingInputBirthDate"
-                  formControlName="birthDate" />
+                  formControlName="birthDate" [max]="getMaxDate()" />
                 <label for="floatingInputBirthDate" class="w-100">Date de naissance</label>
               </div>
             </div>
@@ -172,27 +186,9 @@
                 <input class="form-check-input me-3" type="checkbox" id="floatingInputAcceptNewsletter"
                   formControlName="newsletter" value="1">
                 <label class="form-check-label" for="floatingInputAcceptNewsletter">
-                  En cochant cette case, je consens à ce que mes données soient utilisées à fins des commerciales dans le cadre de campagne d'emailing.
+                  En cochant cette case, je consens à ce que mes données soient utilisées à fins des commerciales dans
+                  le cadre de campagne d'emailing.
                 </label>
-              </div>
-            </div>
-            <!-- Role -->
-            <div class="col px-md-5" *ngIf="isLoggedAsAdmin">
-              <!-- Afficher les erreurs pour le champ 'role' -->
-              <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched" class="text-danger">
-                <div *ngIf="loginForm.get('role')?.errors?.['required']" class="text-start">
-                  Le role est requise.
-                </div>
-                <div *ngIf="loginForm.get('role')?.errors?.['pattern']" class="text-start">
-                  Les roles autorisées sont : customer et employee.
-                </div>
-              </div>
-              <div class="form-floating mb-3">
-                <select class="form-select rounded-5" id="floatingInputRole" formControlName="role">
-                  <option value="customer">Customer</option>
-                  <option value="employee">Employee</option>
-                </select>
-                <label for="floatingInputRole" class="w-100">Choisir le rôle</label>
               </div>
             </div>
 
@@ -213,15 +209,16 @@
               </div>
             </div>
 
-           
+
           </div>
         </form>
 
         <div class="col px-md-5  order-1 order-lg-2">
           <p class="mt-2 text-body-secondary">
-            <button class="btn btn-primary fw-bold custom-bg-shadow py-3 px-sm-4 px-sm-5 rounded-5" (click)="onCustomSignup()">S'inscrire avec Google</button>
+            <app-google-login-button [buttonText]="'S\'inscrire avec Google'"
+              (customSignup)="onCustomSignup()"></app-google-login-button>
             <!-- <a [routerLink]="'../signup'">S'inscrire avec google</a>  -->
-          
+
           </p>
         </div>
 

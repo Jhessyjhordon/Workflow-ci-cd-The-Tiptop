@@ -12,8 +12,6 @@
     "dev:ssr": "ng run the-tiptop-front:serve-ssr",
     "serve:ssr": "node dist/the-tiptop-front/server/main.js",
     "build:ssr": "ng build && ng run the-tiptop-front:server",
-    "build:ssr:dev": "ng build --configuration=development && ng run the-tiptop-front:server:development",
-    "build:ssr:preprod": "ng build --configuration=preprod && ng run the-tiptop-front:server:preprod",
     "build:ssr:prod": "ng build --configuration=production && ng run the-tiptop-front:server:production",
     "prerender": "ng run the-tiptop-front:prerender"
   },

@@ -4,20 +4,20 @@
 </button>
 
 <div class="container-fluid ">
-    <h5 class="text-center py-3 py-md-5 text-break">INFORMATIONS DU TICKET</h5>
+    <h2 class="text-center py-3 py-md-5 text-break">INFORMATIONS DU TICKET</h2>
     <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 g-lg-4 g-xl-5"> -->
     <div class="row" *ngIf="dataTicket">
         <div class="col-xl-4 mb-3 mb-xl-0">
             <div class="card h-100">
                 <div class="card-body d-sm-flex justify-content-between">
                     <div class="w-100">
-                        <h5 class="card-title"><b>Ticket N° {{dataTicket?.numTicket}} </b></h5>
+                        <h3 class="card-title"><strong>Ticket N° {{dataTicket?.numTicket}} </strong></h3>
                         <hr>
                         <p class="card-text">Date d'achat : {{dataTicket?.dateAchat | date: 'dd / MM / yyyy' }}</p>
                         <p class="card-text">Montant d'achat : {{dataTicket?.montantAchat}} €</p>
-                        <span [ngClass]="{'badge': true, 'text-bg-secondary': dataTicket?.statusGain === 'Non attribué', 'text-bg-success': dataTicket?.statusGain === 'Attribué'}">Status : {{dataTicket?.statusGain}}</span>
+                        <span [ngClass]="{'badge': true, 'text-bg-secondary': dataTicket?.statusGain === 'not demanded', 'text-bg-warning': dataTicket?.statusGain === 'demanded', 'text-bg-success': dataTicket?.statusGain === 'assigned'}">Status : {{dataTicket?.statusGain}}</span>
                     </div>
-                    <div>
+                    <div *ngIf="dataTicket?.statusGain != 'assigned'">
                         <a (click)="pathTicket()" class="btn btn-primary">Attribuer</a>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
         <div class="col-xl-8">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><b>Utilisateur</b></h5>
+                    <h3 class="card-title"><strong>Utilisateur</strong></h3>
                     <hr>
                     <p class="card-text"> {{dataTicket?.user?.firstname}}</p>
                     <p class="card-text"> {{dataTicket?.user?.lastname}}</p>
@@ -38,7 +38,7 @@
         <div class="col-xl-12 my-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><b>Gain :  {{dataTicket.batch.type_lot}}</b></h5>
+                    <h3 class="card-title"><strong>Gain :  {{dataTicket.batch.type_lot}}</strong></h3>
                     <hr>
                     <p class="card-text">Description du lot :  {{dataTicket.batch.description}}</p>
                     <p class="card-text">Valeur du lot:  {{dataTicket.batch.valeur}}</p>

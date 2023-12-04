@@ -6,7 +6,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
 import { UserCustomer } from 'src/app/models/user-custumer.model';
-import { environment } from 'src/environments/environment';
 import { UserCustomerShortcut } from 'src/app/models/user-customer-shortcut.model';
 
 @Injectable({
@@ -24,7 +23,7 @@ export class UserService {
   userData$: Observable<UserCustomer | null> = this.userDataSubject.asObservable();
 
   // private userData!: UserCustomer;
-  private endpointUrl = environment.endpointUrl; // Endpoint de l'API 
+  private endpointUrl = 'https://api.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private cookieService: CookieService, private auth: AuthService,) { }
 
@@ -126,7 +125,7 @@ export class UserService {
   deconnexionAfterSevenSecond(){
     setTimeout(()=>{
       this.auth.logout()
-    }, 7000)
+    }, 3000)
   }
 
 }

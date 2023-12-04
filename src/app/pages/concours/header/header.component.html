@@ -1,6 +1,6 @@
 <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div *ngIf="isToastVisible" class="toast align-items-center show position-fixed top-0 start-50 translate-middle-x "
-        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : 'red'}" role="alert"
+        [ngStyle]="{'background-color': submissionResult?.success ? '#20c997' : '#821313'}" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body text-center" [ngStyle]="{'color': submissionResult?.success ? 'black' : 'white'}" [innerHTML]="submissionResult!.message">
@@ -22,37 +22,41 @@
     <div class="carousel-caption carousel-caption-overlay  rounded-5 d-md-block">
         <div class="centered-square p-0  h-100">
 
-            <h5>Participez au jeu concours</h5>
+            <h1 class="text-break">Participez au jeu concours</h1>
             <p class="truncate-text">A l'occasion de l'ouverture de notre 10eme boutique à Nice. Nous organisons un jeu concours par tirage au sort pour promouvoir nos produits</p>
 
             <div *ngIf="!isLoggedIn">
                 <button class="border-0 p-0 offlinePlay" [routerLink]="'/auth/login'">Jouer</button>
             </div>
 
-            <form *ngIf="isLoggedIn" [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
-
-                <div class="row row-cols-1 row-cols-md-1 g-4 pt-md-4">
-
+            <ng-container *ngIf="isLoggedIn">
+                <form *ngIf="isVerify" [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
+                  <!-- Le contenu de votre formulaire -->
+                  <div class="row row-cols-1 row-cols-md-1 g-4 pt-md-4">
                     <div class="col px-auto">
-                        <!-- Afficher les erreurs pour le champ 'E-mail' -->
-                        <div *ngIf="verifyTicketForm.get('numTicket')?.invalid && verifyTicketForm.get('numTicket')?.touched"
-                            class="text-danger">
-                            <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['required']" class="text-start">
-                                Le numero de ticket est requis.
-                            </div>
-                            <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['pattern']" class="text-start">
-                                Le numero de ticket doit être des chiffres.
-                            </div>
+                      <!-- Afficher les erreurs pour le champ 'numTicket' -->
+                      <div *ngIf="verifyTicketForm.get('numTicket')?.invalid && verifyTicketForm.get('numTicket')?.touched"
+                           class="text-danger">
+                        <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['required']" class="text-start">
+                          Le numéro de ticket est requis.
                         </div>
-                        <div>
-                            <input class="border-0" type="text" formControlName="numTicket" placeholder="Your Name">
-                            <button class="border-0 p-0 logedForPlay" type="submit">Jouer</button>
+                        <div *ngIf="verifyTicketForm.get('numTicket')?.errors?.['pattern']" class="text-start">
+                          Le numéro de ticket doit être des chiffres.
                         </div>
+                      </div>
+                      <div>
+                        <input class="border-0" type="text" formControlName="numTicket" placeholder="Votre numéro de ticket : 0153">
+                        <button class="border-0 p-0 logedForPlay" type="submit">Jouer</button>
+                      </div>
                     </div>
-
+                  </div>
+                </form>
+                
+                <!-- Message si le compte n'est pas vérifié -->
+                <div *ngIf="!isVerify" class="alert alert-warning" role="alert">
+                  Votre compte n'est pas encore vérifié. Vous ne pouvez pas participer au jeu concours avant que votre compte soit vérifié.
                 </div>
-            </form>
-
+            </ng-container>
 
         </div>
     </div>
