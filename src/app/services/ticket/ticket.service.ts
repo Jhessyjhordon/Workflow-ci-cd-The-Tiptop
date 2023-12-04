@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
 
-  private endpointUrl = environment.endpointUrl; // Remplacez ceci par l'URL réelle de votre backend
+  private endpointUrl = 'https://api.dsp-archiwebo22b-ji-rw-ah.fr'; // Remplacez ceci par l'URL réelle de votre backend
 
   constructor(private http: HttpClient) { }
 

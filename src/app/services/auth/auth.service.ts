@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError
 import { AuthResponse } from 'src/app/models/auth-response';
 import { jwtDecode } from "jwt-decode";
 import { CookieService, SameSite } from 'ngx-cookie-service'; // Importez CookieService
-import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs';
 
 interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les informations qui seront stockés
@@ -21,7 +20,7 @@ interface JwtPayload { // Utilisation d'une interface Payload pour indiquer les 
 export class AuthService {
 
   private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private apiUrl = environment.endpointUrl;
+  private apiUrl = 'https://api.dsp-archiwebo22b-ji-rw-ah.fr';
   // On ajout les options cookies pour sécuriser notre utilisation des cookies
   private cookieOptions = {
     expires: 1, // Fais que le cookie expire au bout de 1 jour
