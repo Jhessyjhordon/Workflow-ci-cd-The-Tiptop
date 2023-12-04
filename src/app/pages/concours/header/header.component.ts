@@ -125,7 +125,7 @@ export class HeaderComponent implements OnInit {
             // Afficher le toast (petite notification) en cas de success
             this.submissionResult = {
               success: true,
-              message: "Félicitation ! Vous venez de gagné un Infuseur à thé. <br> Veillez vous rendre à la page <b>Récompence</b> pour réclamer votre gain"
+              message: "Félicitation ! Vous venez de gagné un Infuseur à thé. <br> Veillez vous rendre à la page <strong>Récompense</strong> pour réclamer votre gain"
               // message: response.message[0],
             };
 
