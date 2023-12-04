@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { AllBatch } from 'src/app/models/all-batch.model';
 
@@ -10,7 +9,7 @@ import { AllBatch } from 'src/app/models/all-batch.model';
 })
 export class TicketVerifyService {
 
-  private endpointUrl = environment.endpointUrl; // Endpoint de l'API 
+  private endpointUrl = 'https://api.dsp-archiwebo22b-ji-rw-ah.fr'; // Endpoint de l'API 
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
