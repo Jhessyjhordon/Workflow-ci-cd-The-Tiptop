@@ -78,6 +78,14 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "the-tiptop-front:build:production"
+            },
+            "development": {
+              "browserTarget": "the-tiptop-front:build:development"
+            }
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
