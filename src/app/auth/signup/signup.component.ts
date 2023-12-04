@@ -115,7 +115,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         (result) => {
           this.submissionResult = {
             success: true,
-            message: "Inscription réussit ! <b>Un mail de confirmation, vous a été envoyé</b>. Veuillez confirmer votre compte pour pouvoir participer aux jeux concours !",
+            message: "Inscription réussit ! <strong>Un mail de confirmation, vous a été envoyé</strong>. Veuillez confirmer votre compte pour pouvoir participer aux jeux concours !",
           };
           // Affichage du toast après les mises à jour réussies
           this.showToast();
