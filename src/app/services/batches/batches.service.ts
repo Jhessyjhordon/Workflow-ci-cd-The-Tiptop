@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { environment } from 'src/environments/environment';
 import { ShortcutedBatch } from 'src/app/models/batch-shortcut.model';
 
 @Injectable({
