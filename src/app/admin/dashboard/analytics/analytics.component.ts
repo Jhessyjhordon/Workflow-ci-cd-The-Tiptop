@@ -56,6 +56,11 @@ export class AnalyticsComponent implements OnInit {
   @ViewChild('canvasPieElement') canvasPie: ElementRef | null = null;
 
   constructor(private adminService: AdminService, private currentDateService: CurrentDateService, private ageService: AgeService, private auth: AuthService, private titleService : Title, private metaService: Meta, private changeDetectorRef: ChangeDetectorRef) {
+    // Supprimer les metatags existants
+    this.metaService.removeTag("name='description'");
+    this.metaService.removeTag("name='keywords'");
+    this.metaService.removeTag("property='og:title'");
+    this.metaService.removeTag("name='robots'");
     this.titleService.setTitle(this.title);
     this.addTag();
     
