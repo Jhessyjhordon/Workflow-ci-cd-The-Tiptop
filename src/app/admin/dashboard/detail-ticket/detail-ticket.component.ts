@@ -21,11 +21,6 @@ export class DetailTicketComponent implements OnInit {
 
   // Utilisation d'ActiveRoute pour récupérer le paramètre (ici on récupère le paramètre en fonction de sa clé)
   constructor(private route: ActivatedRoute, private adminService: AdminService, private titleService : Title, private metaService: Meta) {
-    // Supprimer les metatags existants
-    this.metaService.removeTag("name='description'");
-    this.metaService.removeTag("name='keywords'");
-    this.metaService.removeTag("property='og:title'");
-    this.metaService.removeTag("name='robots'");
     this.titleService.setTitle(this.title);
     this.addTag();
   }
