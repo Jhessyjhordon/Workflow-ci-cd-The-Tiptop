@@ -22,14 +22,14 @@ export class DetailTicketComponent implements OnInit {
   // Utilisation d'ActiveRoute pour récupérer le paramètre (ici on récupère le paramètre en fonction de sa clé)
   constructor(private route: ActivatedRoute, private adminService: AdminService, private titleService : Title, private metaService: Meta) {
     this.titleService.setTitle(this.title);
-    this.addTag();
+    this.updateTag();
   }
 
   // Définition des différentes balises pour le SEO
-  addTag() {
-    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
-    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
-    this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
+  updateTag() {
+    this.metaService.updateTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.updateTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.updateTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
   }
 
 
