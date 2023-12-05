@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
@@ -12,7 +13,7 @@ import { FormsModule, FormGroup, Validators, FormBuilder, ReactiveFormsModule } 
 @Component({
   selector: 'app-create-ticket',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, BsDropdownModule.forRoot()],
   templateUrl: './create-ticket.component.html',
   styleUrls: ['./create-ticket.component.scss']
 })
@@ -26,22 +27,26 @@ export class CreateTicketComponent implements OnInit {
   constructor(private ticketService: TicketService, 
               private userService: UserService,
               private batchService: BatchesService,
-              private formBuilder: FormBuilder,) { }
+              private formBuilder: FormBuilder,) {}
 
   ngOnInit() {
+    this.initializeForm();
+    this.loadInitialData();
+  }
 
+  private initializeForm() {
     this.ticketForm = this.formBuilder.group({
-      montantTicket: [null, [Validators.required, Validators.min(0)]],
+      montantTicket: [null, [Validators.required, Validators.min(49)]],
       userId: [null, Validators.required],
       batchId: [null, Validators.required]
     });
-    this.loadInitialData();
   }
 
   loadInitialData() {
     this.userService.getShortcutCustomerDetails().subscribe(
       (users: UserCustomerShortcut[]) => {
         this.users = users;
+        console.log('Utilisateurs chargés avec succès :', this.users);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);
@@ -52,6 +57,7 @@ export class CreateTicketComponent implements OnInit {
     this.batchService.getShortcutedBatchs().subscribe(
       (batshs: ShortcutedBatch[]) => {
         this.batches = batshs;
+        console.log('Lots chargés avec succès :', this.batches);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);
