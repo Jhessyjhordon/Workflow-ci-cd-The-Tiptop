@@ -25,6 +25,11 @@ export class CreateUserComponent implements OnInit {
 
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
+  isToastVisible: boolean = false;
+  toastDisplayDuration = 8000; // 8 secondes
+  timeoutId: any; // Déclaration de la propriété timeoutId
+  progressWidth: number = 0;
+
   constructor(private auth: AuthService, private router: Router, private fb: FormBuilder, private titleService : Title, private metaService: Meta) {
     this.loginForm = this.buildCommonForm();
     this.titleService.setTitle(this.title);
@@ -92,23 +97,23 @@ export class CreateUserComponent implements OnInit {
     if (this.loginForm.valid) { // Si le formulaire d'inscription est valide
       this.formSubmitted = false;
       const loginData = this.loginForm.value; // On créer une constante et on ajoute les valeurs du formulaire d'inscription dedans
-      
+
+      console.log("~~~~~~~>", loginData);
+
       // On fait appel à la méthode signup du Service AuthService pour effectuer l'inscription
       this.auth.signup(loginData).subscribe(
         (result) => {
           this.submissionResult = {
             success: true,
-            message: result.message,
+            message: "Inscription réussit ! Un mail de confirmation, vous a été envoyé. Veuillez confirmer votre compte pour pouvoir participer aux jeux concours !",
           };
           this.loginForm.reset(); // Réinitialiser le formulaire après la soumission réussie
-          this.router.navigate(['home']) // Redirige vers la home
         },
         (err: Error) => {
-          console.error("==============>>>>>>>>", err);
+          console.error("==============>>>>>>>>", err.message);
           this.submissionResult = {
             success: false,
-            message:
-              "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
+            message: err.message
           };
         }
       )

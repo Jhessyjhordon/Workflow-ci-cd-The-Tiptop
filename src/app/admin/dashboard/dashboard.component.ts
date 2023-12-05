@@ -19,6 +19,7 @@ export class DashboardComponent {
   constructor(private auth: AuthService, private titleService : Title, private metaService: Meta) {
     this.titleService.setTitle(this.title);
     this.updateTag();
+    this.getRoleUser();
   }
 
   // Définition des différentes balises pour le SEO
@@ -29,15 +30,19 @@ export class DashboardComponent {
   }
 
   ngOnInt() {
+
+  }
+
+  toggleSidebar() {
+    this.isSidebarActive = !this.isSidebarActive;
+  }
+
+  getRoleUser(){
     if (this.auth.getRoleUser() === "admin") {
       this.isLoggedAsAdmin = true;
     } else {
       this.isLoggedAsAdmin = false;
     };
-  }
-
-  toggleSidebar() {
-    this.isSidebarActive = !this.isSidebarActive;
   }
 
   logout() {

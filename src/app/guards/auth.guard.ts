@@ -8,6 +8,9 @@ import { Observable, map, take } from 'rxjs';
   providedIn: 'root'
 })
 export class authGuard implements CanActivate {
+
+  isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
+
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -23,7 +26,6 @@ export class authGuard implements CanActivate {
 
         if (userRole === 'admin' || userRole === 'employee') {
           // Pas besoin de rediriger ici car si le garde passe, la navigation vers le DashboardComponent se produira automatiquement
-          //this.router.navigate(['admin/dashboard']);
           console.log('Je suis dedans')
           return true;
         }

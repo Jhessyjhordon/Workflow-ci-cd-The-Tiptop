@@ -7,13 +7,13 @@
 
         <ul class="list-unstyled components">
             <li>
-                <a class="analytics" [routerLink]="'./analytics'">Analytics</a>
+                <a class="analytics" [routerLink]="'./analytics'" *ngIf="isLoggedAsAdmin">Analytics</a>
             </li>
             <li>
                 <a class="analytics" [routerLink]="'./tickets'">Tickets</a>
             </li>
             <li>
-                <a class="analytics" [routerLink]="'./app-create-user'">Créer un utilisateur</a>
+                <a class="analytics" [routerLink]="'./create-user'">Créer un utilisateur</a>
             </li>
         </ul>
     </nav>

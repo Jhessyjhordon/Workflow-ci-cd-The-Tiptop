@@ -48,10 +48,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // console.log(this.auth.getRoleUser());
     // Vérification du role pour passer true à la variable "isLoggedAsAdmin"
-    if (this.auth.getRoleUser() === "admin") {
-      console.log("ok");
-      this.isLoggedAsAdmin = true;
-    } else console.log("not admin");
+    // if (this.auth.getRoleUser() === "admin") {
+    //   console.log("ok");
+    //   this.isLoggedAsAdmin = true;
+    // } else console.log("not admin");
   }
 
   buildCommonForm(): FormGroup {
