@@ -14,7 +14,7 @@ import { Meta, Title } from '@angular/platform-browser';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  title= 'Connexion | Thé Tiptop | Jeu concours';
+  title= 'Thé Tiptop - Grand Jeu Concours à Nice - Connexion';
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
 
@@ -23,6 +23,11 @@ export class LoginComponent implements OnInit {
   submissionResult: { success: boolean; message: string } | null = null;
 
   constructor(private auth: AuthService, private router: Router, private fb: FormBuilder, private titleService : Title, private metaService: Meta) {
+    // Supprimer les metatags existants
+    this.metaService.removeTag("name='description'");
+    this.metaService.removeTag("name='keywords'");
+    this.metaService.removeTag("property='og:title'");
+    this.metaService.removeTag("name='robots'");
     this.loginForm = this.buildCommonForm();
     this.titleService.setTitle(this.title);
     this.addTag();
@@ -31,11 +36,11 @@ export class LoginComponent implements OnInit {
   // Définition des différentes balises pour le SEO
   addTag() {
     this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
-    this.metaService.addTag({ name: 'description', content: "Connexion à Thé Tiptop, site de jeu concours de thé pour les 10 ans et l'ouverture de la boutique à Nice" }); // Meta description de la page
+    this.metaService.addTag({ name: 'description', content: "Connectez-vous sur Thé Tiptop pour participer au concours à Nice. Vivez l'expérience unique du jeu à l'occasion des 10 ans de notre boutique de thé." }); // Meta description de la page
     this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
     this.metaService.addTag({ name: 'robots', content: 'index,follow' }); // Permet au robot d'indexer la page
-    this.metaService.addTag({ name: 'keywords', content: 'jeu concours Nice' }); //Add keyword
-    this.metaService.addTag({ property: 'og:title', content: "Connexion | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
+    this.metaService.addTag({ name: 'keywords', content: 'connexion concours Nice' }); //Add keyword
+    this.metaService.addTag({ property: 'og:title', content: "Thé Tiptop - Grand Jeu Concours à Nice - Connexion" }) // Titre pour l'encadré dans les recherches
   }
 
   ngOnInit() {
@@ -98,24 +103,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // onCustomSignup() {
-  //   // Redirige l'utilisateur vers la route spécifique (ajustez l'URL selon vos besoins)
-  //   this.auth.redirectToGoogleAuth().subscribe(
-  //     () => {
-  //       // Redirigez vers le tableau de bord du client après une authentification réussie
-  //       this.router.navigate(['/concours']);
-  //     },
-  //     (error) => {
-  //       // Gérez les erreurs ici
-  //       console.error(error);
-  //     }
-  //   );
-  // }
-
   onCustomSignup() {
     this.auth.redirectToGoogleAuth();
   }
-  
-  
   
 }
