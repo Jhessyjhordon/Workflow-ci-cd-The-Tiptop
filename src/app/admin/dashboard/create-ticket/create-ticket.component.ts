@@ -22,12 +22,19 @@ export class CreateTicketComponent implements OnInit {
   ticketForm!: FormGroup; 
   ticket: any = {}; // Créez une structure de données pour stocker les détails du ticket
   users: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
-  batches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
+  filtredUsers: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
+  batchs: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
+  filtredBatches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
 
   constructor(private ticketService: TicketService, 
               private userService: UserService,
               private batchService: BatchesService,
-              private formBuilder: FormBuilder,) {}
+              private formBuilder: FormBuilder,) {
+    this.users = [];            
+    this.batchs = [];
+    this.filtredUsers = [...this.users];       
+    this.filtredBatches = [...this.batchs];       
+              }
 
   ngOnInit() {
     this.initializeForm();
@@ -46,7 +53,7 @@ export class CreateTicketComponent implements OnInit {
     this.userService.getShortcutCustomerDetails().subscribe(
       (users: UserCustomerShortcut[]) => {
         this.users = users;
-        console.log('Utilisateurs chargés avec succès :', this.users);
+        // console.log('Utilisateurs chargés avec succès :', this.users);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);
@@ -55,9 +62,10 @@ export class CreateTicketComponent implements OnInit {
     );
 
     this.batchService.getShortcutedBatchs().subscribe(
-      (batshs: ShortcutedBatch[]) => {
-        this.batches = batshs;
-        console.log('Lots chargés avec succès :', this.batches);
+      (batchs: ShortcutedBatch[]) => {
+        this.batchs = batchs;
+        console.log(batchs);
+        console.log('Lots chargés avec succès :', this.batchs);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);

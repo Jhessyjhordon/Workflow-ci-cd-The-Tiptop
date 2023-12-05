@@ -30,7 +30,7 @@
                 <div class="mb-3">
                     <label for="batchId" class="form-label">Lot</label>
                     <select class="form-select" id="batchId" formControlName="batchId" required>
-                        <option *ngFor="let batch of batches" [value]="batch.id">
+                        <option *ngFor="let batch of batchs" [value]="batch.id">
                             {{ batch.type_lot }}
                         </option>
                     </select>
