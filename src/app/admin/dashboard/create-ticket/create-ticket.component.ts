@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
@@ -21,27 +22,38 @@ export class CreateTicketComponent implements OnInit {
   ticketForm!: FormGroup; 
   ticket: any = {}; // Créez une structure de données pour stocker les détails du ticket
   users: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
+  filtredUsers: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
   batches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
+  filtredBatches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
 
   constructor(private ticketService: TicketService, 
               private userService: UserService,
               private batchService: BatchesService,
-              private formBuilder: FormBuilder,) { }
+              private formBuilder: FormBuilder,) {
+    this.users = [];            
+    this.batches = [];
+    this.filtredUsers = [...this.users];       
+    this.filtredBatches = [...this.batches];       
+              }
 
   ngOnInit() {
+    this.initializeForm();
+    this.loadInitialData();
+  }
 
+  private initializeForm() {
     this.ticketForm = this.formBuilder.group({
-      montantTicket: [null, [Validators.required, Validators.min(0)]],
+      montantTicket: [null, [Validators.required, Validators.min(49)]],
       userId: [null, Validators.required],
       batchId: [null, Validators.required]
     });
-    this.loadInitialData();
   }
 
   loadInitialData() {
     this.userService.getShortcutCustomerDetails().subscribe(
       (users: UserCustomerShortcut[]) => {
         this.users = users;
+        // console.log('Utilisateurs chargés avec succès :', this.users);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);
@@ -50,8 +62,10 @@ export class CreateTicketComponent implements OnInit {
     );
 
     this.batchService.getShortcutedBatchs().subscribe(
-      (batshs: ShortcutedBatch[]) => {
-        this.batches = batshs;
+      (batches: ShortcutedBatch[]) => {
+        this.batches = batches;
+        console.log(batches);
+        console.log('Lots chargés avec succès :', this.batches);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);

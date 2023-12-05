@@ -98,15 +98,10 @@ export class UserService {
   }
 
   getShortcutCustomerDetails(): Observable<UserCustomerShortcut[]> {
-    const url = `${this.endpointUrl}/user/shortcut/customers/datails`;
+    const url = `${this.endpointUrl}/user/shortcut/customers/details`;
 
-    return this.http.get<UserCustomerShortcut[]>(url).pipe(
-      catchError((error: any) => {
-        // Gérez les erreurs ici (par exemple, affichez-les dans la console).
-        console.error('Erreur lors de la récuperation des details des utilisateurs :', error);
-        // Vous pouvez également lancer une nouvelle erreur personnalisée ici si nécessaire.
-        return throwError(error);
-      })
+    return this.http.get<{users:UserCustomerShortcut[]}>(url).pipe(
+      map(response => response.users)
     );
   }
 
