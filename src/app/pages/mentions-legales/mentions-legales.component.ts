@@ -21,6 +21,7 @@ export class MentionsLegalesComponent {
   }
 
   constructor(private titleService : Title, private metaService: Meta) {
+    this.metaService.removeTag("name='description'");
     this.titleService.setTitle(this.title);
     this.updateTag();
   }
