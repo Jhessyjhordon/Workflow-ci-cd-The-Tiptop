@@ -21,7 +21,7 @@ export class FooterComponent {
       cookiesVersion: "projet dsp5 - archi o22b-fr-3",
     };
 
-    // Créer et ajouter le script Axeptio au DOM
+    // Used to setup up cookie AXEPTIO in Angular 
     const script = document.createElement('script');
     script.async = true;
     script.src = "//static.axept.io/sdk.js";
