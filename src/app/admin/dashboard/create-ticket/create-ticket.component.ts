@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+// import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
@@ -13,7 +13,7 @@ import { FormsModule, FormGroup, Validators, FormBuilder, ReactiveFormsModule } 
 @Component({
   selector: 'app-create-ticket',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, BsDropdownModule.forRoot()],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './create-ticket.component.html',
   styleUrls: ['./create-ticket.component.scss']
 })
