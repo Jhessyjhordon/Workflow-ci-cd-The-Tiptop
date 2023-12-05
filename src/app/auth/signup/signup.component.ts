@@ -29,6 +29,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoggedAsAdmin: boolean = false; // True si on est connecté en tant qu'Admin
 
   constructor(private auth: AuthService, private router: Router, private fb: FormBuilder, private titleService: Title, private metaService: Meta) {
+    // Supprimer les metatags existants
+    this.metaService.removeTag("name='description'");
+    this.metaService.removeTag("name='keywords'");
+    this.metaService.removeTag("property='og:title'");
+    this.metaService.removeTag("name='robots'");
     this.loginForm = this.buildCommonForm();
     this.titleService.setTitle(this.title);
     this.addTag();
@@ -52,15 +57,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       console.log("ok");
       this.isLoggedAsAdmin = true;
     } else console.log("not admin");
-    // this.auth.isLoggedIn().subscribe((loggedIn) => {
-    //   this.isLoggedIn = loggedIn; // vérifie l'etat de la connexion (true si connecté)
-    //   console.log(loggedIn);
-    // });
-    // // si l'utilisateur est déjà connecté il a pas acces à la route "auth/login" et on le renvoie sur la "home" 
-    // // si non il a l'accès
-    // if (this.isLoggedIn) {
-    //   this.router.navigate(['home'])
-    // }
   }
 
   buildCommonForm(): FormGroup {

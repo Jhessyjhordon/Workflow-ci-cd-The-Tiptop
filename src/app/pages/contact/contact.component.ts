@@ -13,7 +13,7 @@ import { Meta, Title } from '@angular/platform-browser';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  title= 'Contactez-nous | Thé Tiptop | Jeu concours';
+  title= 'Thé Tiptop - Grand Jeu Concours à Nice - Contactez-nous';
   contactForm!: FormGroup;
   formSubmitted: boolean = false;
 
@@ -24,6 +24,11 @@ export class ContactComponent implements OnInit {
     private contactService: ContactService,
     private titleService : Title, private metaService: Meta
   ) {
+    // Supprimer les metatags existants
+    this.metaService.removeTag("name='description'");
+    this.metaService.removeTag("name='keywords'");
+    this.metaService.removeTag("property='og:title'");
+    this.metaService.removeTag("name='robots'");
     this.contactForm = this.buildCommonForm();
     this.titleService.setTitle(this.title);
     this.addTag();
@@ -36,7 +41,7 @@ export class ContactComponent implements OnInit {
   // Définition des différentes balises pour le SEO
   addTag() {
     this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
-    this.metaService.addTag({ name: 'description', content: "Contactez-nous, pour avoir plus d'informations sur notre jeu concours" }); // Meta description de la page
+    this.metaService.addTag({ name: 'description', content: "Pour toute information sur le jeu concours de thé à Nice, contactez Thé Tiptop. Nous sommes là pour répondre à vos questions et partager notre passion." }); // Meta description de la page
     this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
     this.metaService.addTag({ name: 'robots', content: 'index,follow' }); // Permet au robot d'indexer la page
     this.metaService.addTag({ name: 'keywords', content: 'information thé Nice' }); //Add keyword
