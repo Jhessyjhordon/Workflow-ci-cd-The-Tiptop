@@ -68,8 +68,8 @@ export class BatchesService {
   getShortcutedBatchs(): Observable<ShortcutedBatch[]> {
     const url = `${this.endpointUrl}/batch/shortcuted/details`;
 
-    return this.http.get<{batchs:ShortcutedBatch[]}>(url).pipe(
-      map(response => response.batchs)
+    return this.http.get<{batches:ShortcutedBatch[]}>(url).pipe(
+      map(response => response.batches)
     );
   }
 

@@ -23,7 +23,7 @@ export class CreateTicketComponent implements OnInit {
   ticket: any = {}; // Créez une structure de données pour stocker les détails du ticket
   users: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
   filtredUsers: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
-  batchs: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
+  batches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
   filtredBatches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
 
   constructor(private ticketService: TicketService, 
@@ -31,9 +31,9 @@ export class CreateTicketComponent implements OnInit {
               private batchService: BatchesService,
               private formBuilder: FormBuilder,) {
     this.users = [];            
-    this.batchs = [];
+    this.batches = [];
     this.filtredUsers = [...this.users];       
-    this.filtredBatches = [...this.batchs];       
+    this.filtredBatches = [...this.batches];       
               }
 
   ngOnInit() {
@@ -62,10 +62,10 @@ export class CreateTicketComponent implements OnInit {
     );
 
     this.batchService.getShortcutedBatchs().subscribe(
-      (batchs: ShortcutedBatch[]) => {
-        this.batchs = batchs;
-        console.log(batchs);
-        console.log('Lots chargés avec succès :', this.batchs);
+      (batches: ShortcutedBatch[]) => {
+        this.batches = batches;
+        console.log(batches);
+        console.log('Lots chargés avec succès :', this.batches);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);
