@@ -21,11 +21,6 @@ export class MentionsLegalesComponent {
   }
 
   constructor(private titleService : Title, private metaService: Meta) {
-    // Supprimer les metatags existants
-    this.metaService.removeTag("name='description'");
-    this.metaService.removeTag("name='keywords'");
-    this.metaService.removeTag("property='og:title'");
-    this.metaService.removeTag("name='robots'");
     this.titleService.setTitle(this.title);
     this.addTag();
   }

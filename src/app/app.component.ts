@@ -1,9 +1,9 @@
 import { Component, Renderer2, Inject, OnInit } from '@angular/core'; // Import Renderer2 pour manipuler le DOM
-import { DOCUMENT } from '@angular/common';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { filter } from 'rxjs';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -17,13 +17,19 @@ export class AppComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
-    private router: Router
+    private router: Router,
+    private metaService: Meta
   ) {}
 
   ngOnInit() {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd) // Ecoute l'événement de navigation et filtre pour ne réagir qu'à NavigationEnd (soit un événment qui indique une navigation terminée avec succès)
     ).subscribe(event => {
+      // Supprimer les metatags existants
+      this.metaService.removeTag("name='description'");
+      this.metaService.removeTag("name='keywords'");
+      this.metaService.removeTag("property='og:title'");
+      this.metaService.removeTag("name='robots'");
       this.addCanonicalURL(`https://dsp-archiwebo22b-ji-rw-ah.fr${event.urlAfterRedirects}`); // Créer un nouvel événement qui ajoute un link comme attribut
     });
   }
