@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
@@ -22,18 +21,14 @@ export class CreateTicketComponent implements OnInit {
   ticketForm!: FormGroup; 
   ticket: any = {}; // Créez une structure de données pour stocker les détails du ticket
   users: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
-  filtredUsers: UserCustomerShortcut[] = []; // Créez une structure de données pour stocker les utilisateurs
   batches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
-  filtredBatches: ShortcutedBatch[] = []; // Créez une structure de données pour stocker les lots
 
   constructor(private ticketService: TicketService, 
               private userService: UserService,
               private batchService: BatchesService,
               private formBuilder: FormBuilder,) {
     this.users = [];            
-    this.batches = [];
-    this.filtredUsers = [...this.users];       
-    this.filtredBatches = [...this.batches];       
+    this.batches = [];      
               }
 
   ngOnInit() {
@@ -79,6 +74,7 @@ export class CreateTicketComponent implements OnInit {
     if (this.ticketForm.valid) {
       // Si le formulaire est valide, effectuez le traitement
       const ticketData = this.ticketForm.value;
+      
       this.ticketService.createTicket(ticketData).subscribe(
         (response) => {
           console.log('Ticket créé avec succès:', response);
