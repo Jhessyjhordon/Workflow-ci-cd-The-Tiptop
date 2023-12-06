@@ -34,7 +34,7 @@
                         <p class="card-text">Montant d'achat : {{dataTicket?.montantAchat}} €</p>
                         <span [ngClass]="{'badge': true, 'text-bg-secondary': dataTicket?.statusGain === 'not demanded', 'text-bg-warning': dataTicket?.statusGain === 'demanded', 'text-bg-success': dataTicket?.statusGain === 'assigned'}">Status : {{dataTicket?.statusGain}}</span>
                     </div>
-                    <div *ngIf="dataTicket?.statusGain != 'assigned'">
+                    <div *ngIf="dataTicket?.statusGain != 'assigned' || dataTicket?.state != 'recieved'">
                         <a (click)="pathTicket()" class="btn btn-primary">Attribuer</a>
                     </div>
                 </div>
