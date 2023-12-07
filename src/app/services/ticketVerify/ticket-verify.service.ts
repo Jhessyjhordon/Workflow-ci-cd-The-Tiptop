@@ -49,4 +49,9 @@ export class TicketVerifyService {
         })
       );
   }
+
+  patchTicketStatus(id: number, data: object): Observable<any> {
+    const url = `${this.endpointUrl}/ticket/${id}`;
+    return this.http.patch(url, data);
+  }
 }

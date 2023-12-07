@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
@@ -10,21 +11,27 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  
   ngOnInit(){
-    this.loadAxeptioScript();
+    if (isPlatformBrowser(this.platformId)) { // Vérifie si le code ne s'exécute que sur le navigateur
+      // Exécuté seulement côté client
+      this.loadAxeptioScript();
+    }
   }
 
   loadAxeptioScript(){
-     // Définir les paramètres Axeptio
+    // Définir les paramètres Axeptio
     (window as any).axeptioSettings = {
       clientId: "655e146f508b50f44623bccc",
       cookiesVersion: "projet dsp5 - archi o22b-fr-3",
     };
 
-    // Used to setup up cookie AXEPTIO in Angular 
+    // Chargement du script Axeptio seulement si on est côté client
     const script = document.createElement('script');
     script.async = true;
     script.src = "//static.axept.io/sdk.js";
-    document.body.appendChild(script); // Vous pouvez aussi utiliser document.head si nécessaire
+    document.body.appendChild(script);
   }
 }

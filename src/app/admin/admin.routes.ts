@@ -18,7 +18,7 @@ export default [
             { path: 'tickets', component: TicketsComponent },
             { path: 'detail-ticket/:id', component: DetailTicketComponent },
             { path: 'create-ticket', component: CreateTicketComponent },
-            { path: 'app-create-user', component: CreateUserComponent}
+            { path: 'create-user', component: CreateUserComponent}
 
             // autres routes enfants
         ]

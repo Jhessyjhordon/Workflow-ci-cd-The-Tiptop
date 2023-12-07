@@ -66,15 +66,10 @@ export class BatchesService {
   // }
 
   getShortcutedBatchs(): Observable<ShortcutedBatch[]> {
-    const url = `${this.endpointUrl}/shortcuted/datails`;
+    const url = `${this.endpointUrl}/batch/shortcuted/details`;
 
-    return this.http.get<ShortcutedBatch[]>(url).pipe(
-      catchError((error: any) => {
-        // Gérez les erreurs ici (par exemple, affichez-les dans la console).
-        console.error('Erreur lors de la récuperation des details des lot racourcis :', error);
-        // Vous pouvez également lancer une nouvelle erreur personnalisée ici si nécessaire.
-        return throwError(error);
-      })
+    return this.http.get<{batches:ShortcutedBatch[]}>(url).pipe(
+      map(response => response.batches)
     );
   }
 

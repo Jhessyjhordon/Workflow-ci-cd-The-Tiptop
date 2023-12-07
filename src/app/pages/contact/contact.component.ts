@@ -26,7 +26,7 @@ export class ContactComponent implements OnInit {
   ) {
     this.contactForm = this.buildCommonForm();
     this.titleService.setTitle(this.title);
-    this.addTag();
+    this.updateTag();
   }
 
   ngOnInit() {
@@ -34,13 +34,13 @@ export class ContactComponent implements OnInit {
   }
 
   // Définition des différentes balises pour le SEO
-  addTag() {
-    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
-    this.metaService.addTag({ name: 'description', content: "Pour toute information sur le jeu concours de thé à Nice, contactez Thé Tiptop. Nous sommes là pour répondre à vos questions et partager notre passion." }); // Meta description de la page
-    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
-    this.metaService.addTag({ name: 'robots', content: 'index,follow' }); // Permet au robot d'indexer la page
-    this.metaService.addTag({ name: 'keywords', content: 'information thé Nice' }); //Add keyword
-    this.metaService.addTag({ property: 'og:title', content: "Contactez-nous | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
+  updateTag() {
+    this.metaService.updateTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.updateTag({ name: 'description', content: "Pour toute information sur le jeu concours de thé à Nice, contactez Thé Tiptop. Nous sommes là pour répondre à vos questions et partager notre passion." }); // Meta description de la page
+    this.metaService.updateTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.updateTag({ name: 'robots', content: 'index,follow' }); // Permet au robot d'indexer la page
+    this.metaService.updateTag({ name: 'keywords', content: 'information thé Nice' }); //Add keyword
+    this.metaService.updateTag({ property: 'og:title', content: "Contactez-nous | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
   }
 
 
