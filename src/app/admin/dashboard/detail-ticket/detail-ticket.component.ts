@@ -50,7 +50,9 @@ export class DetailTicketComponent implements OnInit {
 
     this.adminService.getTicketDetails(this.numTicket).subscribe(
       (response: any) => {
-        const { id, numTicket, montantAchat, dateAchat, statusGain, user, batch } = response.data.ticket;
+        const { id, numTicket, montantAchat, dateAchat, statusGain, state, user, batch } = response.data.ticket;
+        
+        console.log(response);
         
         console.log(response);
         
@@ -61,6 +63,7 @@ export class DetailTicketComponent implements OnInit {
             montantAchat,
             dateAchat,
             statusGain,
+            state,
             user: {
               firstname: user.firstname,
               lastname: user.lastname,
@@ -92,6 +95,7 @@ export class DetailTicketComponent implements OnInit {
     console.log(this.dataTicket.id); // return undefined
     const ticketAttribue = {
       statusGain: "assigned",
+      state: "recieved",
       gainAttribue: true
     };
 

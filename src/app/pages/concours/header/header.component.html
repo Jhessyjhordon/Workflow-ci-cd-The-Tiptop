@@ -30,7 +30,7 @@
             </div>
 
             <ng-container *ngIf="isLoggedIn">
-                <form *ngIf="isVerify" [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
+                <form  [formGroup]="verifyTicketForm" (ngSubmit)="getTicketById()" class="w-100">
                   <!-- Le contenu de votre formulaire -->
                   <div class="row row-cols-1 row-cols-md-1 g-4 pt-md-4">
                     <div class="col px-auto">

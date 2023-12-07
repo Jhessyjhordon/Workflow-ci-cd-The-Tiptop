@@ -4,6 +4,8 @@ export interface AllTickets {
     numTicket: string;
     montantAchat: string;
     gainAttribue: string;
+    state: string;
+    batch: object;
     statusGain: string;
     dateAchat: string;
 }

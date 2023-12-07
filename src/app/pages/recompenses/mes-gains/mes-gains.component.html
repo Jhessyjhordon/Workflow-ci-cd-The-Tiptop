@@ -1,6 +1,6 @@
 <div class="container-fluid px-2 p-md-5 border-bottom border-1">
     <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 g-lg-4 g-xl-5"> -->
-    <h2 class="text-center py-3 py-md-5">Mes gains</h2>
+    <h2 class="text-center py-3 py-md-5 mesGains">Mes gains</h2>
     <div class="row row-cols-1 row-cols-lg-3 g-3"> <!-- Suppression de row-cols-* -->
         <div class="col" *ngFor="let mybatch of batch">
             <div class="card border-0 d-flex align-items-center text-center" *ngIf="mybatch">
@@ -8,35 +8,75 @@
                 <div class="card-body w-100 d-flex flex-column align-items-center">
                     <h3>{{mybatch.type_lot}}</h3>
                     <p class="card-text">{{mybatch!.description}}</p>
+                    <button *ngIf="!isRecieved(mybatch.id) && !isClaimed(mybatch.id)"
+                        (click)="openModalToGetBatchId(mybatch!.id)" type="button" class="btn btn-outline-dark"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Réclamer ce gains
+                    </button>
+                    <button *ngIf="isClaimed(mybatch.id)" (click)="openModalToGetBatchId(mybatch!.id)" type="button" 
+                        [ngClass]="{
+                            'text-bg-secondary': isUncheked(mybatch.id),
+                            'text-bg-danger': isChecked(mybatch.id),
+                            'btn btn-outline-warning text-dark': isClaimed(mybatch.id),
+                            'text-bg-success': isRecieved(mybatch.id)
+                        }" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        A récupèrer en magasin
+                    </button>
+                    <!-- Assuming "tickets" is the array containing your data -->
+                    <div *ngIf="tickets && tickets.length > 0">
+                        <!-- Find the latest ticket for the current batch -->
+                        <span [ngClass]="{
+                          'badge': true,
+                          'text-bg-secondary': isUncheked(mybatch.id),
+                          'text-bg-danger': isChecked(mybatch.id),
+                          'text-bg-warning': isClaimed(mybatch.id),
+                          'text-bg-success': isRecieved(mybatch.id)
+                        }" *ngIf="isRecieved(mybatch.id) ">
+                            {{ getTranslatedState(getLatestTicketState(mybatch.id)) }}
+                        </span>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <!-- <div class="col">
-            <div class="card border-0 d-flex align-items-center text-center">
-                <img src="/assets/images/concours/header/cafe1.png" class="w-50" alt="récompense-acquis-thé-tiptop-2">
-                <div class="card-body w-100 d-flex flex-column align-items-center">
-                    <h3>Lorem ipsum dolor sit amet</h3>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur. Id congue arcu elementum eu aliquet
-                        accumsan sed sagittis vestibulum. Commodo eget imperdiet lectus egestas quisque. Magna quisque
-                        mollis rutrum nulla eget quam amet in nec. Eget diam mauris at ac gravida feugiat egestas
-                        fermentum. Ultricies tempor ullamcorper gravida ultricies.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card border-0 d-flex align-items-center text-center">
-                <img src="/assets/images/concours/header/cafe2.png" class="w-50" alt="récompense-acquis-thé-tiptop-3">
-                <div class="card-body w-100 d-flex flex-column align-items-center">
-                    <h3>Lorem ipsum dolor sit amet</h3>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur. Id congue arcu elementum eu aliquet
-                        accumsan sed sagittis vestibulum. Commodo eget imperdiet lectus egestas quisque. Magna quisque
-                        mollis rutrum nulla eget quam amet in nec. Eget diam mauris at ac gravida feugiat egestas
-                        fermentum. Ultricies tempor ullamcorper gravida ultricies.</p>
-                </div>
-            </div>
-        </div> -->
 
 
     </div>
 
+</div>
+
+<!-- Ajoutez la modale pour la réclamation -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-no-focus>
+    <div class="modal-dialog">
+        <div class="modal-content" *ngIf="selectedBatch">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">{{selectedBatch.type_lot}}</h3>
+                <button type="button" class="btn-close" id="navbarCloseButton" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Affichez ici les détails du lot pour la réclamation -->
+                <h4>Description :</h4>
+                <p>{{selectedBatch.description}}</p>
+                <p>Récuperez votre gain à l'adresse suivant :</p>
+                <ul>
+                    <li>15 Avenue Romain Rolland, 06100 Nice</li>
+                </ul>
+
+                <!-- Affichez le badge dans le modal lorsque le statut est "demanded" -->
+                <span *ngIf="!isRecieved(selectedBatch.id)" [ngClass]="{
+                    'badge': true,
+                    'text-bg-secondary': isUncheked(selectedBatch.id),
+                    'text-bg-danger': isChecked(selectedBatch.id),
+                    'text-bg-warning': isClaimed(selectedBatch.id)
+                }"> {{ getTranslatedState(getLatestTicketState(selectedBatch.id)) }}</span>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <!-- Ajoutez ici le bouton de soumission de la réclamation -->
+                <button type="button" class="btn btn-primary" (click)="claimGains()">Réclamer mes gains</button>
+            </div>
+        </div>
+    </div>
 </div>
