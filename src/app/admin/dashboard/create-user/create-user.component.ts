@@ -18,6 +18,8 @@ export class CreateUserComponent implements OnInit {
   title= "Création de compte | Thé Tiptop | Jeu concours";
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
+  hidePassword: boolean = true;
+  hideConfirmPassword: boolean = true; 
 
   isLoggedIn: boolean = false;
 
@@ -140,6 +142,12 @@ export class CreateUserComponent implements OnInit {
     };
   }
 
-  
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
+  }
 
 }
