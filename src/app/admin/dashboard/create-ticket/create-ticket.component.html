@@ -5,12 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <form [formGroup]="ticketForm" (submit)="onSubmit()" >
-                <!-- montantTicket sera généré automatiquement côté backend -->
+                <!-- montantAchat sera généré automatiquement côté backend -->
 
                 <div class="mb-3">
-                    <label for="montantTicket" class="form-label">Montant du Ticket</label>
-                    <input type="number" class="form-control" id="montantTicket" formControlName="montantTicket" required min="49" step="0.01">
-                    <div *ngIf="ticketForm.get('montantTicket')?.hasError('min') && ticketForm.get('montantTicket')?.touched">
+                    <label for="montantAchat" class="form-label">Montant du Ticket</label>
+                    <input type="number" class="form-control" id="montantAchat" formControlName="montantAchat" required min="49" step="0.01">
+                    <div *ngIf="ticketForm.get('montantAchat')?.hasError('min') && ticketForm.get('montantAchat')?.touched">
                       Le montant doit être supérieur ou égal à 49 euros.
                     </div>
                   </div>
