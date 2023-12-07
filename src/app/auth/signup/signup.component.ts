@@ -21,7 +21,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   toastDisplayDuration = 8000; // 8 secondes
   timeoutId: any; // Déclaration de la propriété timeoutId
   progressWidth: number = 0;
-
+  hidePassword: boolean = true;
+  hideConfirmPassword: boolean = true; 
   isLoggedIn: boolean = false;
 
   submissionResult: { success: boolean; message: string } | null = null;
@@ -225,6 +226,14 @@ export class SignupComponent implements OnInit, OnDestroy {
         }
       });
     };
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
   // Méthode appelée lors de la destruction du composant

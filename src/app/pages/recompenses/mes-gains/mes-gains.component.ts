@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, PlatformLocation } from '@angular/common';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TicketVerifyService } from 'src/app/services/ticketVerify/ticket-verify.service';
 import { AllBatch } from 'src/app/models/all-batch.model';
@@ -21,7 +21,7 @@ export class MesGainsComponent implements OnInit {
   public dataTicket!: any;
   selectedBatch: any;
 
-  constructor(private auth: AuthService, private ticketVerifyService: TicketVerifyService, private router: Router, private route: ActivatedRoute) {
+  constructor(private auth: AuthService, private ticketVerifyService: TicketVerifyService, private router: Router, private route: ActivatedRoute, private platformLocation: PlatformLocation) {
     this.tickets = []; // Initialiser avec un tableau vide ou les données par défaut.
   }
 
@@ -226,7 +226,20 @@ export class MesGainsComponent implements OnInit {
         console.log('Ticket mis à jour avec succès', response);
         // Naviguer à la même route pour rafraîchir la vue
         // this.router.navigate(['.'], { relativeTo: this.route });
-        window.location.reload();
+        // window.location.reload();
+
+        // this.router.navigateByUrl('/refresh', { skipLocationChange: true }).then(() => {
+        //   this.router.navigate(['/recompenses']);
+        //   const modalBackdrop = document.querySelector('.modal-backdrop');
+        //   if (modalBackdrop) {
+        //     modalBackdrop.classList.remove('show');
+        //   }
+        // });
+        location.reload();
+
+        // Actualiser la page sans ajouter l'ID du ticket à l'URL
+        // this.platformLocation.onPopState(() => location.reload());
+        // history.replaceState({}, document.title, location.pathname);
       },
       (error) => {
         console.error('Erreur lors de la mise à jour du ticket', error);

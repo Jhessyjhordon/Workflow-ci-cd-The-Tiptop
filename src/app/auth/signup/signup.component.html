@@ -151,9 +151,13 @@
                 </div>
               </div>
               <div class="form-floating mb-3">
-                <input type="password" class="form-control rounded-5" placeholder="Mot de passe .."
+                <input type="{{ hidePassword ? 'password' : 'text' }}" class="form-control rounded-5" placeholder="Mot de passe .."
                   id="floatingInputPsw" formControlName="password" />
                 <label for="floatingInputPsw" class="w-100">Mot de passe</label>
+                <span class="password-toggle" (click)="togglePasswordVisibility()">
+                  <!-- {{ hidePassword ? 'Afficher' : 'Masquer' }} -->
+                  <i class="fa-solid fa-2xl" [ngClass]="{ 'fa-eye': hidePassword, 'fa-eye-slash': !hidePassword }" style="color: #3e5140;"></i>
+                </span>
               </div>
             </div>
             <!-- Confirm password -->
@@ -174,9 +178,13 @@
                 </div>
               </div>
               <div class="form-floating mb-3">
-                <input type="password" class="form-control rounded-5" placeholder="Confirmer le mot de passe .."
+                <input type="{{ hideConfirmPassword ? 'password' : 'text' }}" class="form-control rounded-5" placeholder="Confirmer le mot de passe .."
                   id="floatingInputConfirmPsw" formControlName="confirmPassword" />
                 <label for="floatingInputConfirmPsw" class="w-100">Confirmer le mot de passe</label>
+                <span class="password-toggle" (click)="toggleConfirmPasswordVisibility()">
+                  <!-- {{ hidePassword ? 'Afficher' : 'Masquer' }} -->
+                  <i class="fa-solid fa-2xl" [ngClass]="{ 'fa-eye': hideConfirmPassword, 'fa-eye-slash': !hideConfirmPassword }" style="color: #3e5140;"></i>
+                </span>
               </div>
             </div>
             <!-- Newsletter -->
