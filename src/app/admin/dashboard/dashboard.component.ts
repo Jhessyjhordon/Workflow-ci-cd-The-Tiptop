@@ -18,26 +18,31 @@ export class DashboardComponent {
 
   constructor(private auth: AuthService, private titleService : Title, private metaService: Meta) {
     this.titleService.setTitle(this.title);
-    this.addTag();
+    this.updateTag();
+    this.getRoleUser();
   }
 
   // Définition des différentes balises pour le SEO
-  addTag() {
-    this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
-    this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
-    this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
+  updateTag() {
+    this.metaService.updateTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+    this.metaService.updateTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+    this.metaService.updateTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
   }
 
   ngOnInt() {
+
+  }
+
+  toggleSidebar() {
+    this.isSidebarActive = !this.isSidebarActive;
+  }
+
+  getRoleUser(){
     if (this.auth.getRoleUser() === "admin") {
       this.isLoggedAsAdmin = true;
     } else {
       this.isLoggedAsAdmin = false;
     };
-  }
-
-  toggleSidebar() {
-    this.isSidebarActive = !this.isSidebarActive;
   }
 
   logout() {

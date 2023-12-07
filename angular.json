@@ -144,6 +144,16 @@
         },
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "the-tiptop-front:build:development",
+              "serverTarget": "the-tiptop-front:server:development"
+            },
+            "production": {
+              "browserTarget": "the-tiptop-front:build:production",
+              "serverTarget": "the-tiptop-front:server:production"
+            }
+          },
           "defaultConfiguration": "development"
         },
         "prerender": {

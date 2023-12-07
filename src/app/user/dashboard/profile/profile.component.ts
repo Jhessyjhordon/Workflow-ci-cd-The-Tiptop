@@ -24,16 +24,16 @@ export class ProfileComponent implements OnInit {
   title= 'Mon compte | Thé Tiptop | Jeu concours';
 
   // Définition des différentes balises pour le SEO
-  addTag() {
-   this.metaService.addTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
-   this.metaService.addTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
-   this.metaService.addTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
-   this.metaService.addTag({ property: 'og:title', content: "Mon compte | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
+  updateTag() {
+   this.metaService.updateTag({ httpEquiv: 'Content-Type', content: 'text/html' }); // Indique aux agents et serveurs de prendre le contenu de cette page en tant que HTML
+   this.metaService.updateTag({ property: 'og-type', content: "Site web"}); /* Indique le type de l'objet */
+   this.metaService.updateTag({ name: 'robots', content: 'noindex, nofollow' }); // Permet au robot d'indexer la page
+   this.metaService.updateTag({ property: 'og:title', content: "Mon compte | Thé Tiptop | Jeu concours" }) // Titre pour l'encadré dans les recherches
  }
 
   constructor(private userService: UserService, private titleService : Title, private metaService: Meta) {
     this.titleService.setTitle(this.title);
-    this.addTag();
+    this.updateTag();
    }
 
   // 

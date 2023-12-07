@@ -26,22 +26,29 @@ export class CreateTicketComponent implements OnInit {
   constructor(private ticketService: TicketService, 
               private userService: UserService,
               private batchService: BatchesService,
-              private formBuilder: FormBuilder,) { }
+              private formBuilder: FormBuilder,) {
+    this.users = [];            
+    this.batches = [];      
+              }
 
   ngOnInit() {
+    this.initializeForm();
+    this.loadInitialData();
+  }
 
+  private initializeForm() {
     this.ticketForm = this.formBuilder.group({
-      montantTicket: [null, [Validators.required, Validators.min(0)]],
+      montantTicket: [null, [Validators.required, Validators.min(49)]],
       userId: [null, Validators.required],
       batchId: [null, Validators.required]
     });
-    this.loadInitialData();
   }
 
   loadInitialData() {
     this.userService.getShortcutCustomerDetails().subscribe(
       (users: UserCustomerShortcut[]) => {
         this.users = users;
+        // console.log('Utilisateurs chargés avec succès :', this.users);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);
@@ -50,8 +57,10 @@ export class CreateTicketComponent implements OnInit {
     );
 
     this.batchService.getShortcutedBatchs().subscribe(
-      (batshs: ShortcutedBatch[]) => {
-        this.batches = batshs;
+      (batches: ShortcutedBatch[]) => {
+        this.batches = batches;
+        console.log(batches);
+        console.log('Lots chargés avec succès :', this.batches);
       },
       error => {
         console.error('Erreur lors du chargement des utilisateurs :', error);
@@ -65,6 +74,7 @@ export class CreateTicketComponent implements OnInit {
     if (this.ticketForm.valid) {
       // Si le formulaire est valide, effectuez le traitement
       const ticketData = this.ticketForm.value;
+      
       this.ticketService.createTicket(ticketData).subscribe(
         (response) => {
           console.log('Ticket créé avec succès:', response);
