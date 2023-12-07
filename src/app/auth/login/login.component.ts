@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   title= 'Thé Tiptop - Grand Jeu Concours à Nice - Connexion';
   loginForm!: FormGroup;
   formSubmitted: boolean = false;
+  hidePassword: boolean = true;
 
   isLoggedIn: boolean = false;
 
@@ -100,6 +101,10 @@ export class LoginComponent implements OnInit {
 
   onCustomSignup() {
     this.auth.redirectToGoogleAuth();
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
   
 }
