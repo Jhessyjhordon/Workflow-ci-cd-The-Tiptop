@@ -38,7 +38,7 @@ export class CreateTicketComponent implements OnInit {
 
   private initializeForm() {
     this.ticketForm = this.formBuilder.group({
-      montantTicket: [null, [Validators.required, Validators.min(49)]],
+      montantAchat: [null, [Validators.required, Validators.min(49)]],
       userId: [null, Validators.required],
       batchId: [null, Validators.required]
     });
