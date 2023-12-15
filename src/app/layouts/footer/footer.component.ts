@@ -22,6 +22,7 @@ export class FooterComponent {
   }
 
   loadAxeptioScript(){
+    // Commentaire pour la démonstration
     // Définir les paramètres Axeptio
     (window as any).axeptioSettings = {
       clientId: "655e146f508b50f44623bccc",
